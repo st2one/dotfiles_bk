@@ -36,12 +36,12 @@ set wrapscan   " 最後尾まで検索を終えたら次の検索で先頭に移
 set gdefault   " 置換の時 g オプションをデフォルトで有効にする
 
 " タブ/インデントの設定
-"set expandtab     " タブ入力を複数の空白入力に置き換える
-set tabstop=4     " 画面上でタブ文字が占める幅
-set shiftwidth=4  " 自動インデントでずれる幅
-set softtabstop=4 " 連続した空白に対してタブキーやバックスペースキーでカーソルが動く幅
-set autoindent    " 改行時に前の行のインデントを継続する
-set smartindent   " 改行時に入力された行の末尾に合わせて次の行のインデントを増減する
+set expandtab		" タブ入力を複数の空白入力に置き換える
+set tabstop=4		" 画面上でタブ文字が占める幅
+set shiftwidth=4	" 自動インデントでずれる幅
+set softtabstop=4	" 連続した空白に対してタブキーやバックスペースキーでカーソルが動く幅
+set autoindent		" 改行時に前の行のインデントを継続する
+set smartindent		" 改行時に入力された行の末尾に合わせて次の行のインデントを増減する
 
 " 動作環境との統合関連の設定
 
@@ -85,6 +85,7 @@ NeoBundle 'Shougo/vimshell'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'Shougo/neosnippet'
+NeoBundle 'Shougo/neosnippet-snippets'
 NeoBundle 'jpalardy/vim-slime'
 NeoBundle 'scrooloose/syntastic'
 
@@ -112,6 +113,36 @@ NeoBundle 'tomasr/molokai'
 " カラースキーム一覧表示に Unite.vim を使う
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'ujihisa/unite-colorscheme'
+
+"-------------------------
+" Unit
+" ------------------------
+" 入力モードで開始する
+let g:unite_enable_start_insert=1
+
+" " バッファ一覧
+noremap <C-N> :Unite buffer<CR>
+
+" " ファイル一覧
+noremap <C-P> :Unite -buffer-name=file file<CR>
+
+" " 最近使ったファイルの一覧
+" noremap <C-Z> :Unite file_mru<CR>
+
+" " sourcesを「今開いているファイルのディレクトリ」とする
+noremap :uff :<C-u>UniteWithBufferDir file -buffer-name=file<CR>
+
+" " ウィンドウを分割して開く
+au FileType unite nnoremap <silent> <buffer> <expr> <C-J> unite#do_action('split')
+au FileType unite inoremap <silent> <buffer> <expr> <C-J> unite#do_action('split')
+
+" " ウィンドウを縦に分割して開く
+au FileType unite nnoremap <silent> <buffer> <expr> <C-K> unite#do_action('vsplit')
+au FileType unite inoremap <silent> <buffer> <expr> <C-K> unite#do_action('vsplit')
+
+" " ESCキーを2回押すと終了する
+au FileType unite nnoremap <silent> <buffer> <ESC><ESC> :q<CR>
+au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR>
 
 call neobundle#end()
 
