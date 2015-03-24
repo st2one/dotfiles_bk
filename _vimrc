@@ -190,7 +190,8 @@ NeoBundleCheck
 "===============================
 syntax on
 syntax enable
-color Dracula
+colorscheme dracula
+"color Dracula
 "colorscheme solarized 
 "colorscheme hybrid
 " 行番号の色
