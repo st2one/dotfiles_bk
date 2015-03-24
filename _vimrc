@@ -15,8 +15,11 @@ set showmatch      " 対応する括弧を強調表示
 set helpheight=999 " ヘルプを画面いっぱいに開く
 set list           " 不可視文字を表示
 set listchars=tab:▸\ ,eol:↲,extends:❯,precedes:❮    " 不可視文字の表示記号指定
+"set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%,eol:↲
+"set listchars=tab:>.,trail:_,eol:↲,extends:>,precedes:<,nbsp:%
 set statusline+=%{fugitive#statusline()}            " ステータス行に現在のgitブランチを表示する
 set title         " ウインドウのタイトルバーにファイルのパス情報等を表示する
+set t_Co=256
 
 "===========================
 " カーソル移動関連の設定
@@ -130,7 +133,7 @@ NeoBundle 'tpope/vim-fugitive'
 " NeoBundle 'tpope/vim-surround'
 
 " インデントに色を付けて見やすくする
-NeoBundle 'nathanaelkane/vim-indent-guides'
+"NeoBundle 'nathanaelkane/vim-indent-guides'
 " " ログファイルを色づけしてくれる
 " NeoBundle 'vim-scripts/AnsiEsc.vim'
 " " 行末の半角スペースを可視化(うまく動かない？)
@@ -151,25 +154,27 @@ NeoBundle 'w0ng/vim-hybrid'
 " solarized カラースキーム
 NeoBundle 'altercation/vim-colors-solarized'
 " mustang カラースキーム
-NeoBundle 'croaker/mustang-vim'
+"NeoBundle 'croaker/mustang-vim'
 " wombat カラースキーム
-NeoBundle 'jeffreyiacono/vim-colors-wombat'
+"NeoBundle 'jeffreyiacono/vim-colors-wombat'
 " jellybeans カラースキーム
 NeoBundle 'nanotech/jellybeans.vim'
 " lucius カラースキーム
-NeoBundle 'vim-scripts/Lucius'
+"NeoBundle 'vim-scripts/Lucius'
 " zenburn カラースキーム
-NeoBundle 'vim-scripts/Zenburn'
+"NeoBundle 'vim-scripts/Zenburn'
 " mrkn256 カラースキーム
-NeoBundle 'mrkn/mrkn256.vim'
+"NeoBundle 'mrkn/mrkn256.vim'
 " railscasts カラースキーム
-NeoBundle 'jpo/vim-railscasts-theme'
+"NeoBundle 'jpo/vim-railscasts-theme'
 " pyte カラースキーム
-NeoBundle 'therubymug/vim-pyte'
+"NeoBundle 'therubymug/vim-pyte'
 " molokai カラースキーム
 NeoBundle 'tomasr/molokai'
+" Doracula
+NeoBundle 'zenorocha/dracula-theme', {'rtp' : 'vim'}
 " カラースキーム一覧表示に Unite.vim を使う
-NeoBundle 'ujihisa/unite-colorscheme'
+"NeoBundle 'ujihisa/unite-colorscheme'
 
 call neobundle#end()
 
@@ -184,8 +189,10 @@ NeoBundleCheck
 " color schema
 "===============================
 syntax on
+syntax enable
+color Dracula
+"colorscheme solarized 
 "colorscheme hybrid
-colorscheme solarized 
 " 行番号の色
 " highlight LineNr ctermfg=darkyellow
 
@@ -239,16 +246,16 @@ au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR>
 "========================================
 " automatically complement (), {}, []
 "========================================
-imap { {}<LEFT>
-imap [ []<LEFT>
-imap ( ()<LEFT>
+"imap { {}<LEFT>
+"imap [ []<LEFT>
+"imap ( ()<LEFT>
 
 "====================================
 " 最後のカーソル位置を復元する
 "====================================
-if has("autocmd")
-    autocmd BufReadPost *
-    \ if line("'\"") > 0 && line ("'\"") <= line("$") |
-    \   exe "normal! g'\"" |
-    \ endif
-endif
+"if has("autocmd")
+"    autocmd BufReadPost *
+"    \ if line("'\"") > 0 && line ("'\"") <= line("$") |
+"    \   exe "normal! g'\"" |
+"    \ endif
+"endif

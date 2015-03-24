@@ -4,6 +4,8 @@
 export LANG=ja_JP.UTF-8
 export TERM=xterm-256color
 
+ZSH_THEME="dracula"
+
 #alias emacs='/Applications/Emacs.app/Contents/MacOS/Emacs'
 #alias emacs='/Applications/Emacs.app/Contents/MacOS/Emacs -nw'
 #alias emacs='$(brew --prefix emacs)/Emacs.app/Contents/MacOS/Emacs'
@@ -140,7 +142,7 @@ export PATH=/usr/local/share/npm/bin:$PATH
 #eval "$(rbenv init - zsh)"
 
 # Java
-export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8
+#export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8
 
 # Postgres
 export PATH=/Applications/Postgres.app/Contents/MacOS/bin:$PATH
@@ -202,3 +204,6 @@ zle -N forward-word tcsh-forward-word-match
 #    'do { print qq/(setenv "$_" "$ENV{$_}")/ if exists $ENV{$_} } for @ARGV' \
 #    PATH > ~/.emacs.d/elisp/shellenv.el
 
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
