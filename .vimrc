@@ -149,6 +149,11 @@ NeoBundle 'Shougo/neosnippet-snippets'
 NeoBundle 'jpalardy/vim-slime'
 NeoBundle 'scrooloose/syntastic'
 
+" Markdown
+NeoBundle 'plasticboy/vim-markdown'
+NeoBundle 'kannokanno/previm'
+NeoBundle 'tyru/open-browser.vim'
+
 " hybrid カラースキーム
 NeoBundle 'w0ng/vim-hybrid'
 " solarized カラースキーム
@@ -230,6 +235,10 @@ au FileType unite inoremap <silent> <buffer> <expr> <C-K> unite#do_action('vspli
 au FileType unite nnoremap <silent> <buffer> <ESC><ESC> :q<CR>
 au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR>
 
+" Markdownの設定
+"set syntax=markdown
+autocmd BufNewFile,BufRead *.md set filetype=markdown
+
 "==============================
 " key-bind
 "==============================
@@ -260,3 +269,13 @@ au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR>
 "    \   exe "normal! g'\"" |
 "    \ endif
 "endif
+
+" TeXの設定
+filetype plugin on
+let tex_flavor = 'latex'
+set grepprg=grep\ -nH\ $*
+set shellslash
+let g:Tex_DefaultTargetFormat = 'pdf'
+let g:Tex_CompileRule_dvi = 'platex --interaction=nonstopmode $*'
+let g:Tex_CompileRule_pdf = 'dvipdfmx $*.dvi'
+let g:Tex_FormatDependency_pdf = 'dvi,pdf'
