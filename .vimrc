@@ -2,7 +2,6 @@
 set nocompatible
 " 一旦ファイルタイプ関連を無効化する
 filetype off
-
 "===========================
 " 画面表示の設定
 "===========================
@@ -105,14 +104,9 @@ if has('vim_starting')
     set nocompatible               " be iMproved
     set runtimepath+=~/.vim/bundle/neobundle.vim
 endif
-
-" Required:
 call neobundle#begin(expand('~/.vim/bundle/'))
 
-" Let NeoBundle manage NeoBundle
-" Required:
 NeoBundle 'Shougo/neobundle.vim'
-
 " ファイルオープンを便利に
 NeoBundle 'Shougo/unite.vim'
 " Unite.vimで最近使ったファイルを表示できるようにする
@@ -121,7 +115,6 @@ NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'scrooloose/nerdtree'
 " Gitを便利に使う
 NeoBundle 'tpope/vim-fugitive'
-
 " Rails向けのコマンドを提供する
 "NeoBundle 'tpope/vim-rails'
 " Ruby向けにendを自動挿入してくれる
@@ -148,6 +141,7 @@ NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/neosnippet-snippets'
 NeoBundle 'jpalardy/vim-slime'
 NeoBundle 'scrooloose/syntastic'
+NeoBundle 'nathanaelkane/vim-indent-guides'
 
 " Markdown
 NeoBundle 'plasticboy/vim-markdown'
@@ -155,7 +149,7 @@ NeoBundle 'kannokanno/previm'
 NeoBundle 'tyru/open-browser.vim'
 
 " hybrid カラースキーム
-NeoBundle 'w0ng/vim-hybrid'
+"NeoBundle 'w0ng/vim-hybrid'
 " solarized カラースキーム
 NeoBundle 'altercation/vim-colors-solarized'
 " mustang カラースキーム
@@ -163,7 +157,7 @@ NeoBundle 'altercation/vim-colors-solarized'
 " wombat カラースキーム
 "NeoBundle 'jeffreyiacono/vim-colors-wombat'
 " jellybeans カラースキーム
-NeoBundle 'nanotech/jellybeans.vim'
+"NeoBundle 'nanotech/jellybeans.vim'
 " lucius カラースキーム
 "NeoBundle 'vim-scripts/Lucius'
 " zenburn カラースキーム
@@ -175,19 +169,13 @@ NeoBundle 'nanotech/jellybeans.vim'
 " pyte カラースキーム
 "NeoBundle 'therubymug/vim-pyte'
 " molokai カラースキーム
-NeoBundle 'tomasr/molokai'
+"NeoBundle 'tomasr/molokai'
 " Doracula
 NeoBundle 'zenorocha/dracula-theme', {'rtp' : 'vim'}
 " カラースキーム一覧表示に Unite.vim を使う
 "NeoBundle 'ujihisa/unite-colorscheme'
 
 call neobundle#end()
-
-" Required:
-filetype plugin indent on
-
-" If there are uninstalled bundles found on startup,
-" " this will conveniently prompt you to install them.
 NeoBundleCheck
 
 "===============================
@@ -243,39 +231,14 @@ autocmd BufNewFile,BufRead *.md set filetype=markdown
 " key-bind
 "==============================
 "emacs-like key bind
-"imap <silent> <C-P> <Up>
-"imap <silent> <C-N> <Down>
-"imap <silent> <C-B> <Left>
-"imap <silent> <C-F> <Right>
-"imap <silent> <C-A> <Home>
-"imap <silent> <C-E> <End>
-"imap <silent> <C-D> <Del>
+"imap <silent> <c-p> <up>
+"imap <silent> <c-n> <down>
+"imap <silent> <c-b> <left>
+"imap <silent> <c-f> <right>
+"imap <silent> <c-a> <home>
+"imap <silent> <c-e> <end>
+"imap <silent> <c-d> <del>
 "imap <silent> <C-K> <C-O>
 "imap <silent> <C-Y> <C-R>
 
-"========================================
-" automatically complement (), {}, []
-"========================================
-"imap { {}<LEFT>
-"imap [ []<LEFT>
-"imap ( ()<LEFT>
-
-"====================================
-" 最後のカーソル位置を復元する
-"====================================
-"if has("autocmd")
-"    autocmd BufReadPost *
-"    \ if line("'\"") > 0 && line ("'\"") <= line("$") |
-"    \   exe "normal! g'\"" |
-"    \ endif
-"endif
-
-" TeXの設定
-filetype plugin on
-let tex_flavor = 'latex'
-set grepprg=grep\ -nH\ $*
-set shellslash
-let g:Tex_DefaultTargetFormat = 'pdf'
-let g:Tex_CompileRule_dvi = 'platex --interaction=nonstopmode $*'
-let g:Tex_CompileRule_pdf = 'dvipdfmx $*.dvi'
-let g:Tex_FormatDependency_pdf = 'dvi,pdf'
+filetype plugin indent on
