@@ -49,6 +49,8 @@ setopt hist_ignore_dups   # 直前と同じコマンドはヒストリに追加�
 setopt share_history      # 他のシェルのヒストリをリアルタイムで共有する
 setopt hist_reduce_blanks # 余分なスペースを削除してヒストリに保存する
 
+# setopt nonomatch
+
 # すべてのヒストリを表示する
 function history-all { history -E 1 }
 
@@ -133,13 +135,23 @@ export PATH=$HOME/Library/Haskell/bin:$PATH
 #export PATH=~/node_modules/typescript/bin:$PATH
 export PATH=/usr/local/share/npm/bin:$PATH
 
+# nodebrew
+export PATH=$HOME/.nodebrew/current/bin:$PATH
+
 # Python
+export PYENV_ROOT=${HOME}/.pyenv
+if [ -d "${PYENV_ROOT}" ]; then
+    export PATH=${PYENV_ROOT}/bin:$PATH
+    eval "$(pyenv init -)"
+    eval "$(pyenv virtualenv-init -)"
+fi
+
 #export PYTHONSTARTUP=$HOME/.pythonrc.py
 #PYTHONPATH=~/Library/Python/debug_toolbar:$PYTHONPATH
 #export PYTHONPATH
 # Ruby
-#export PATH=$HOME/.rbenv/bin:$PATH
-#eval "$(rbenv init - zsh)"
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
 
 # Java
 #export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8
@@ -160,6 +172,14 @@ export PYTHONPATH=/usr/local/Cellar/opencv/2.4.9/lib/python2.7/site-packages:$PY
 
 # tex
 PATH=$PATH:/usr/local/texlive/2014/bin/x86_64-darwin/
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+
+# MAMP PHP
+export PATH="/Applications/MAMP/bin/php/php5.5.26/bin:$PATH"
 
 # Proxy
 #-------------------------------------------------
@@ -205,5 +225,10 @@ zle -N forward-word tcsh-forward-word-match
 #    PATH > ~/.emacs.d/elisp/shellenv.el
 
 
-### Added by the Heroku Toolbelt
-export PATH="/usr/local/heroku/bin:$PATH"
+
+
+# The next line updates PATH for the Google Cloud SDK.
+source '/Users/st2one/google-cloud-sdk/path.zsh.inc'
+
+# The next line enables shell command completion for gcloud.
+source '/Users/st2one/google-cloud-sdk/completion.zsh.inc'

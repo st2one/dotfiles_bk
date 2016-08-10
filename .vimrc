@@ -104,6 +104,8 @@ if has('vim_starting')
     set nocompatible               " be iMproved
     set runtimepath+=~/.vim/bundle/neobundle.vim
 endif
+
+" NeoBundleを初期化
 call neobundle#begin(expand('~/.vim/bundle/'))
 
 NeoBundle 'Shougo/neobundle.vim'
@@ -137,6 +139,7 @@ NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'Shougo/vimproc'
 NeoBundle 'Shougo/vimshell'
 NeoBundle 'Shougo/neocomplcache'
+NeoBundle 'Shougo/neocomplete'
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/neosnippet-snippets'
 NeoBundle 'jpalardy/vim-slime'
@@ -151,7 +154,7 @@ NeoBundle 'tyru/open-browser.vim'
 " hybrid カラースキーム
 "NeoBundle 'w0ng/vim-hybrid'
 " solarized カラースキーム
-NeoBundle 'altercation/vim-colors-solarized'
+"NeoBundle 'altercation/vim-colors-solarized'
 " mustang カラースキーム
 "NeoBundle 'croaker/mustang-vim'
 " wombat カラースキーム
@@ -223,10 +226,19 @@ au FileType unite inoremap <silent> <buffer> <expr> <C-K> unite#do_action('vspli
 au FileType unite nnoremap <silent> <buffer> <ESC><ESC> :q<CR>
 au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR>
 
-" Markdownの設定
-"set syntax=markdown
-autocmd BufNewFile,BufRead *.md set filetype=markdown
+" 補完を有効にする
+let g:neocomplete#enable_at_startup = 1
 
+" 補完に時間がかかってもスキップしない
+let g:neocomplete#skip_auto_completion_time = ""
+
+" Markdownの設定
+set syntax=markdown
+autocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
+" markdownの折りたたみなし
+let g:vim_markdown_folding_disabled = 1
+let g:vim_markdown_new_list_item_indent = 2
+"
 "==============================
 " key-bind
 "==============================
