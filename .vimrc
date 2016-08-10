@@ -174,7 +174,7 @@ NeoBundle 'tyru/open-browser.vim'
 " molokai カラースキーム
 "NeoBundle 'tomasr/molokai'
 " Doracula
-NeoBundle 'zenorocha/dracula-theme', {'rtp' : 'vim'}
+NeoBundle 'dracula/vim'
 " カラースキーム一覧表示に Unite.vim を使う
 "NeoBundle 'ujihisa/unite-colorscheme'
 
