@@ -1,14 +1,20 @@
+#
+# Executes commands at the start of an interactive session.
+#
+# Authors:
+#   Sorin Ionescu <sorin.ionescu@gmail.com>
+#
+
+# Source Prezto.
+if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+fi
+
 #-------------------------------------------------
 # General Stteings
 #-------------------------------------------------
 export LANG=ja_JP.UTF-8
 export TERM=xterm-256color
-
-ZSH_THEME="dracula"
-
-#alias emacs='/Applications/Emacs.app/Contents/MacOS/Emacs'
-#alias emacs='/Applications/Emacs.app/Contents/MacOS/Emacs -nw'
-#alias emacs='$(brew --prefix emacs)/Emacs.app/Contents/MacOS/Emacs'
 
 # command history search
 autoload history-search-end
@@ -48,61 +54,6 @@ setopt extended_history   # ヒストリに実行時間も保存する
 setopt hist_ignore_dups   # 直前と同じコマンドはヒストリに追加しない
 setopt share_history      # 他のシェルのヒストリをリアルタイムで共有する
 setopt hist_reduce_blanks # 余分なスペースを削除してヒストリに保存する
-
-# setopt nonomatch
-
-# すべてのヒストリを表示する
-function history-all { history -E 1 }
-
-# ------------------------------
-# Look And Feel Settings
-# ------------------------------
-### Ls Color ###
-# 色の設定
-export LSCOLORS=Exfxcxdxbxegedabagacad
-# 補完時の色の設定
-export LS_COLORS='di=01;34:ln=01;35:so=01;32:ex=01;31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
-# ZLS_COLORSとは？
-export ZLS_COLORS=$LS_COLORS
-# lsコマンド時、自動で色がつく(ls -Gのようなもの？)
-export CLICOLOR=true
-# 補完候補に色を付ける
-zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
-
-### Prompt ###
-# プロンプトに色を付ける
-autoload -U colors; colors
-# 一般ユーザ時
-#tmp_prompt="%{${fg[cyan]}%}%n%# %{${reset_color}%}"
-#tmp_prompt2="%{${fg[cyan]}%}%_> %{${reset_color}%}"
-#tmp_rprompt="%{${fg[green]}%}[%~]%{${reset_color}%}"
-#tmp_sprompt="%{${fg[yellow]}%}%r is correct? [Yes, No, Abort, Edit]:%{${reset_color}%}"
-
-#PROMPT=$tmp_prompt    # 通常のプロンプト
-#PROMPT2=$tmp_prompt2  # セカンダリのプロンプト(コマンドが2行以上の時に表示される)
-#RPROMPT=$tmp_rprompt  # 右側のプロンプト
-#SPROMPT=$tmp_sprompt  # スペル訂正用プロンプト
-
-PROMPT='%F{10}%n:%F{12}%4(~,%-1~/.../%1~,%~)%f
-%0(?.%#.%F{9}%#%f) '
-#PROMPT='%F{10}%n@%m%f:%F{12}%4(~,%-1~/.../%1~,%~)%f
-#%0(?.%#.%F{9}%#%f) '
-RPROMPT='%*'
- 
-
-# SSHログイン時のプロンプト
-[ -n "${REMOTEHOST}${SSH_CONNECTION}" ] &&
-  PROMPT="%{${fg[white]}%}${HOST%%.*} ${PROMPT}"
-;
-
-### Title (user@hostname) ###
-case "${TERM}" in
-kterm*|xterm*|)
-  precmd() {
-    echo -ne "\033]0;${USER}@${HOST%%.*}\007"
-  }
-  ;;
-esac
 
 #-------------------------------------------------
 # Path
@@ -180,52 +131,6 @@ export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
 # MAMP PHP
 export PATH="/Applications/MAMP/bin/php/php5.5.26/bin:$PATH"
-
-# Proxy
-#-------------------------------------------------
-#waseda
-# export http_proxy=www-proxy.waseda.jp:8080
-# export ALL_PROXY=$http_proxy
-
-#-------------------------------------------------
-# Other Setting
-#-------------------------------------------------
-### Aliases ###
-alias ls='ls -a'
-alias finda='open .'
-# alias emacs='open -a Emacs'
-alias mongod='mongod --config /usr/local/mongo/conf/'
-alias grun='java org.antlr.v4.runtime.misc.TestRig'
-
-alias ls='ls -aF'
-alias ll='ls -l'
-alias rm='rm -i'
-alias mv='mv -i'
-alias cp='cp -i'
-alias ..='cd ..'
-alias ...='cd -'
-alias cot='open -a CotEditor'
- 
-#Aliases --JAVA
-#alias javac='javac -encoding UTF-8'
-#alias java='java -Dfile.encoding=UTF-8'
-
-# M-f, M-b
-autoload -Uz select-word-style
-select-word-style default
-zstyle ':zle:*' word-chars '*?_-.[]~='
-
-fpath=( ~/.home/zsh $fpath )
-autoload -Uz tcsh-forward-word-match
-zle -N forward-word tcsh-forward-word-match
-
-# create emacs env file
-#perl -wle \
-#    'do { print qq/(setenv "$_" "$ENV{$_}")/ if exists $ENV{$_} } for @ARGV' \
-#    PATH > ~/.emacs.d/elisp/shellenv.el
-
-
-
 
 # The next line updates PATH for the Google Cloud SDK.
 source '/Users/st2one/google-cloud-sdk/path.zsh.inc'
