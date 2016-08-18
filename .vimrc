@@ -19,6 +19,9 @@ set listchars=tab:▸\ ,eol:↲,extends:❯,precedes:❮    " 不可視文字の
 set statusline+=%{fugitive#statusline()}            " ステータス行に現在のgitブランチを表示する
 set title         " ウインドウのタイトルバーにファイルのパス情報等を表示する
 set t_Co=256
+set encoding=utf-8
+set fileencodings=iso-2022-jp,euc-jp,sjis,utf-8
+set fileformats=unix,dos,mac
 
 "===========================
 " カーソル移動関連の設定
