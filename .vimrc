@@ -22,6 +22,12 @@ set t_Co=256
 set encoding=utf-8
 set fileencodings=utf-8
 set fileformats=unix,dos,mac
+"全角スペースの可視化
+augroup highlightIdegraphicSpace
+  autocmd!
+  autocmd Colorscheme * highlight IdeographicSpace term=underline ctermbg=Yellow guibg=Yellow
+  autocmd VimEnter,WinEnter * match IdeographicSpace /　/
+augroup END
 
 "===========================
 " カーソル移動関連の設定
@@ -255,5 +261,17 @@ let g:vim_markdown_new_list_item_indent = 2
 "imap <silent> <c-d> <del>
 "imap <silent> <C-K> <C-O>
 "imap <silent> <C-Y> <C-R>
+
+"括弧の補完(改行してインデント)
+inoremap {<Enter> {}<Left><CR><ESC><S-o>
+inoremap [ []<LEFT>
+inoremap ( ()<LEFT>
+inoremap " ""<LEFT>
+inoremap ' ''<LEFT>
+vnoremap { "zdi^V{<C-R>z}<ESC>
+vnoremap [ "zdi^V[<C-R>z]<ESC>
+vnoremap ( "zdi^V(<C-R>z)<ESC>
+vnoremap " "zdi^V"<C-R>z^V"<ESC>
+vnoremap ' "zdi'<C-R>z'<ESC>
 
 filetype plugin indent on
