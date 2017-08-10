@@ -137,3 +137,15 @@ source '/Users/st2one/google-cloud-sdk/path.zsh.inc'
 
 # The next line enables shell command completion for gcloud.
 source '/Users/st2one/google-cloud-sdk/completion.zsh.inc'
+
+# tab_title
+function chpwd() { ls; echo -ne "\033]0;$(pwd | rev | awk -F \/ '{print "/"$1"/"$2}'| rev)\007"}
+
+# markdown -> Tex --> made pdf
+alias mdtx='mdtex.sh'
+
+# markdown -> Tex shellscript
+if [ -d $HOME/tools ]
+then
+    PATH=$PATH:$HOME/Tools; export PATH
+fi

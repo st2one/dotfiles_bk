@@ -126,13 +126,17 @@ NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'scrooloose/nerdtree'
 " Gitを便利に使う
 NeoBundle 'tpope/vim-fugitive'
+" HTMLやCSSの入力を効率化
+NeoBundle 'mattn/emmet-vim'
+" テキストを囲うものを編集する
+NeoBundle 'tpope/vim-surround'
 " Rails向けのコマンドを提供する
 "NeoBundle 'tpope/vim-rails'
 " Ruby向けにendを自動挿入してくれる
-"NeoBundle 'tpope/vim-endwise'
+NeoBundle 'tpope/vim-endwise'
 
 " コメントON/OFFを手軽に実行
-" NeoBundle 'tomtom/tcomment_vim'
+NeoBundle 'tomtom/tcomment_vim'
 " シングルクオートとダブルクオートの入れ替え等
 " NeoBundle 'tpope/vim-surround'
 
@@ -203,7 +207,7 @@ colorscheme dracula
 " highlight LineNr ctermfg=darkyellow
 
 "==============================
-" Unit
+" Unite
 "==============================
 " 入力モードで開始する
 let g:unite_enable_start_insert=1
@@ -235,11 +239,140 @@ au FileType unite inoremap <silent> <buffer> <expr> <C-K> unite#do_action('vspli
 au FileType unite nnoremap <silent> <buffer> <ESC><ESC> :q<CR>
 au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR>
 
-" 補完を有効にする
-let g:neocomplete#enable_at_startup = 1
-
+"==============================
+" neocomplete
+"==============================
+" _(アンダースコア)区切りの補完を有効化
+let g:neocomplete#enable_underbar_completion = 1
+let g:neocomplete#enable_camel_case_completion  =  1
+" ポップアップメニューで表示される候補の数
+let g:neocomplete#max_list = 20
+" シンタックスをキャッシュするときの最小文字長
+let g:neocomplete#sources#syntax#min_keyword_length = 3
+" 補完を表示する最小文字数
+let g:neocomplete#auto_completion_start_length = 2
+" 区切り文字まで補完するneosnippet#expandable() ?
+let g:neocomplete#enable_auto_delimiter = 1
 " 補完に時間がかかってもスキップしない
 let g:neocomplete#skip_auto_completion_time = ""
+" preview window を閉じない
+let g:neocomplete#enable_auto_close_preview = 0
+
+" Disable AutoComplPop.
+let g:acp_enableAtStartup = 0
+" Use neocomplete.
+let g:neocomplete#enable_at_startup = 1
+" Use smartcase.
+let g:neocomplete#enable_smart_case = 1
+" Set minimum syntax keyword length.
+let g:neocomplete#sources#syntax#min_keyword_length = 3
+
+" Define dictionary.
+let g:neocomplete#sources#dictionary#dictionaries = {
+    \ 'default' : '',
+    \ 'vimshell' : $HOME.'/.vimshell_hist',
+    \ 'scheme' : $HOME.'/.gosh_completions'
+        \ }
+
+" Define keyword.
+if !exists('g:neocomplete#keyword_patterns')
+    let g:neocomplete#keyword_patterns = {}
+endif
+let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+
+" Plugin key-mappings.
+inoremap <expr><C-g>     neocomplete#undo_completion()
+inoremap <expr><C-l>     neocomplete#complete_common_string()
+
+" Recommended key-mappings.
+" <CR>: close popup and save indent.
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function()
+  return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
+  " For no inserting <CR> key.
+  "return pumvisible() ? "\<C-y>" : "\<CR>"
+endfunction
+" <TAB>: completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+" Close popup by <Space>.
+"inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
+
+" AutoComplPop like behavior.
+"let g:neocomplete#enable_auto_select = 1
+
+" Shell like behavior(not recommended).
+"set completeopt+=longest
+"let g:neocomplete#enable_auto_select = 1
+"let g:neocomplete#disable_auto_complete = 1
+"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
+
+" Enable omni completion.
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+" Enable heavy omni completion.
+if !exists('g:neocomplete#sources#omni#input_patterns')
+  let g:neocomplete#sources#omni#input_patterns = {}
+endif
+"let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+"let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+"let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+
+" For perlomni.vim setting.
+" https://github.com/c9s/perlomni.vim
+let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+
+
+" Uniteキーマッピング
+nnoremap [unite]    <Nop>
+nmap     <Space>u [unite]
+
+nnoremap <silent> [unite]c   :<C-u>UniteWithCurrentDir -buffer-name=files buffer file_mru bookmark file<CR>
+nnoremap <silent> [unite]b   :<C-u>Unite buffer<CR>
+
+" emmetキーマップ変更
+let g:user_emmet_leader_key = '<C-E>'
+let g:user_emmet_settings = {'variables' : { 'lang' : 'ja' }}
+
+" tcomment_vimキーマップ変更
+let g:tcommentMapLeader1 = '<C-_>'
+let g:tcommentMapLeader2 = '<Leader>'
+let g:tcommentMapLeaderOp1 = 'gc'
+let g:tcommentMapLeaderOp2 = 'gC'
+
+" tcommentで使用する形式を追加
+if !exists('g:tcomment_types')
+  let g:tcomment_types = {}
+endif
+let g:tcomment_types = {
+      \'php_surround' : "<?php %s ?>",
+      \'eruby_surround' : "<%% %s %%>",
+      \'eruby_surround_minus' : "<%% %s -%%>",
+      \'eruby_surround_equality' : "<%%= %s %%>",
+\}
+
+" マッピングを追加
+function! SetErubyMapping2()
+  nmap <buffer> <C-_>c :TCommentAs eruby_surround<CR>
+  nmap <buffer> <C-_>- :TCommentAs eruby_surround_minus<CR>
+  nmap <buffer> <C-_>= :TCommentAs eruby_surround_equality<CR>
+
+  vmap <buffer> <C-_>c :TCommentAs eruby_surround<CR>
+  vmap <buffer> <C-_>- :TCommentAs eruby_surround_minus<CR>
+  vmap <buffer> <C-_>= :TCommentAs eruby_surround_equality<CR>
+endfunction
+
+" erubyのときだけ設定を追加
+au FileType eruby call SetErubyMapping2()
+" phpのときだけ設定を追加
+au FileType php nmap <buffer><C-_>c :TCommentAs php_surround<CR>
+au FileType php vmap <buffer><C-_>c :TCommentAs php_surround<CR>
 
 " Markdownの設定
 set syntax=markdown
@@ -274,4 +407,95 @@ vnoremap ( "zdi^V(<C-R>z)<ESC>
 vnoremap " "zdi^V"<C-R>z^V"<ESC>
 vnoremap ' "zdi'<C-R>z'<ESC>
 
+" 基本的なキーマッピング変更
+noremap j gj
+noremap k gk
+noremap <S-h> g^
+noremap <S-l> g$
+noremap <S-m> %
+
+"tex形式のファイルにおいてgqコマンドを実行した時には選択範囲に対してmarkdown->LaTex変換を行うようにする
+augroup texfile
+  autocmd BufRead,BufNewFile *.tex set filetype=tex
+  let md_to_latex  = "pandoc --from=markdown --to=latex"
+  autocmd Filetype tex let &formatprg=md_to_latex
+augroup END
+
+"自動でペーストモード
+if &term =~ "xterm"
+    let &t_ti .= "\e[?2004h"
+    let &t_te .= "\e[?2004l"
+    let &pastetoggle = "\e[201~"
+
+    function XTermPasteBegin(ret)
+        set paste
+        return a:ret
+    endfunction
+
+    noremap <special> <expr> <Esc>[200~ XTermPasteBegin("0i")
+    inoremap <special> <expr> <Esc>[200~ XTermPasteBegin("")
+    cnoremap <special> <Esc>[200~ <nop>
+    cnoremap <special> <Esc>[201~ <nop>
+endif
+
+" Turn off paste mode when leaving insert
+autocmd InsertLeave * set nopaste
+
+"エスケープをcontrol+jにマッピング
+imap <C-j> <esc>
+
+" 挿入モード時にカーソルを移動
+inoremap <C-f> <Right>
+inoremap <C-b> <Left>
+
 filetype plugin indent on
+
+" Vimの起動時NeoBundleがなかった場合
+let $VIMBUNDLE = '~/.vim/bundle'
+let $NEOBUNDLEPATH = $VIMBUNDLE . '/neobundle.vim'
+if stridx(&runtimepath, $NEOBUNDLEPATH) != -1
+" If the NeoBundle doesn't exist.
+command! NeoBundleInit try | call s:neobundle_init()
+            \| catch /^neobundleinit:/
+                \|   echohl ErrorMsg
+                \|   echomsg v:exception
+                \|   echohl None
+                \| endtry
+
+function! s:neobundle_init()
+    redraw | echo "Installing neobundle.vim..."
+    if !isdirectory($VIMBUNDLE)
+        call mkdir($VIMBUNDLE, 'p')
+        echo printf("Creating '%s'.", $VIMBUNDLE)
+    endif
+    cd $VIMBUNDLE
+
+    if executable('git')
+        call system('git clone git://github.com/Shougo/neobundle.vim')
+        if v:shell_error
+            throw 'neobundleinit: Git error.'
+        endif
+    endif
+
+    set runtimepath& runtimepath+=$NEOBUNDLEPATH
+    call neobundle#rc($VIMBUNDLE)
+    try
+        echo printf("Reloading '%s'", $MYVIMRC)
+        source $MYVIMRC
+    catch
+        echohl ErrorMsg
+        echomsg 'neobundleinit: $MYVIMRC: could not source.'
+        echohl None
+        return 0
+    finally
+        echomsg 'Installed neobundle.vim'
+    endtry
+
+    echomsg 'Finish!'
+endfunction
+
+autocmd! VimEnter * redraw
+            \ | echohl WarningMsg
+            \ | echo "You should do ':NeoBundleInit' at first!"
+            \ | echohl None
+endif
