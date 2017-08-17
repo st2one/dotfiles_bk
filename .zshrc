@@ -38,6 +38,7 @@ setopt auto_list               # 補完候補を一覧で表示する(d)
 setopt auto_menu               # 補完キー連打で補完候補を順に表示する(d)
 setopt list_packed             # 補完候補をできるだけ詰めて表示する
 setopt list_types              # 補完候補にファイルの種類も表示する
+setopt IGNOREEOF               # Ctrl+Dでログアウトしてしまうことを防ぐ     
 bindkey "^[[Z" reverse-menu-complete  # Shift-Tabで補完候補を逆順する("\e[Z"でも動作する)
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' # 補完時に大文字小文字を区別しない
 
@@ -54,6 +55,17 @@ setopt extended_history   # ヒストリに実行時間も保存する
 setopt hist_ignore_dups   # 直前と同じコマンドはヒストリに追加しない
 setopt share_history      # 他のシェルのヒストリをリアルタイムで共有する
 setopt hist_reduce_blanks # 余分なスペースを削除してヒストリに保存する
+
+### KeyBinding ###
+#bindkey -e # emacs キーマップを選択
+"Ctrl-Wでパスの文字列などをスラッシュ単位で削除する" && {
+ autoload -U select-word-style
+ select-word-style bash
+}
+
+### Alias ###
+alias -g ...="../.." 
+alias -g ....="../../.."
 
 #-------------------------------------------------
 # Path
@@ -133,10 +145,10 @@ export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 export PATH="/Applications/MAMP/bin/php/php5.5.26/bin:$PATH"
 
 # The next line updates PATH for the Google Cloud SDK.
-source '/Users/st2one/google-cloud-sdk/path.zsh.inc'
+# source '/Users/st2one/google-cloud-sdk/path.zsh.inc'
 
 # The next line enables shell command completion for gcloud.
-source '/Users/st2one/google-cloud-sdk/completion.zsh.inc'
+# source '/Users/st2one/google-cloud-sdk/completion.zsh.inc'
 
 # tab_title
 function chpwd() { ls; echo -ne "\033]0;$(pwd | rev | awk -F \/ '{print "/"$1"/"$2}'| rev)\007"}
