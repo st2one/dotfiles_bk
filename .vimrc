@@ -16,7 +16,6 @@ set list           " 不可視文字を表示
 set listchars=tab:▸\ ,eol:↲,extends:❯,precedes:❮    " 不可視文字の表示記号指定
 "set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%,eol:↲
 "set listchars=tab:>.,trail:_,eol:↲,extends:>,precedes:<,nbsp:%
-set statusline+=%{fugitive#statusline()}            " ステータス行に現在のgitブランチを表示する
 set title         " ウインドウのタイトルバーにファイルのパス情報等を表示する
 set t_Co=256
 set encoding=utf-8
@@ -380,7 +379,7 @@ autocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
 " markdownの折りたたみなし
 let g:vim_markdown_folding_disabled = 1
 let g:vim_markdown_new_list_item_indent = 2
-"
+
 "==============================
 " key-bind
 "==============================
@@ -447,6 +446,29 @@ imap <C-j> <esc>
 " 挿入モード時にカーソルを移動
 inoremap <C-f> <Right>
 inoremap <C-b> <Left>
+
+"==============================
+" ステータスライン
+"==============================
+" 現在のgitブランチを表示
+set statusline=%{fugitive#statusline()}
+" ファイル名のみ表示
+set statusline+=%t
+" 変更チェック表示
+"set statusline+=%m
+" 読み込み専用かどうか表示
+set statusline+=%r
+" ヘルプページなら[HELP]と表示
+set statusline+=%h
+" プレビューウインドウなら[Prevew]と表示
+set statusline+=%w
+" これ以降は右寄せ表示
+set statusline+=%=
+" file encoding
+set statusline+=[ENC=%{&fileencoding}]
+" 現在行数/全行数
+set statusline+=[LOW=%l/%L]
+
 
 filetype plugin indent on
 
