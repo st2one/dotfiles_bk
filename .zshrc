@@ -103,11 +103,9 @@ export PATH=$HOME/.nodebrew/current/bin:$PATH
 
 # Python
 export PYENV_ROOT=${HOME}/.pyenv
-if [ -d "${PYENV_ROOT}" ]; then
-    export PATH=${PYENV_ROOT}/bin:$PATH
-    eval "$(pyenv init -)"
-    eval "$(pyenv virtualenv-init -)"
-fi
+  export PATH="${PYENV_ROOT}/bin:$PATH"
+  eval "$(pyenv init -)"
+  eval "$(pyenv virtualenv-init -)"
 
 #export PYTHONSTARTUP=$HOME/.pythonrc.py
 #PYTHONPATH=~/Library/Python/debug_toolbar:$PYTHONPATH
@@ -135,6 +133,14 @@ export PYTHONPATH=/usr/local/Cellar/opencv/2.4.9/lib/python2.7/site-packages:$PY
 
 # tex
 PATH=$PATH:/usr/local/texlive/2014/bin/x86_64-darwin/
+
+# gcc-6
+export PATH=/usr/local/bin:$PATH
+
+# openmpi
+export MANPATH=/opt/openmpi/share/man:$MANPATH
+export LD_LIBRARY_PATH=/opt/openmpi/lib:$LD_LIBRARY_PATH
+export PATH="/opt/openmpi/bin:$PATH"
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"

@@ -48,6 +48,12 @@ formulas=(
   neovim
   pkg-config
   vim
+  gcc
+  gcc@6
+  mysql
+  pyenv
+  pyenv-virtualenv
+  rbenv
 )
 
 "brew tap..."
@@ -72,6 +78,7 @@ casks=(
   vagrant
   vagrant-manager
   karabiner
+  karabiner-elements
   shiftit
   cheatsheet
 )
