@@ -517,29 +517,40 @@ noremap k gk
 noremap <S-h> g^
 noremap <S-l> g$
 noremap <S-m> %
+noremap <S-j> }
+noremap <S-k> {
+
+";;でノーマルモード
+inoremap ;; <esc>
+
+"rだけでリドゥ
+nnoremap r <C-r>
+
+"Yで行末までヤンク
+nnoremap Y y$
 
 "tex形式のファイルにおいてgqコマンドを実行した時には選択範囲に対してmarkdown->LaTex変換を行うようにする
 augroup texfile
-  autocmd BufRead,BufNewFile *.tex set filetype=tex
-  let md_to_latex  = "pandoc --from=markdown --to=latex"
-  autocmd Filetype tex let &formatprg=md_to_latex
+autocmd BufRead,BufNewFile *.tex set filetype=tex
+let md_to_latex  = "pandoc --from=markdown --to=latex"
+autocmd Filetype tex let &formatprg=md_to_latex
 augroup END
 
 "自動でペーストモード
 if &term =~ "xterm"
-    let &t_ti .= "\e[?2004h"
-    let &t_te .= "\e[?2004l"
-    let &pastetoggle = "\e[201~"
+  let &t_ti .= "\e[?2004h"
+  let &t_te .= "\e[?2004l"
+  let &pastetoggle = "\e[201~"
 
-    function XTermPasteBegin(ret)
-        set paste
-        return a:ret
-    endfunction
+  function XTermPasteBegin(ret)
+      set paste
+      return a:ret
+  endfunction
 
-    noremap <special> <expr> <Esc>[200~ XTermPasteBegin("0i")
-    inoremap <special> <expr> <Esc>[200~ XTermPasteBegin("")
-    cnoremap <special> <Esc>[200~ <nop>
-    cnoremap <special> <Esc>[201~ <nop>
+  noremap <special> <expr> <Esc>[200~ XTermPasteBegin("0i")
+  inoremap <special> <expr> <Esc>[200~ XTermPasteBegin("")
+  cnoremap <special> <Esc>[200~ <nop>
+  cnoremap <special> <Esc>[201~ <nop>
 endif
 
 " Turn off paste mode when leaving insert
