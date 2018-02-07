@@ -66,6 +66,7 @@ setopt hist_reduce_blanks # 余分なスペースを削除してヒストリに�
 ### Alias ###
 alias -g ...="../.."
 alias -g ....="../../.."
+alias updatedb='sudo /usr/libexec/locate.updatedb' # データベースの更新
 
 #-------------------------------------------------
 # Path
@@ -106,6 +107,10 @@ export PYENV_ROOT=${HOME}/.pyenv
   export PATH="${PYENV_ROOT}/bin:$PATH"
   eval "$(pyenv init -)"
   eval "$(pyenv virtualenv-init -)"
+
+# Alias(activate / deactivate)
+alias conda-activate='source $PYENV_ROOT/versions/anaconda3-5.0.0/bin/activate'
+alias conda-deactivate='source $PYENV_ROOT/versions/anaconda3-5.0.0/bin/deactivate'
 
 #export PYTHONSTARTUP=$HOME/.pythonrc.py
 #PYTHONPATH=~/Library/Python/debug_toolbar:$PYTHONPATH
@@ -149,6 +154,11 @@ export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
 # MAMP PHP
 export PATH="/Applications/MAMP/bin/php/php5.5.26/bin:$PATH"
+
+# git使用時HEAD^をHEAD\^と自動エスケープ
+fpath=(~/.functions ${fpath})
+autoload -Uz git-escape-magic
+git-escape-magic
 
 # The next line updates PATH for the Google Cloud SDK.
 # source '/Users/st2one/google-cloud-sdk/path.zsh.inc'

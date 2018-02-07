@@ -24,7 +24,7 @@ set fileformats=unix,dos,mac
 "全角スペースの可視化
 augroup highlightIdegraphicSpace
   autocmd!
-  autocmd Colorscheme * highlight IdeographicSpace term=underline ctermbg=Yellow guibg=Yellow
+  autocmd Colorscheme * highlight IdeographicSpace term=underline ctermbg=DarkGray guibg=DarkGray
   autocmd VimEnter,WinEnter * match IdeographicSpace /　/
 augroup END
 
