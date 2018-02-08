@@ -520,8 +520,8 @@ noremap <S-m> %
 noremap <S-j> }
 noremap <S-k> {
 
-";;でノーマルモード
-inoremap ;; <esc>
+"jjでノーマルモード
+inoremap jj <esc>
 
 "rだけでリドゥ
 nnoremap r <C-r>
@@ -567,24 +567,30 @@ inoremap <C-b> <Left>
 " ステータスライン
 "==============================
 " 現在のgitブランチを表示
-set statusline=%{fugitive#statusline()}
+" set statusline=%{fugitive#statusline()}
 " ファイル名のみ表示
-set statusline+=%t
+" set statusline+=%t
 " 変更チェック表示
-"set statusline+=%m
+""  set statusline+=%m
 " 読み込み専用かどうか表示
-set statusline+=%r
+" set statusline+=%r
 " ヘルプページなら[HELP]と表示
-set statusline+=%h
+" set statusline+=%h
 " プレビューウインドウなら[Prevew]と表示
-set statusline+=%w
+" set statusline+=%w
 " これ以降は右寄せ表示
-set statusline+=%=
+" set statusline+=%=
 " file encoding
-set statusline+=[ENC=%{&fileencoding}]
+" set statusline+=[ENC=%{&fileencoding}]
 " 現在行数/全行数
-set statusline+=[LOW=%l/%L]
+" set statusline+=[LOW=%l/%L]
 
+" powerlineによりvimのステータスラインを変更
+python from powerline.vim import setup as powerline_setup
+python powerline_setup()
+python del powerline_setup
+set noshowmode
+set timeout timeoutlen=1000 ttimeoutlen=50
 
 filetype plugin indent on
 
