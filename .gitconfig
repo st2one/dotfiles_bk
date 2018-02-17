@@ -15,13 +15,24 @@
   pushinsteadof = https://github.com/
 [alias]
   alias = !git config --get-regexp '^alias\\.' | sed 's/alias\\.\\([^ ]*\\) \\(.*\\)/\\1\\\t => \\2/' | sort
-  pom = push origin master
-  s = status
-  df = diff
-  br = branch
+  i = init
+  r = remote -v
+  a = add
+  aa = add -A
   cm = commit
   cmm = commit -m
+  pom = push origin master
+  s = status
+  d = diff
+  dc = diff --cached
+  dw = diff -w
+  dn = diff --name-only
+  dww = diff --word-diff
+  b = branch
+  bv = branch -vv
   co = checkout
+  f = fetch
+  ll = log -p --stat --reverse --abbrev-commit --decorate --topo-order
   tree = log --graph --date=iso --pretty='[%ad]%C(auto) %h%d %C(white bold)%an%Creset: %s'
   list = log --pretty=format:\"<%h> %ad [%an] %Cgreen%d%Creset %s\" --date=short
   loglr = log --left-right -p
