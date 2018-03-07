@@ -54,6 +54,10 @@ formulas=(
   pyenv
   pyenv-virtualenv
   rbenv
+  nodebrew
+  tmux
+  redis
+  ricty
 )
 
 "brew tap..."
@@ -77,7 +81,6 @@ casks=(
   virtualbox
   vagrant
   vagrant-manager
-  karabiner
   karabiner-elements
   shiftit
   cheatsheet
