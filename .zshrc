@@ -126,6 +126,9 @@ eval "$(rbenv init -)"
 # Java
 #export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8
 
+# Node.js
+export PATH=$HOME/.nodebrew/current/bin:$PATH
+
 # Postgres
 export PATH=/Applications/Postgres.app/Contents/MacOS/bin:$PATH
 
@@ -188,6 +191,9 @@ for DIR in $HOME/Library/Python/2.7/bin $HOME/.local/bin ; do
     PATH=${PATH}:${DIR}
   fi
 done
+
+# サーチパスに~/mybinを追加
+PATH=$PATH:~/mybin
 
 # powerlineによりzshの見た目を変更
 # powerline-daemon -q

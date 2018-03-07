@@ -133,6 +133,10 @@ NeoBundle 'tpope/vim-surround'
 "NeoBundle 'tpope/vim-rails'
 " Ruby向けにendを自動挿入してくれる
 NeoBundle 'tpope/vim-endwise'
+" slimのシンタックスハイライトを行う
+NeoBundle 'slim-template/vim-slim'
+" coffeescriptのシンタックスハイライトを行う
+NeoBundle 'kchmck/vim-coffee-script'
 
 " コメントON/OFFを手軽に実行
 NeoBundle 'tomtom/tcomment_vim'
@@ -413,6 +417,7 @@ nnoremap <silent> ,uf :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
 nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>
 nnoremap <silent> ,uu :<C-u>Unite file_mru buffer<CR>
 nnoremap <silent> ,ut :<C-u>Unite tab<CR>
+nnoremap <silent> ,un :<C-u>Unite file/new<CR>
 
 nnoremap s <Nop>
 nnoremap sj <C-w>j
@@ -429,6 +434,11 @@ nnoremap sq :<C-u>q<CR>
 nnoremap sQ :<C-u>bd<CR>
 nnoremap sn :<C-u>bn<CR>
 nnoremap sp :<C-u>bp<CR>
+
+" vimshellのマッピング
+nnoremap <silent> vs :VimShell<CR>
+nnoremap <silent> vsc :VimShellCreate<CR>
+nnoremap <silent> vp :VimShellPop<CR>
 
 " Anywhere SID.
 function! s:SID_PREFIX()
