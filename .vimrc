@@ -137,6 +137,8 @@ NeoBundle 'tpope/vim-endwise'
 NeoBundle 'slim-template/vim-slim'
 " coffeescriptのシンタックスハイライトを行う
 NeoBundle 'kchmck/vim-coffee-script'
+" マッピング便利に
+NeoBundle "kana/vim-submode"
 
 " コメントON/OFFを手軽に実行
 NeoBundle 'tomtom/tcomment_vim'
@@ -413,6 +415,7 @@ let g:unite_source_history_yank_enable =1
 let g:unite_source_file_mru_limit = 200
 nnoremap <silent> ,uy :<C-u>Unite history/yank<CR>
 nnoremap <silent> ,ub :<C-u>Unite buffer<CR>
+nnoremap <silent> ,uB :<C-u>Unite buffer_tab -buffer-name=file<CR>
 nnoremap <silent> ,uf :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
 nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>
 nnoremap <silent> ,uu :<C-u>Unite file_mru buffer<CR>
@@ -434,6 +437,16 @@ nnoremap sq :<C-u>q<CR>
 nnoremap sQ :<C-u>bd<CR>
 nnoremap sn :<C-u>bn<CR>
 nnoremap sp :<C-u>bp<CR>
+nnoremap st :<C-u>tabnew<CR>
+
+call submode#enter_with('bufmove', 'n', '', 's>', '<C-w>>')
+call submode#enter_with('bufmove', 'n', '', 's<', '<C-w><')
+call submode#enter_with('bufmove', 'n', '', 's+', '<C-w>+')
+call submode#enter_with('bufmove', 'n', '', 's-', '<C-w>-')
+call submode#map('bufmove', 'n', '', '>', '<C-w>>')
+call submode#map('bufmove', 'n', '', '<', '<C-w><')
+call submode#map('bufmove', 'n', '', '+', '<C-w>+')
+call submode#map('bufmove', 'n', '', '-', '<C-w>-')
 
 " vimshellのマッピング
 nnoremap <silent> vs :VimShell<CR>
