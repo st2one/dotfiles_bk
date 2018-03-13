@@ -442,6 +442,16 @@ nnoremap <silent> vp :VimShellPop<CR>
 
 " NERDTreeのマッピング
 nnoremap <silent><C-e> :NERDTreeToggle<CR>
+nnoremap <C-n> gt
+nnoremap <C-p> gT
+" 隠しファイルをデフォルトで表示させる
+let NERDTreeShowHidden = 1
+" ブックマークをデフォルト表示
+let g:NERDTreeShowBookmarks=1
+
+" let g:NERDTreeDirArrows = 1
+" let g:NERDTreeDirArrowExpandable  = '▶'
+" let g:NERDTreeDirArrowCollapsible = '▼'
 
 " Anywhere SID.
 function! s:SID_PREFIX()
