@@ -51,6 +51,7 @@ formulas=(
   gcc
   gcc@6
   mysql
+  postgresql
   pyenv
   pyenv-virtualenv
   rbenv
