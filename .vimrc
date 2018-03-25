@@ -13,7 +13,7 @@ set cmdheight=2    " メッセージ表示欄を2行確保
 set showmatch      " 対応する括弧を強調表示
 set helpheight=999 " ヘルプを画面いっぱいに開く
 set list           " 不可視文字を表示
-set listchars=tab:▸\ ,eol:↲,extends:❯,precedes:❮    " 不可視文字の表示記号指定
+set listchars=tab:\▸\-,trail:-,extends:❯,precedes:❮ " 不可視文字の表示記号指定
 "set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%,eol:↲
 "set listchars=tab:>.,trail:_,eol:↲,extends:>,precedes:<,nbsp:%
 set title         " ウインドウのタイトルバーにファイルのパス情報等を表示する
@@ -21,6 +21,11 @@ set t_Co=256
 set encoding=utf-8
 set fileencodings=utf-8
 set fileformats=unix,dos,mac
+
+" tabにて対応ペアにジャンプ
+nnoremap <tab> %
+vnoremap <tab> %
+
 "全角スペースの可視化
 augroup highlightIdegraphicSpace
   autocmd!
@@ -139,6 +144,10 @@ NeoBundle 'slim-template/vim-slim'
 NeoBundle 'kchmck/vim-coffee-script'
 " マッピング便利に
 NeoBundle "kana/vim-submode"
+" インデントの可視化
+NeoBundle "Yggdroot/indentLine"
+" アンドゥツリーの可視化
+NeoBundle "sjl/gundo.vim"
 
 " コメントON/OFFを手軽に実行
 NeoBundle 'tomtom/tcomment_vim'
@@ -334,6 +343,39 @@ endif
 " https://github.com/c9s/perlomni.vim
 let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 
+" syntastic設定
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+" 構文エラー行に「>>」を表示
+let g:syntastic_enable_signs = 1
+" 他のVimプラグインと競合するのを防ぐ
+let g:syntastic_always_populate_loc_list = 1
+" 構文エラーリストを非表示
+let g:syntastic_auto_loc_list = 0
+" ファイルを開いた時に構文エラーチェックを実行しない
+let g:syntastic_check_on_open = 0
+" 「:wq」で終了する時構文エラーチェックしない
+let g:syntastic_check_on_wq = 0
+
+let g:syntastic_mode_map = { 'mode': 'passive',
+  \ 'passive_filetypes': [] }
+
+let g:syntastic_javascript_checkers=['eslint']
+let g:syntastic_coffee_checkers = ['coffeelint']
+let g:syntastic_scss_checkers = ['scss_lint']
+let g:syntastic_ruby_checkers = ['rubocop']
+
+" normal モードのとき、,sc でコーディングルールをチェック
+nnoremap <silent> ,sc :<C-u>SyntasticCheck<CR>
+
+let g:syntastic_error_symbol='✗'
+let g:syntastic_style_error_symbol = '✗'
+let g:syntastic_warning_symbol = '⚠'
+let g:syntastic_style_warning_symbol = '⚠'
+
+" Gundo.vim設定
+nnoremap U :GundoToggle<CR>
 
 " Uniteキーマッピング
 nnoremap [unite]    <Nop>
@@ -341,6 +383,27 @@ nmap     <Space>u [unite]
 
 nnoremap <silent> [unite]c   :<C-u>UniteWithCurrentDir -buffer-name=files buffer file_mru bookmark file<CR>
 nnoremap <silent> [unite]b   :<C-u>Unite buffer<CR>
+
+" neosnippetキーマップ
+imap <C-l> <Plug>(neosnippet_expand_or_jump)
+smap <C-l> <Plug>(neosnippet_expand_or_jump)
+xmap <C-l> <Plug>(neosnippet_expand_target)
+
+" SuperTab like snippets behavior.
+"imap <expr><TAB>
+" \ pumvisible() ? "\<C-n>" :
+" \ neosnippet#expandable_or_jumpable() ?
+" \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+" For conceal markers.
+if has('conceal')
+  set conceallevel=2 concealcursor=niv
+endif
+
+"set snippet file dir
+let g:neosnippet#snippets_directory='~/.vim/bundle/neosnippet-snippets/snippets/,~/.vim/snippets'
 
 " emmetキーマップ変更
 let g:user_emmet_leader_key = '<C-E>'
