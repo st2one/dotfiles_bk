@@ -13,7 +13,7 @@ set cmdheight=2    " メッセージ表示欄を2行確保
 set showmatch      " 対応する括弧を強調表示
 set helpheight=999 " ヘルプを画面いっぱいに開く
 set list           " 不可視文字を表示
-set listchars=tab:\▸\-,trail:-,extends:❯,precedes:❮ " 不可視文字の表示記号指定
+set listchars=tab:\▸\-,extends:❯,precedes:❮ " 不可視文字の表示記号指定
 "set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%,eol:↲
 "set listchars=tab:>.,trail:_,eol:↲,extends:>,precedes:<,nbsp:%
 set title         " ウインドウのタイトルバーにファイルのパス情報等を表示する
