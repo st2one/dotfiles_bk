@@ -175,36 +175,38 @@ NeoBundle 'nathanaelkane/vim-indent-guides'
 NeoBundle 'thinca/vim-quickrun'
 
 " Markdown
-NeoBundle 'plasticboy/vim-markdown'
+" NeoBundle 'plasticboy/vim-markdown'
+NeoBundle 'rcmdnk/vim-markdown'
+NeoBundle 'joker1007/vim-markdown-quote-syntax'
 NeoBundle 'kannokanno/previm'
 NeoBundle 'tyru/open-browser.vim'
 
 " hybrid カラースキーム
-"NeoBundle 'w0ng/vim-hybrid'
+" NeoBundle 'w0ng/vim-hybrid'
 " solarized カラースキーム
-"NeoBundle 'altercation/vim-colors-solarized'
+" NeoBundle 'altercation/vim-colors-solarized'
 " mustang カラースキーム
-"NeoBundle 'croaker/mustang-vim'
+" NeoBundle 'croaker/mustang-vim'
 " wombat カラースキーム
-"NeoBundle 'jeffreyiacono/vim-colors-wombat'
+" NeoBundle 'jeffreyiacono/vim-colors-wombat'
 " jellybeans カラースキーム
-"NeoBundle 'nanotech/jellybeans.vim'
+NeoBundle 'nanotech/jellybeans.vim'
 " lucius カラースキーム
-"NeoBundle 'vim-scripts/Lucius'
+" NeoBundle 'vim-scripts/Lucius'
 " zenburn カラースキーム
-"NeoBundle 'vim-scripts/Zenburn'
+" NeoBundle 'vim-scripts/Zenburn'
 " mrkn256 カラースキーム
-"NeoBundle 'mrkn/mrkn256.vim'
+" NeoBundle 'mrkn/mrkn256.vim'
 " railscasts カラースキーム
-"NeoBundle 'jpo/vim-railscasts-theme'
+NeoBundle 'jpo/vim-railscasts-theme'
 " pyte カラースキーム
-"NeoBundle 'therubymug/vim-pyte'
+" NeoBundle 'therubymug/vim-pyte'
 " molokai カラースキーム
-"NeoBundle 'tomasr/molokai'
+" NeoBundle 'tomasr/molokai'
 " Doracula
-NeoBundle 'dracula/vim'
+" NeoBundle 'dracula/vim'
 " カラースキーム一覧表示に Unite.vim を使う
-"NeoBundle 'ujihisa/unite-colorscheme'
+NeoBundle 'ujihisa/unite-colorscheme'
 
 call neobundle#end()
 NeoBundleCheck
@@ -214,10 +216,13 @@ NeoBundleCheck
 "===============================
 syntax on
 syntax enable
-colorscheme dracula
-"color Dracula
-"colorscheme solarized 
-"colorscheme hybrid
+" colorscheme dracula
+" color Dracula
+" colorscheme solarized
+" colorscheme hybrid
+" colorscheme mustang
+colorscheme jellybeans
+" colorscheme railscasts
 " 行番号の色
 " highlight LineNr ctermfg=darkyellow
 
@@ -444,33 +449,78 @@ au FileType php nmap <buffer><C-_>c :TCommentAs php_surround<CR>
 au FileType php vmap <buffer><C-_>c :TCommentAs php_surround<CR>
 
 " Markdownの設定
-set syntax=markdown
-autocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
+" set syntax=markdown
+" Ctrl-pでプレビュー
+nnoremap <silent> ,pv :PrevimOpen<CR>
+
+" autocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
+" " Disable highlight italic in Markdown
+" autocmd FileType markdown hi! def link markdownItalic LineNr
+if has("autocmd")
+  augroup MyAutoCmd
+    autocmd!
+
+    " md等の拡張子をMarkdownと判断させるための設定
+    autocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
+    " イタリックフォントを無効にする設定
+    autocmd FileType markdown hi! def link markdownItalic LineNr
+  augroup END
+endif
+" html
+hi link htmlItalic LineNr
+hi link htmlBold WarningMsg
+hi link htmlBoldItalic ErrorMsg
+
 " markdownの折りたたみなし
 let g:vim_markdown_folding_disabled = 1
-let g:vim_markdown_new_list_item_indent = 2
+" let g:vim_markdown_new_list_item_indent = 2
+" for plasticboy/vim-markdown
+" let g:vim_markdown_no_default_key_mappings = 1
+let g:vim_markdown_math = 1
+let g:vim_markdown_frontmatter = 1
+" let g:vim_markdown_toc_autofit = 1
+" let g:vim_markdown_folding_style_pythonic = 1
+let g:markdown_fenced_languages = [
+\  'coffee',
+\  'css',
+\  'erb=eruby',
+\  'javascript',
+\  'js=javascript',
+\  'json=javascript',
+\  'ruby',
+\  'xml',
+\  'zsh',
+\  'scala',
+\  'java',
+\  'c',
+\  'php'
+\]
 
 " Vim-Quickrunの設定
 let g:quickrun_config = {
 \   "_" :{
-\         "runner" : "vimproc",
-\         "runner/vimproc/updatetime" : 60
-\         },
+\       'runner'    : 'vimproc',
+\       'runner/vimproc/updatetime' : 60,
+\       'outputter' : 'error',
+\       'outputter/error/success' : 'buffer',
+\       'outputter/error/error'   : 'quickfix',
+\       'outputter/buffer/split'  : ':rightbelow 15sp',
+\       'outputter/buffer/close_on_empty' : 1,
+\   },
 \   "tex" : {
 \       'command' : 'latexmk',
-\       "outputter/buffer/split" : ":botright 8sp",
 \       'outputter/error/error' : 'quickfix',
 \       'hook/cd/directory': '%S:h',
 \       'exec': '%c %s'
 \   },
 \}
-" 画面分割設定
-let g:quickrun_config={'*': {'split': 'vertical'}} " 垂直分割にする
 set splitright " 新しいウインドウを右に開く
 " 出力バッファ閉じる(Space + q)
 nnoremap <Space>q :<C-u>bw! \[quickrun\ output\]<CR>
 " キーマッピング変更(Space + r)
 nnoremap <silent> <Space>r :QuickRun<CR>
+" <C-c>でquickrun停止
+nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
 
 " Unite.vimの設定
 let g:unite_enable_start_insert=1
@@ -484,6 +534,11 @@ nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>
 nnoremap <silent> ,uu :<C-u>Unite file_mru buffer<CR>
 nnoremap <silent> ,ut :<C-u>Unite tab<CR>
 nnoremap <silent> ,un :<C-u>Unite file/new<CR>
+
+" book-mark list
+noremap ,bm :Unite bookmark<CR>
+" add book-mark
+noremap ,ba :UniteBookmarkAdd<CR>
 
 nnoremap s <Nop>
 nnoremap sj <C-w>j
