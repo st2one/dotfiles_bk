@@ -148,6 +148,8 @@ NeoBundle "kana/vim-submode"
 NeoBundle "Yggdroot/indentLine"
 " アンドゥツリーの可視化
 NeoBundle "sjl/gundo.vim"
+" パワーライン
+NeoBundle 'powerline/powerline' , {'rtp': 'powerline/bindings/vim/'}
 
 " コメントON/OFFを手軽に実行
 NeoBundle 'tomtom/tcomment_vim'
@@ -348,6 +350,9 @@ endif
 " https://github.com/c9s/perlomni.vim
 let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 
+" ocamlの自動補完設定
+let g:neocomplete#sources#omni#input_patterns.ocaml = '[^. *\t]\.\w*\|\h\w*|#'
+
 " syntastic設定
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
@@ -370,6 +375,7 @@ let g:syntastic_javascript_checkers=['eslint']
 let g:syntastic_coffee_checkers = ['coffeelint']
 let g:syntastic_scss_checkers = ['scss_lint']
 let g:syntastic_ruby_checkers = ['rubocop']
+let g:syntastic_ocaml_checkers = ['merlin']
 
 " normal モードのとき、,sc でコーディングルールをチェック
 nnoremap <silent> ,sc :<C-u>SyntasticCheck<CR>
@@ -380,6 +386,9 @@ let g:syntastic_warning_symbol = '⚠'
 let g:syntastic_style_warning_symbol = '⚠'
 
 " Gundo.vim設定
+if has('python3')
+    let g:gundo_prefer_python3 = 1
+endif
 nnoremap U :GundoToggle<CR>
 
 " Uniteキーマッピング
@@ -581,6 +590,24 @@ let NERDTreeShowHidden = 1
 " ブックマークをデフォルト表示
 let g:NERDTreeShowBookmarks=1
 
+" NERDTress File highlighting
+function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
+ exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
+ exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
+endfunction
+
+call NERDTreeHighlightFile('py',     'blue',    'none', '#3366FF', '#151515')
+call NERDTreeHighlightFile('md',     'green',   'none', 'green',   '#151515')
+" call NERDTreeHighlightFile('yml',    'yellow',  'none', 'yellow',  '#151515')
+" call NERDTreeHighlightFile('config', 'yellow',  'none', 'yellow',  '#151515')
+" call NERDTreeHighlightFile('conf',   'yellow',  'none', 'yellow',  '#151515')
+" call NERDTreeHighlightFile('json',   'yellow',  'none', 'yellow',  '#151515')
+call NERDTreeHighlightFile('html',   'green',   'none', 'green',   '#151515')
+call NERDTreeHighlightFile('styl',   'cyan',    'none', 'cyan',    '#151515')
+call NERDTreeHighlightFile('css',    'cyan',    'none', 'cyan',    '#151515')
+call NERDTreeHighlightFile('rb',     'Red',     'none', 'red',     '#151515')
+" call NERDTreeHighlightFile('js',     'Red',     'none', '#ffa500', '#151515')
+call NERDTreeHighlightFile('php',    'Magenta', 'none', '#ff00ff', '#151515')
 " let g:NERDTreeDirArrows = 1
 " let g:NERDTreeDirArrowExpandable  = '▶'
 " let g:NERDTreeDirArrowCollapsible = '▼'
@@ -691,6 +718,24 @@ let md_to_latex  = "pandoc --from=markdown --to=latex"
 autocmd Filetype tex let &formatprg=md_to_latex
 augroup END
 
+" Ocamlにおけるmerlin(エラーチェック)の設定
+let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
+execute 'set rtp+=' . g:opamshare . '/merlin/vim'
+
+" Ocamlにおけるocp-indentの設定
+execute 'set rtp^=' . g:opamshare . '/ocp-indent/vim'
+
+function! s:ocaml_format()
+    let now_line = line('.')
+    exec ':%! ocp-indent'
+    exec ':' . now_line
+endfunction
+
+augroup ocaml_format
+    autocmd!
+    autocmd BufWrite,FileWritePre,FileAppendPre *.mli\= call s:ocaml_format()
+  augroup END
+
 "自動でペーストモード
 if &term =~ "xterm"
   let &t_ti .= "\e[?2004h"
@@ -741,11 +786,12 @@ inoremap <C-b> <Left>
 " set statusline+=[LOW=%l/%L]
 
 " powerlineによりvimのステータスラインを変更
-python from powerline.vim import setup as powerline_setup
-python powerline_setup()
-python del powerline_setup
-set noshowmode
-set timeout timeoutlen=1000 ttimeoutlen=50
+" python import sys; sys.path.append("/Library/Python/2.7/site-packages")
+" python from powerline.vim import setup as powerline_setup
+" python powerline_setup()
+" python del powerline_setup
+" set noshowmode
+" set timeout timeoutlen=1000 ttimeoutlen=50
 
 filetype plugin indent on
 

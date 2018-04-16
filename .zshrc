@@ -68,6 +68,9 @@ alias -g ...="../.."
 alias -g ....="../../.."
 alias updatedb='sudo /usr/libexec/locate.updatedb' # データベースの更新
 
+# ocamlのalias
+alias ocaml="rlwrap ocaml"
+
 #-------------------------------------------------
 # Path
 #-------------------------------------------------
@@ -263,3 +266,6 @@ function tmux_automatically_attach_session()
     fi
 }
 tmux_automatically_attach_session
+
+# OPAM configuration
+. /Users/takumi/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
