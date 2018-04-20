@@ -16,6 +16,7 @@ set list           " 不可視文字を表示
 set listchars=tab:\▸\-,extends:❯,precedes:❮ " 不可視文字の表示記号指定
 "set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%,eol:↲
 "set listchars=tab:>.,trail:_,eol:↲,extends:>,precedes:<,nbsp:%
+set noshowmode
 set title         " ウインドウのタイトルバーにファイルのパス情報等を表示する
 set t_Co=256
 set encoding=utf-8
@@ -150,6 +151,8 @@ NeoBundle "Yggdroot/indentLine"
 NeoBundle "sjl/gundo.vim"
 " パワーライン
 NeoBundle 'powerline/powerline' , {'rtp': 'powerline/bindings/vim/'}
+" ライトライン
+" NeoBundle 'itchyny/lightline.vim'
 
 " コメントON/OFFを手軽に実行
 NeoBundle 'tomtom/tcomment_vim'
@@ -723,18 +726,18 @@ let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
 execute 'set rtp+=' . g:opamshare . '/merlin/vim'
 
 " Ocamlにおけるocp-indentの設定
-execute 'set rtp^=' . g:opamshare . '/ocp-indent/vim'
-
-function! s:ocaml_format()
-    let now_line = line('.')
-    exec ':%! ocp-indent'
-    exec ':' . now_line
-endfunction
-
-augroup ocaml_format
-    autocmd!
-    autocmd BufWrite,FileWritePre,FileAppendPre *.mli\= call s:ocaml_format()
-  augroup END
+" execute 'set rtp^=' . g:opamshare . '/ocp-indent/vim'
+"
+" function! s:ocaml_format()
+"     let now_line = line('.')
+"     exec ':%! ocp-indent'
+"     exec ':' . now_line
+" endfunction
+"
+" augroup ocaml_format
+"     autocmd!
+"     autocmd BufWrite,FileWritePre,FileAppendPre *.mli\= call s:ocaml_format()
+"   augroup END
 
 "自動でペーストモード
 if &term =~ "xterm"
@@ -771,7 +774,7 @@ inoremap <C-b> <Left>
 " ファイル名のみ表示
 " set statusline+=%t
 " 変更チェック表示
-""  set statusline+=%m
+" set statusline+=%m
 " 読み込み専用かどうか表示
 " set statusline+=%r
 " ヘルプページなら[HELP]と表示
@@ -790,8 +793,79 @@ inoremap <C-b> <Left>
 " python from powerline.vim import setup as powerline_setup
 " python powerline_setup()
 " python del powerline_setup
-" set noshowmode
 " set timeout timeoutlen=1000 ttimeoutlen=50
+
+" lightline設定
+" let g:lightline = {
+"         \ 'colorscheme': 'wombat',
+"         \ 'mode_map': {'c': 'NORMAL'},
+"         \ 'active': {
+"         \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filepath' ] ]
+"         \ },
+"         \ 'component_function': {
+"         \   'modified': 'LightlineModified',
+"         \   'readonly': 'LightlineReadonly',
+"         \   'fugitive': 'LightlineFugitive',
+"         \   'filename': 'LightlineFilename',
+"         \   'fileformat': 'LightlineFileformat',
+"         \   'filetype': 'LightlineFiletype',
+"         \   'fileencoding': 'LightlineFileencoding',
+"         \   'mode': 'LightlineMode',
+"         \   'filepath': 'FilePath'
+"         \ }
+"         \ }
+"
+" function! LightlineModified()
+"   return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+" endfunction
+"
+" function! LightlineReadonly()
+"   return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? 'x' : ''
+" endfunction
+"
+" function! LightlineFilename()
+"   return ('' != LightlineReadonly() ? LightlineReadonly() . ' ' : '') .
+"         \ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
+"         \  &ft == 'unite' ? unite#get_status_string() :
+"         \  &ft == 'vimshell' ? vimshell#get_status_string() :
+"         \ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
+"         \ ('' != LightlineModified() ? ' ' . LightlineModified() : '')
+" endfunction
+"
+" function! LightlineFugitive()
+"   if &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head')
+"     return fugitive#head()
+"   else
+"     return ''
+"   endif
+" endfunction
+"
+" function! LightlineFileformat()
+"   return winwidth(0) > 70 ? &fileformat : ''
+" endfunction
+"
+" function! LightlineFiletype()
+"   return winwidth(0) > 70 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
+" endfunction
+"
+" function! LightlineFileencoding()
+"   return winwidth(0) > 70 ? (&fenc !=# '' ? &fenc : &enc) : ''
+" endfunction
+"
+" function! LightlineMode()
+"   return  &ft == 'unite' ? 'Unite' :
+"         \ &ft == 'vimfiler' ? 'VimFiler' :
+"         \ &ft == 'vimshell' ? 'VimShell' :
+"         \ winwidth(0) > 60 ? lightline#mode() : ''
+" endfunction
+"
+" function! FilePath()
+"     if winwidth(0) > 120
+"       return expand("%:s")
+"     else
+"       return expand("%:t")
+"     endif
+"   endfunction
 
 filetype plugin indent on
 
