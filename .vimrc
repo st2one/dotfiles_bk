@@ -16,12 +16,13 @@ set list           " 不可視文字を表示
 set listchars=tab:\▸\-,extends:❯,precedes:❮ " 不可視文字の表示記号指定
 "set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%,eol:↲
 "set listchars=tab:>.,trail:_,eol:↲,extends:>,precedes:<,nbsp:%
-set noshowmode
 set title         " ウインドウのタイトルバーにファイルのパス情報等を表示する
 set t_Co=256
 set encoding=utf-8
 set fileencodings=utf-8
 set fileformats=unix,dos,mac
+set background=dark
+" set ambiwidth=double
 
 " tabにて対応ペアにジャンプ
 nnoremap <tab> %
@@ -127,8 +128,20 @@ NeoBundle 'Shougo/neobundle.vim'
 NeoBundle 'Shougo/unite.vim'
 " Unite.vimで最近使ったファイルを表示できるようにする
 NeoBundle 'Shougo/neomru.vim'
+" yank historyにコピー履歴(Uniteで使用)
+NeoBundle 'Shougo/neoyank.vim'
+" ファイル操作
+NeoBundle 'Shougo/vimfiler'
+" ペーストを便利に
+NeoBundle 'LeafCage/yankround.vim'
+" ファイル検索
+NeoBundle 'ctrlpvim/ctrlp.vim'
+" 検索高速に
+" NeoBundle 'rking/ag.vim'
+" tabpageのバッファ表示(Unite)
+NeoBundle 'Shougo/tabpagebuffer.vim'
 " ファイルをtree表示してくれる
-NeoBundle 'scrooloose/nerdtree'
+" NeoBundle 'scrooloose/nerdtree'
 " Gitを便利に使う
 NeoBundle 'tpope/vim-fugitive'
 " HTMLやCSSの入力を効率化
@@ -149,8 +162,13 @@ NeoBundle "kana/vim-submode"
 NeoBundle "Yggdroot/indentLine"
 " アンドゥツリーの可視化
 NeoBundle "sjl/gundo.vim"
+" 置換のプレビュー
+NeoBundle 'osyo-manga/vim-over'
 " パワーライン
-NeoBundle 'powerline/powerline' , {'rtp': 'powerline/bindings/vim/'}
+" NeoBundle 'powerline/powerline' , {'rtp': 'powerline/bindings/vim/'}
+" エアライン
+NeoBundle 'vim-airline/vim-airline'
+NeoBundle 'vim-airline/vim-airline-themes'
 " ライトライン
 " NeoBundle 'itchyny/lightline.vim'
 
@@ -175,7 +193,7 @@ NeoBundle 'Shougo/neocomplete'
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/neosnippet-snippets'
 NeoBundle 'jpalardy/vim-slime'
-NeoBundle 'scrooloose/syntastic'
+NeoBundle 'vim-syntastic/syntastic'
 NeoBundle 'nathanaelkane/vim-indent-guides'
 NeoBundle 'thinca/vim-quickrun'
 
@@ -187,13 +205,13 @@ NeoBundle 'kannokanno/previm'
 NeoBundle 'tyru/open-browser.vim'
 
 " hybrid カラースキーム
-" NeoBundle 'w0ng/vim-hybrid'
+NeoBundle 'w0ng/vim-hybrid'
 " solarized カラースキーム
 " NeoBundle 'altercation/vim-colors-solarized'
 " mustang カラースキーム
-" NeoBundle 'croaker/mustang-vim'
+NeoBundle 'croaker/mustang-vim'
 " wombat カラースキーム
-" NeoBundle 'jeffreyiacono/vim-colors-wombat'
+NeoBundle 'jeffreyiacono/vim-colors-wombat'
 " jellybeans カラースキーム
 NeoBundle 'nanotech/jellybeans.vim'
 " lucius カラースキーム
@@ -207,9 +225,9 @@ NeoBundle 'jpo/vim-railscasts-theme'
 " pyte カラースキーム
 " NeoBundle 'therubymug/vim-pyte'
 " molokai カラースキーム
-" NeoBundle 'tomasr/molokai'
+NeoBundle 'tomasr/molokai'
 " Doracula
-" NeoBundle 'dracula/vim'
+NeoBundle 'dracula/vim'
 " カラースキーム一覧表示に Unite.vim を使う
 NeoBundle 'ujihisa/unite-colorscheme'
 
@@ -227,6 +245,7 @@ syntax enable
 " colorscheme hybrid
 " colorscheme mustang
 colorscheme jellybeans
+" colorscheme hybrid
 " colorscheme railscasts
 " 行番号の色
 " highlight LineNr ctermfg=darkyellow
@@ -251,6 +270,26 @@ noremap :uff :<C-u>UniteWithBufferDir file -buffer-name=file<CR>
 
 " 検索結果のハイライトをEsc連打でクリアする
 nnoremap <ESC><ESC> :nohlsearch<CR>
+
+" 大文字小文字を区別しない
+let g:unite_enable_ignore_case = 1
+let g:unite_enable_smart_case = 1
+
+" grep検索
+nnoremap <silent> ,g  :<C-u>Unite grep -buffer-name=search-buffer<CR>
+
+" カーソル位置の単語をgrep検索
+nnoremap <silent> ,cg :<C-u>Unite grep -buffer-name=search-buffer<CR><C-R><C-W>
+
+" grep検索結果の再呼出
+nnoremap <silent> ,r  :<C-u>UniteResume search-buffer<CR>
+
+" unite grep に ag を使う
+if executable('ag')
+  let g:unite_source_grep_command = 'ag'
+  let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
+  let g:unite_source_grep_recursive_opt = ''
+endif
 
 " ウィンドウを分割して開く
 au FileType unite nnoremap <silent> <buffer> <expr> <C-J> unite#do_action('split')
@@ -357,9 +396,9 @@ let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 let g:neocomplete#sources#omni#input_patterns.ocaml = '[^. *\t]\.\w*\|\h\w*|#'
 
 " syntastic設定
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
 " 構文エラー行に「>>」を表示
 let g:syntastic_enable_signs = 1
 " 他のVimプラグインと競合するのを防ぐ
@@ -387,6 +426,75 @@ let g:syntastic_error_symbol='✗'
 let g:syntastic_style_error_symbol = '✗'
 let g:syntastic_warning_symbol = '⚠'
 let g:syntastic_style_warning_symbol = '⚠'
+
+" vim-over設定
+" over.vimの起動
+nnoremap <silent> <Space>m :OverCommandLine<CR>
+
+" カーソル下の単語をハイライト付きで置換
+nnoremap sub :OverCommandLine<CR>%s/<C-r><C-w>//g<Left><Left>
+
+" コピーした文字列をハイライト付きで置換
+nnoremap subp y:OverCommandLine<CR>%s!<C-r>=substitute(@0, '!', '\\!', 'g')<CR>!!gI<Left><Left><Left>
+
+" yankround.vim設定
+"" キーマップ
+nmap rp <Plug>(yankround-p)
+nmap rP <Plug>(yankround-P)
+nmap <C-p> <Plug>(yankround-prev)
+nmap <C-n> <Plug>(yankround-next)
+
+"" 履歴取得数
+let g:yankround_max_history = 50
+""履歴一覧(kien/ctrlp.vim)
+nnoremap <silent>g<C-p> :<C-u>CtrlPYankRound<CR>
+
+" ヤンク履歴をUniteでリスト表示
+" noremap ,y :<C-u>Unite yankround<CR>
+
+" ctrlp設定
+" # ctrlpのキーマッピングを <C-p>からs*に変更
+" # yankround.vimで<C-p>を使用しているため，衝突回避
+" Prefix: s
+" 検索してファイル見つかったらEnter(現在のウインドウで), <C-t>(新規タブで), <C-v>(垂直分割で), <C-s>(水平分割で)開ける
+nnoremap s <Nop>
+nnoremap sa :<C-u>CtrlP<Space>
+nnoremap sb :<C-u>CtrlPBuffer<CR>
+nnoremap sd :<C-u>CtrlPDir<CR>
+nnoremap sf :<C-u>CtrlP<CR>
+" nnoremap sl :<C-u>CtrlPLine<CR>
+nnoremap sm :<C-u>CtrlPMRUFiles<CR>
+" nnoremap sq :<C-u>CtrlPQuickfix<CR>
+" nnoremap ss :<C-u>CtrlPMixed<CR>
+" nnoremap st :<C-u>CtrlPTag<CR>
+
+let g:ctrlp_map = '<Nop>'
+" Guess vcs root dir
+let g:ctrlp_working_path_mode = 'ra'
+" Open new file in current window
+let g:ctrlp_open_new_file = 'r'
+let g:ctrlp_extensions = ['tag', 'quickfix', 'dir', 'line', 'mixed']
+let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:18'
+" # キャッシュを使用して検索を高速化
+" let g:ctrlp_use_caching = 1
+" # vim終了時にキャッシュをクリアしない
+let g:ctrlp_clear_cache_on_exit = 0
+" # <c-r>でキャッシュをクリアして再検索
+" let g:ctrlp_prompt_mappings = { 'PrtClearCache()': ['<C-r>'] }
+" # 検索の際に200[ms]のウェイトを入れる（１文字入力の度に検索結果がコロコロ変わるのが気に入らないため）
+let g:ctrlp_lazy_update = 200
+" # 検索結果の表示ウィンドウの設定，10件分を表示（それ以上になってもスクロールされる）
+let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:10,results:50'
+" # 隠しファイルを表示しない
+let g:ctrlp_show_hidden = 0
+" # 検索してほしくないファイルやディレクトリを除外
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+  \ 'file': '\v\.(exe|so|dll|o)$',
+  \ 'link': 'some_bad_symbolic_links',
+  \}
+" agで検索して高速に
+let g:ctrlp_user_command='ag %s -i --nocolor --nogroup -g '
 
 " Gundo.vim設定
 if has('python3')
@@ -546,11 +654,13 @@ nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>
 nnoremap <silent> ,uu :<C-u>Unite file_mru buffer<CR>
 nnoremap <silent> ,ut :<C-u>Unite tab<CR>
 nnoremap <silent> ,un :<C-u>Unite file/new<CR>
+" ファイル非同期検索
+nnoremap <silent> ,up  :<C-u>Unite file_rec/async:!<CR>
 
 " book-mark list
-noremap ,bm :Unite bookmark<CR>
+noremap bm :Unite bookmark<CR>
 " add book-mark
-noremap ,ba :UniteBookmarkAdd<CR>
+noremap ba :UniteBookmarkAdd<CR>
 
 nnoremap s <Nop>
 nnoremap sj <C-w>j
@@ -579,13 +689,60 @@ call submode#map('bufmove', 'n', '', '<', '<C-w><')
 call submode#map('bufmove', 'n', '', '+', '<C-w>+')
 call submode#map('bufmove', 'n', '', '-', '<C-w>-')
 
+" Uniteでファイルやディレクトリ開く
+" yankroundが有効な場合は前の候補へ、yankroundが有効でない場合はUniteを実行する
+" ファイル検索
+nmap <expr>,sf ":<C-u>execute
+      \ 'Unite'
+      \ '-start-insert'
+      \ 'buffer file_mru'
+      \ 'file:'.fnameescape(expand('%:p:h'))
+      \ (isdirectory(getcwd().'/.git') ?
+      \      'file_rec/git:--cached:--others:--exclude-standard' :
+      \      'file_rec/async')
+      \ <CR>"
+
+let s:unite_ignore_file_rec_patterns=
+      \ ''
+      \ .'vendor/bundle\|.bundle/\|\.sass-cache/\|'
+      \ .'node_modules/\|bower_components/\|'
+      \ .'\.\(bmp\|gif\|jpe\?g\|png\|webp\|ai\|psd\)"\?$'
+
+call unite#custom#source(
+      \ 'file_rec/async,file_rec/git',
+      \ 'ignore_pattern',
+      \ s:unite_ignore_file_rec_patterns)
+
+" ディレクトリ検索
+nnoremap ,sd :<C-u>Unite
+      \ -start-insert -default-action=vimfiler
+      \ directory directory_mru directory_rec/async
+      \ <CR>
+
+let s:unite_ignore_directory_patterns=
+      \ ''
+      \ .'vendor/bundle\|.bundle/\|\.sass-cache/\|'
+      \ .'node_modules/\|bower_components/'
+
+call unite#custom#source(
+      \ 'directory_mru,directory_rec/async',
+      \ 'ignore_pattern',
+      \ s:unite_ignore_directory_patterns)
+
+function! s:unite_project(...)
+  let opts = (a:0 ? join(a:000, ' ') : '')
+  let dir = unite#util#path2project_directory(expand('%'))
+  execute 'Unite' opts 'file_rec:' . dir
+endfunction
+
+
 " vimshellのマッピング
 nnoremap <silent> vs :VimShell<CR>
 nnoremap <silent> vsc :VimShellCreate<CR>
 nnoremap <silent> vp :VimShellPop<CR>
 
 " NERDTreeのマッピング
-nnoremap <silent><C-e> :NERDTreeToggle<CR>
+nnoremap <silent> <Space>nt :NERDTreeToggle<CR>
 nnoremap <C-n> gt
 nnoremap <C-p> gT
 " 隠しファイルをデフォルトで表示させる
@@ -614,6 +771,36 @@ call NERDTreeHighlightFile('php',    'Magenta', 'none', '#ff00ff', '#151515')
 " let g:NERDTreeDirArrows = 1
 " let g:NERDTreeDirArrowExpandable  = '▶'
 " let g:NERDTreeDirArrowCollapsible = '▼'
+
+" vimfiler設定
+" ファイル名長くて全て見れないときは<C-g>で全部見れる
+
+" vimfilerをデフォルトのexplorerに
+let g:vimfiler_as_default_explorer = 1
+" デフォルトのセーフモードを解除
+let g:vimfiler_safe_mode_by_default = 0
+nnoremap <silent> <Space>vf :VimFiler<CR>
+" Open filer
+noremap <silent> ,vf :VimFiler -split -simple -winwidth=40 -no-quit<CR>
+noremap <C-X><C-T> :VimFiler -split -simple -winwidth=40 -no-quit<ENTER>
+" Don't let <CR> enter the directory but let it open the directory
+autocmd FileType vimfiler nmap <buffer> <CR> <Plug>(vimfiler_expand_or_edit)
+" ファイルに対しeコマンド(or Enter)で新規タブで開く
+let g:vimfiler_edit_action = 'tabopen'
+" Unite bookmarkからEnterでvimfiler上で移動
+" autocmd FileType vimfiler call unite#custom_default_action('directory', 'cd')
+" 自動でカレントディレクトリ変更
+" let g:vimfiler_enable_auto_cd = 1
+" 開いているファイルをvimfilerで開く
+nnoremap <silent> ,tr :<C-u>VimFilerBufferDir -split -simple -winwidth=35 -no-quit<CR>
+" 開いているファイルをIDEっぽく階層的に表示
+nnoremap <silent> ,ie :<C-u>VimFilerExplorer -find -simple -winwidth=40 -no-quit<CR>
+" 現在開いているバッファのディレクトリを表示(<C-e>で表示/非表示)使い勝手良い
+nnoremap <silent> <C-e> :<C-u>VimFilerBufferDir -split -simple -winwidth=35 -toggle -no-quit<CR>
+" デフォルトキーッマップt廃止(タブ移動でないから)
+" nnoremap [vimfiler] <nop>
+
+
 
 " Anywhere SID.
 function! s:SID_PREFIX()
@@ -714,6 +901,64 @@ inoremap jj <esc>
 "Yで行末までヤンク
 nnoremap Y y$
 
+"**************************************************
+" <Space>* によるキーバインド設定
+"**************************************************
+
+"--------------------------------------------------
+" <Space>i でコードをインデント整形
+map <Space>i gg=<S-g><C-o><C-o>zz
+
+"--------------------------------------------------
+" <Space>v で1行選択(\n含まず)
+noremap <Space>v 0v$h
+
+"--------------------------------------------------
+" <Space>d で1行削除(\n含まずに dd)
+noremap <Space>d 0v$hx
+
+"--------------------------------------------------
+" <Space>y で改行なしで1行コピー（\n を含まずに yy）
+noremap <Space>y 0v$hy
+
+"--------------------------------------------------
+" <Space>s で置換
+noremap <Space>s :%s/
+
+"--------------------------------------------------
+" <Space>co で1行コメントアウト(Ruby形式)
+" map <Space>co <S-i># <ESC>
+
+"--------------------------------------------------
+" <Space>uc で1行アンコメント。コメントアウトの行頭の# を削除(Ruby形式)
+map <Space>uc ^xx<ESC>
+
+"--------------------------------------------------
+" Ctrl + v で複数行を矩形選択後、<Space>co で複数行コメントアウト(Ruby形式)
+" vmap <Space>co <S-i># <ESC>
+
+"--------------------------------------------------
+" 最初にヤンクした文字列を繰り返しペースト
+" vnoremap <Space>p "0p
+
+" --------------------------------------------------
+" <Space>cd で編集ファイルのカレントディレクトリへと移動
+command! -nargs=? -complete=dir -bang CD  call s:ChangeCurrentDir('<args>', '<bang>')
+function! s:ChangeCurrentDir(directory, bang)
+    if a:directory == ''
+        lcd %:p:h
+    else
+        execute 'lcd' . a:directory
+    endif
+
+    if a:bang == ''
+        pwd
+    endif
+endfunction
+
+" Change current directory.
+nnoremap <silent> <Space>cd :<C-u>CD<CR>
+
 "tex形式のファイルにおいてgqコマンドを実行した時には選択範囲に対してmarkdown->LaTex変換を行うようにする
 augroup texfile
 autocmd BufRead,BufNewFile *.tex set filetype=tex
@@ -745,7 +990,7 @@ if &term =~ "xterm"
   let &t_te .= "\e[?2004l"
   let &pastetoggle = "\e[201~"
 
-  function XTermPasteBegin(ret)
+  function! XTermPasteBegin(ret)
       set paste
       return a:ret
   endfunction
@@ -765,6 +1010,9 @@ imap <C-j> <esc>
 " 挿入モード時にカーソルを移動
 inoremap <C-f> <Right>
 inoremap <C-b> <Left>
+
+" 左下のinsertモードなどの表示をしない
+set noshowmode
 
 "==============================
 " ステータスライン
@@ -794,6 +1042,61 @@ inoremap <C-b> <Left>
 " python powerline_setup()
 " python del powerline_setup
 " set timeout timeoutlen=1000 ttimeoutlen=50
+
+" vim-airline
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffer_idx_mode = 1
+let g:airline#extensions#whitespace#mixed_indent_algo = 1
+let g:airline_theme = 'jellybeans'
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+
+" unicode symbols
+let g:airline_left_sep = '»'
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '«'
+let g:airline_right_sep = '◀'
+let g:airline_symbols.crypt = '🔒'
+let g:airline_symbols.linenr = '☰'
+let g:airline_symbols.linenr = '␊'
+let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.maxlinenr = ''
+let g:airline_symbols.maxlinenr = '㏑'
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.paste = 'Þ'
+let g:airline_symbols.paste = '∥'
+let g:airline_symbols.spell = 'Ꞩ'
+let g:airline_symbols.notexists = '∄'
+let g:airline_symbols.whitespace = 'Ξ'
+
+" powerline symbols
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = '☰'
+let g:airline_symbols.maxlinenr = ''
+
+let g:airline#extensions#tabline#buffer_idx_format = {
+  \ '0': '0 ',
+  \ '1': '1 ',
+  \ '2': '2 ',
+  \ '3': '3 ',
+  \ '4': '4 ',
+  \ '5': '5 ',
+  \ '6': '6 ',
+  \ '7': '7 ',
+  \ '8': '8 ',
+  \ '9': '9 '
+  \}
+
+set timeout timeoutlen=1000 ttimeoutlen=50
 
 " lightline設定
 " let g:lightline = {
