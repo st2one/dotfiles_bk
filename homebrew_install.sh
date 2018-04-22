@@ -59,6 +59,8 @@ formulas=(
   tmux
   redis
   ricty
+  the_silver_searcher
+  highway
 )
 
 "brew tap..."
