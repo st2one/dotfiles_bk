@@ -679,9 +679,21 @@ nnoremap ss :<C-u>sp<CR>
 nnoremap sv :<C-u>vs<CR>
 nnoremap sq :<C-u>q<CR>
 nnoremap sQ :<C-u>bd<CR>
-nnoremap sn :<C-u>bn<CR>
-nnoremap sp :<C-u>bp<CR>
+nnoremap sN :<C-u>bn<CR>
+nnoremap sP :<C-u>bp<CR>
 nnoremap st :<C-u>tabnew<CR>
+nnoremap sn gt
+nnoremap sp gT
+
+" The prefix key.
+nnoremap    [Tag]   <Nop>
+nmap    s [Tag]
+" Tab jump
+for n in range(1, 9)
+  execute 'nnoremap <silent> [Tag]'.n  ':<C-u>tabnext'.n.'<CR>'
+endfor
+" s1 で1番左のタブ、s2 で1番左から2番目のタブにジャンプ
+
 
 call submode#enter_with('bufmove', 'n', '', 's>', '<C-w>>')
 call submode#enter_with('bufmove', 'n', '', 's<', '<C-w><')
@@ -841,14 +853,14 @@ for n in range(1, 9)
 endfor
 " t1 で1番左のタブ、t2 で1番左から2番目のタブにジャンプ
 
-map <silent> [Tag]c :tablast <bar> tabnew<CR>
 " tc 新しいタブを一番右に作る
+map <silent> [Tag]c :tablast <bar> tabnew<CR>
+" tx タブ閉じる
 map <silent> [Tag]x :tabclose<CR>
-" tx タブを閉じる
-map <silent> [Tag]n :tabnext<CR>
 " tn 次のタブ
-map <silent> [Tag]p :tabprevious<CR>
+map <silent> [Tag]n :tabnext<CR>
 " tp 前のタブ
+map <silent> [Tag]p :tabprevious<CR>
 
 " unite.vim上でのキーマッピング
 autocmd FileType unite call s:unite_my_settings()
@@ -1052,6 +1064,7 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_idx_mode = 1
 let g:airline#extensions#whitespace#mixed_indent_algo = 1
 let airline#extensions#tabline#show_buffers = 0
+let g:airline#extensions#whitespace#enabled = 0
 " 上部タブバー右にバッファを表示させない
 " let g:airline#extensions#tabline#show_splits = 0
 let g:airline_theme = 'jellybeans'
