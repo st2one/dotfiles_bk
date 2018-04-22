@@ -658,9 +658,9 @@ nnoremap <silent> ,un :<C-u>Unite file/new<CR>
 nnoremap <silent> ,up  :<C-u>Unite file_rec/async:!<CR>
 
 " book-mark list
-noremap bm :Unite bookmark<CR>
+noremap ,bm :Unite bookmark<CR>
 " add book-mark
-noremap ba :UniteBookmarkAdd<CR>
+noremap ,ba :UniteBookmarkAdd<CR>
 
 nnoremap s <Nop>
 nnoremap sj <C-w>j
