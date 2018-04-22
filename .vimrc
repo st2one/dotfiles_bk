@@ -429,13 +429,13 @@ let g:syntastic_style_warning_symbol = '⚠'
 
 " vim-over設定
 " over.vimの起動
-nnoremap <silent> <Space>m :OverCommandLine<CR>
+nnoremap <silent> <Space>m :OverCommandLine<CR>%s///gc<Left><Left><Left><Left>
 
 " カーソル下の単語をハイライト付きで置換
-nnoremap sub :OverCommandLine<CR>%s/<C-r><C-w>//g<Left><Left>
+nnoremap <silent> sub :OverCommandLine<CR>%s/<C-r><C-w>//g<Left><Left>
 
 " コピーした文字列をハイライト付きで置換
-nnoremap subp y:OverCommandLine<CR>%s!<C-r>=substitute(@0, '!', '\\!', 'g')<CR>!!gI<Left><Left><Left>
+nnoremap <silent> subp y:OverCommandLine<CR>%s!<C-r>=substitute(@0, '!', '\\!', 'g')<CR>!!gI<Left><Left><Left>
 
 " yankround.vim設定
 "" キーマップ
@@ -632,6 +632,9 @@ let g:quickrun_config = {
 \       'outputter/error/error' : 'quickfix',
 \       'hook/cd/directory': '%S:h',
 \       'exec': '%c %s'
+\   },
+\   "python": {
+\       'command': 'python3'
 \   },
 \}
 set splitright " 新しいウインドウを右に開く
@@ -1048,6 +1051,9 @@ let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_idx_mode = 1
 let g:airline#extensions#whitespace#mixed_indent_algo = 1
+let airline#extensions#tabline#show_buffers = 0
+" 上部タブバー右にバッファを表示させない
+" let g:airline#extensions#tabline#show_splits = 0
 let g:airline_theme = 'jellybeans'
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
