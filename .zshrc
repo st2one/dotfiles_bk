@@ -269,3 +269,13 @@ tmux_automatically_attach_session
 
 # OPAM configuration
 . /Users/takumi/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+
+# peco(ヒストリを便利に)の設定
+function peco-history-selection() {
+    BUFFER=`history -n 1 | tail -r  | awk '!a[$0]++' | peco`
+    CURSOR=$#BUFFER
+    zle reset-prompt
+}
+
+zle -N peco-history-selection
+bindkey '^R' peco-history-selection
