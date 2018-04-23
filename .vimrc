@@ -461,8 +461,9 @@ nnoremap s <Nop>
 nnoremap sa :<C-u>CtrlP<Space>
 nnoremap sb :<C-u>CtrlPBuffer<CR>
 nnoremap sd :<C-u>CtrlPDir<CR>
-nnoremap sf :<C-u>CtrlP<CR>
-" nnoremap sl :<C-u>CtrlPLine<CR>
+nnoremap sf :<C-u>CtrlPMixed<CR>
+nnoremap sF :<C-u>CtrlPRoot<CR>
+nnoremap se :<C-u>CtrlPLine<CR>
 nnoremap sm :<C-u>CtrlPMRUFiles<CR>
 " nnoremap sq :<C-u>CtrlPQuickfix<CR>
 " nnoremap ss :<C-u>CtrlPMixed<CR>
@@ -480,13 +481,13 @@ let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:18'
 " # vim終了時にキャッシュをクリアしない
 let g:ctrlp_clear_cache_on_exit = 0
 " # <c-r>でキャッシュをクリアして再検索
-" let g:ctrlp_prompt_mappings = { 'PrtClearCache()': ['<C-r>'] }
+let g:ctrlp_prompt_mappings = { 'PrtClearCache()': ['<C-r>'] }
 " # 検索の際に200[ms]のウェイトを入れる（１文字入力の度に検索結果がコロコロ変わるのが気に入らないため）
-let g:ctrlp_lazy_update = 200
+" let g:ctrlp_lazy_update = 200
 " # 検索結果の表示ウィンドウの設定，10件分を表示（それ以上になってもスクロールされる）
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:10,results:50'
 " # 隠しファイルを表示しない
-let g:ctrlp_show_hidden = 0
+" let g:ctrlp_show_hidden = 0
 " # 検索してほしくないファイルやディレクトリを除外
 let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v[\/]\.(git|hg|svn)$',
@@ -814,6 +815,10 @@ nnoremap <silent> ,ie :<C-u>VimFilerExplorer -find -simple -winwidth=40 -no-quit
 nnoremap <silent> <C-e> :<C-u>VimFilerBufferDir -split -simple -winwidth=35 -toggle -no-quit<CR>
 " デフォルトキーッマップt廃止(タブ移動でないから)
 " nnoremap [vimfiler] <nop>
+
+" QuickLook使ってプレビュー(,v)
+let g:vimfiler_quick_look_command = 'qlmanage -p'
+autocmd FileType vimfiler nmap <buffer> ,v <Plug>(vimfiler_quick_look)
 
 
 
