@@ -571,7 +571,7 @@ au FileType php vmap <buffer><C-_>c :TCommentAs php_surround<CR>
 
 " Markdownの設定
 " set syntax=markdown
-" Ctrl-pでプレビュー
+" ,pvでプレビュー
 nnoremap <silent> ,pv :PrevimOpen<CR>
 
 " autocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown

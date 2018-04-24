@@ -16,6 +16,7 @@ brew upgrade --all
 formulas=(
   autoconf
   freetype
+  fribidi
   ghostscript
   jemalloc
   libtiff
@@ -26,10 +27,17 @@ formulas=(
   automake
   gdbm
   git
+  glib
   jpeg
   libtool
   lua
+  luajit
+  perl
+  python3
   pandoc
+  pango
+  open-mpi
+  openssl
   ruby-build
   zsh
   cabal-install
@@ -38,11 +46,18 @@ formulas=(
   libpng
   libuv
   msgpack
+  readline
+  reattach-to-user-namespace
+  qt
   pcre
   unibilium
   cmake
   ghc
   imagemagick
+  isl
+  iproute2mac
+  fontconfig
+  fontforge
   libtermkey
   libvterm
   neovim
@@ -52,6 +67,7 @@ formulas=(
   gcc@6
   mysql
   postgresql
+  sqlite
   pyenv
   pyenv-virtualenv
   rbenv
@@ -59,6 +75,11 @@ formulas=(
   tmux
   redis
   ricty
+  ocaml
+  ocamlbuild
+  opam
+  rlwrap
+  peco
   the_silver_searcher
   highway
 )
