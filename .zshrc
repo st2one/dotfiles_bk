@@ -279,3 +279,67 @@ function peco-history-selection() {
 
 zle -N peco-history-selection
 bindkey '^R' peco-history-selection
+
+# ^ebでブランチをフィルタリング
+function peco-git-branch () {
+  local current_buffer=$BUFFER
+  local selected_branch_name="$(git branch -a | peco | tr -d ' ' | tr -d '*')"
+  case "$selected_branch_name" in
+    *-\>* )
+      selected_branch_name="$(echo ${selected_branch_name} | perl -ne 's/^.*->(.*?)\/(.*)$/\2/;print')";;
+    remotes* )
+      selected_branch_name="$(echo ${selected_branch_name} | perl -ne 's/^.*?remotes\/(.*?)\/(.*)$/\2/;print')";;
+  esac
+  if [ -n "$selected_branch_name" ]; then
+    BUFFER="${current_buffer}${selected_branch_name}"
+  # カーソル位置を末尾に移動
+    CURSOR=$#BUFFER
+  fi
+}
+zle -N peco-git-branch
+bindkey '^eb' peco-git-branch
+
+# ^ehでgitのコミットハッシュをフィルタリング
+function peco-git-hash () {
+  local current_buffer=$BUFFER
+  local git_hash="$(git log --oneline --branches | peco | awk '{print $1}')"
+  BUFFER="${current_buffer}${git_hash}"
+  # カーソル位置を末尾に移動
+  CURSOR=$#BUFFER
+}
+zle -N peco-git-hash
+bindkey '^ec' peco-git-hash
+
+# ^esでgitのstashのIDを取得
+function peco-git-stash () {
+  local current_buffer=$BUFFER
+  local stash="$(git stash list | peco | awk -F'[ :]' '{print $1}')"
+  BUFFER="${current_buffer}${stash}"
+  # カーソル位置を末尾に移動
+  CURSOR=$#BUFFER
+}
+zle -N peco-git-stash
+bindkey '^es' peco-git-stash
+
+# エイリアスをフィルタリング
+function aliasp () {
+  BUFFER=$(alias | peco --query "$LBUFFER" | awk -F"=" '{print $1}')
+  print -z "$BUFFER"
+}
+
+# aws cliの結果をフィルタリングしてsshする
+function ssh-peco(){
+  ip=$( aws ec2 describe-instances | jq -cr '.Reservations[].Instances[]|[.PrivateIpAddress,.Tags[].Value]' | peco --query "$BUFFER" | awk -F"[\"]" '{print $2}' )
+  ssh ${ip}
+}
+
+# ^epでプロセスID取得
+function peco-ps () {
+  local current_buffer=$BUFFER
+  local process_id="$(ps auxf | peco | awk '{print $2}')"
+  BUFFER="${current_buffer}${process_id}"
+  # カーソル位置を末尾に移動
+  CURSOR=$#BUFFER
+}
+zle -N peco-ps
+bindkey '^ep' peco-ps
