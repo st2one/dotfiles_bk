@@ -299,7 +299,7 @@ function peco-git-branch () {
 zle -N peco-git-branch
 bindkey '^eb' peco-git-branch
 
-# ^ehでgitのコミットハッシュをフィルタリング
+# ^ecでgitのコミットハッシュをフィルタリング
 function peco-git-hash () {
   local current_buffer=$BUFFER
   local git_hash="$(git log --oneline --branches | peco | awk '{print $1}')"
@@ -321,11 +321,13 @@ function peco-git-stash () {
 zle -N peco-git-stash
 bindkey '^es' peco-git-stash
 
-# エイリアスをフィルタリング
+# ^eaエイリアスをフィルタリング
 function aliasp () {
   BUFFER=$(alias | peco --query "$LBUFFER" | awk -F"=" '{print $1}')
   print -z "$BUFFER"
 }
+zle -N aliasp
+# bindkey '^ea' aliasp
 
 # aws cliの結果をフィルタリングしてsshする
 function ssh-peco(){
@@ -336,10 +338,47 @@ function ssh-peco(){
 # ^epでプロセスID取得
 function peco-ps () {
   local current_buffer=$BUFFER
-  local process_id="$(ps auxf | peco | awk '{print $2}')"
+  local process_id="$(ps aux | peco | awk '{print $2}')"
   BUFFER="${current_buffer}${process_id}"
   # カーソル位置を末尾に移動
   CURSOR=$#BUFFER
 }
 zle -N peco-ps
 bindkey '^ep' peco-ps
+
+# search repository(ローカルリポジトリのファイル, ディレクトリ検索)
+function peco-cd-repository() {
+  DIR=$(\find ~/gitrepos ~/my/go/src/github.com -type d -a \! -regex '.*/\.git.*' | peco | head -n 1)
+  pushd $DIR > /dev/null
+  zle clear-screen
+}
+function peco-find-repository() {
+  local l=$(\find ~/gitrepos ~/my/go/src/github.com -a \! -regex '.*/\.git.*' | peco)
+  BUFFER="${LBUFFER}${l}"
+  CURSOR=$#BUFFER
+  zle clear-screen
+}
+zle -N peco-cd-repository
+zle -N peco-find-repository
+bindkey '^ed' peco-cd-repository
+bindkey '^er' peco-find-repository
+
+# search current directory(カレントディレクトリ下の検索)
+# peco-find: ドットファイルを検索対象としない
+# peco-find-all: 全て検索対象
+function peco-find() {
+  local l=$(\find . -maxdepth 8 -a \! -regex '.*/\..*' | peco)
+  BUFFER="${LBUFFER}${l}"
+  CURSOR=$#BUFFER
+  zle clear-screen
+}
+function peco-find-all() {
+  local l=$(\find . -maxdepth 8 | peco)
+  BUFFER="${LBUFFER}${l}"
+  CURSOR=$#BUFFER
+  zle clear-screen
+}
+zle -N peco-find
+zle -N peco-find-all
+bindkey '^ef' peco-find
+bindkey '^ea' peco-find-all
