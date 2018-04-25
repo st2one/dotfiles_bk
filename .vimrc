@@ -250,6 +250,7 @@ colorscheme jellybeans
 " colorscheme railscasts
 " 行番号の色
 " highlight LineNr ctermfg=darkyellow
+highlight LineNr ctermfg=130
 
 "==============================
 " Unite
