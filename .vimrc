@@ -198,6 +198,7 @@ NeoBundle 'nathanaelkane/vim-indent-guides'
 NeoBundle 'thinca/vim-quickrun'
 
 " Markdown
+NeoBundle 'godlygeek/tabular'
 " NeoBundle 'plasticboy/vim-markdown'
 NeoBundle 'rcmdnk/vim-markdown'
 NeoBundle 'joker1007/vim-markdown-quote-syntax'
@@ -597,10 +598,16 @@ let g:vim_markdown_folding_disabled = 1
 " let g:vim_markdown_new_list_item_indent = 2
 " for plasticboy/vim-markdown
 " let g:vim_markdown_no_default_key_mappings = 1
+let g:vim_markdown_liquid=1
 let g:vim_markdown_math = 1
 let g:vim_markdown_frontmatter = 1
 " let g:vim_markdown_toc_autofit = 1
 " let g:vim_markdown_folding_style_pythonic = 1
+" 強調(**)など同じ行内に閉じる**がなければ強調しない
+let g:vim_markdown_empasis_multiline = 1
+" 強調文字(**)など隠さない
+let g:vim_markdown_conceal = 0
+let g:tex_conceal = ""
 let g:markdown_fenced_languages = [
 \  'coffee',
 \  'css',
