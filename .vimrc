@@ -624,6 +624,10 @@ let g:markdown_fenced_languages = [
 \  'php'
 \]
 
+" previmのプレビューのデザイン変更
+let g:previm_disable_default_css = 1
+let g:previm_custom_css_path = '~/.previm/markdown.css'
+
 " Vim-Quickrunの設定
 let g:quickrun_config = {
 \   "_" :{
