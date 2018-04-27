@@ -29,6 +29,10 @@ set background=dark
 nnoremap <tab> %
 vnoremap <tab> %
 
+augroup MyAutoGroup
+    autocmd!
+augroup END
+
 "全角スペースの可視化
 "augroup highlightIdegraphicSpace
 "  autocmd!
@@ -183,8 +187,9 @@ if s:use_dein && v:version >= 704
     call dein#add('Shougo/tabpagebuffer.vim')
 
     call dein#add('Shougo/vimfiler')
+    call dein#add('kassio/neoterm')
     call dein#add('LeafCage/yankround.vim')
-    call dein#add('ctrlpvim/ctrlp.vim')
+    " call dein#add('ctrlpvim/ctrlp.vim')
     call dein#add('tpope/vim-fugitive')
     call dein#add('tpope/vim-surround')
     call dein#add('kana/vim-submode')
@@ -202,6 +207,9 @@ if s:use_dein && v:version >= 704
     call dein#add('rcmdnk/vim-markdown')
     call dein#add('joker1007/vim-markdown-quote-syntax')
     call dein#add('kannokanno/previm')
+    call dein#add('airblade/vim-gitgutter')
+    call dein#add('zchee/deoplete-jedi')
+    call dein#add('w0rp/ale')
 
     call dein#add('nanotech/jellybeans.vim')
     call dein#add('w0ng/vim-hybrid')
@@ -579,16 +587,25 @@ endfunction
 nnoremap <silent> <Space>cd :<C-u>CD<CR>
 
 
+" デフォルトで起動するshellはzsh
+set sh=zsh
 " neovim terminal mapping
 if has('nvim')
   " 新しいタブでターミナルを起動
   nnoremap @t :tabe<CR>:terminal<CR>
   nnoremap ,t :<C-u>16Term<CR>
+  nnoremap ,vt :<C-u>VTerm<CR>:sH<CR>
   " Ctrl + q でターミナルを終了
   tnoremap <C-q> <C-\><C-n>:q<CR>
   " ESCでターミナルモードからノーマルモードへ
-  tnoremap <ESC> <C-\><C-n>
+  tnoremap <silent> <ESC> <C-\><C-n>
+  tnoremap <silent> <C-j> <C-\><C-n>
 endif
+
+" neotermの設定
+nnoremap @p :T python3 %<CR><c-w>j
+" REPLを自動的に改行
+let g:neoterm_autoscroll=1
 
 " vimfiler設定
 " ファイル名長くて全て見れないときは<C-g>で全部見れる
@@ -885,6 +902,46 @@ let g:airline#extensions#tabline#buffer_idx_format = {
   \}
 
 set timeout timeoutlen=1000 ttimeoutlen=50
+
+" gitgutter
+" gitの差分を表示
+nnoremap <silent> ,gg :<C-u>GitGutterToggle<CR>
+nnoremap <silent> ,gh :<C-u>GitGutterLineHighlightsToggle<CR>
+nmap ,gv <Plug>GitGutterPreviewHunk
+nmap ,gn <Plug>GitGutterNextHunk
+nmap ,gp <Plug>GitGutterPrevHunk
+set updatetime=250
+
+" ALE(シンタックスチェッカー)
+" Write this in your vimrc file
+let g:ale_lint_on_text_changed = 'never'
+" You can disable this option too
+" if you don't want linters to run on opening a file
+let g:ale_lint_on_enter = 0
+" ファイルを保存するときにチェックしない
+let g:ale_lint_on_save = 0
+
+" ,scでエラーチェック
+nnoremap ,sc :<C-u>ALELint<CR>
+nmap <silent> <Space>p <Plug>(ale_previous)
+nmap <silent> <Space>n <Plug>(ale_next)
+nmap <silent> <Space>a <Plug>(ale_toggle)
+command! ALEList call s:ale_list()
+nnoremap <Space>m  :ALEList<CR>
+autocmd MyAutoGroup FileType help,qf,man,ref let b:ale_enabled = 0
+" シンボル変更
+let g:ale_sign_error = '⚠'
+let g:ale_sign_warning = '⨉'
+
+let g:ale_linters = {
+      \   'eruby': [],
+      \}
+
+" Gundo.vim
+if has('python3')
+    let g:gundo_prefer_python3 = 1
+endif
+nnoremap U :GundoToggle<CR>
 
 "エスケープをcontrol+jにマッピング
 imap <C-j> <esc>
