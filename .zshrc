@@ -71,6 +71,9 @@ alias updatedb='sudo /usr/libexec/locate.updatedb' # データベースの更新
 # neovim
 alias vim='nvim'
 
+# python
+alias python='python3'
+
 # ocamlのalias
 alias ocaml="rlwrap ocaml"
 
