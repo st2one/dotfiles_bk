@@ -68,6 +68,9 @@ alias -g ...="../.."
 alias -g ....="../../.."
 alias updatedb='sudo /usr/libexec/locate.updatedb' # データベースの更新
 
+# neovim
+alias vim='nvim'
+
 # ocamlのalias
 alias ocaml="rlwrap ocaml"
 
