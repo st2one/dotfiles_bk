@@ -270,9 +270,6 @@ noremap <C-Z> :Unite file_mru<CR>
 " sourcesを「今開いているファイルのディレクトリ」とする
 noremap :uff :<C-u>UniteWithBufferDir file -buffer-name=file<CR>
 
-" 検索結果のハイライトをEsc連打でクリアする
-nnoremap <ESC><ESC> :nohlsearch<CR>
-
 " 大文字小文字を区別しない
 let g:unite_enable_ignore_case = 1
 let g:unite_enable_smart_case = 1
@@ -1035,6 +1032,12 @@ endif
 
 " Turn off paste mode when leaving insert
 autocmd InsertLeave * set nopaste
+
+set clipboard+=unnamed
+
+
+" 検索結果のハイライトをEsc連打でクリアする
+nnoremap <ESC><ESC> :nohlsearch<CR>
 
 "エスケープをcontrol+jにマッピング
 imap <C-j> <esc>
