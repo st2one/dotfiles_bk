@@ -388,3 +388,13 @@ zle -N peco-find
 zle -N peco-find-all
 bindkey '^ef' peco-find
 bindkey '^ea' peco-find-all
+
+# # agで検索した結果から選択し、ファイルを開く
+# function agvim(){
+#   path=$(ag $* | peco | awk -F: '{printf  $1 " +" $2}'| sed -e 's/\+$//')
+#   if [ -n "$path" ]; then
+#     echo "vim $path"
+#     vim $path
+#   fi
+# }
+# zle -N agvim
