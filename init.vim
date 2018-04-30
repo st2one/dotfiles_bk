@@ -170,24 +170,28 @@ if s:use_dein && v:version >= 704
     endif
 
     if ((has('nvim')  || has('timers')) && has('python3')) && system('pip3 show neovim') !=# ''
-      call dein#add('Shougo/deoplete.nvim')
-    if !has('nvim')
-      call dein#add('roxma/nvim-yarp')
-      call dein#add('roxma/vim-hug-neovim-rpc')
-    endif
+      call dein#add('Shougo/deoplete.nvim', {'on_i': 1})
+      if !has('nvim')
+        call dein#add('roxma/nvim-yarp')
+        call dein#add('roxma/vim-hug-neovim-rpc')
+      endif
     elseif has('lua')
       call dein#add('Shougo/neocomplete.vim')
     endif
 
     call dein#add('Shougo/neco-vim')
     call dein#add('Shougo/neco-syntax')
-    call dein#add('ujihisa/neco-look')
+    " call dein#add('ujihisa/neco-look')
     call dein#add('Shougo/neoyank.vim')
     call dein#add('mklabs/split-term.vim')
     call dein#add('Shougo/tabpagebuffer.vim')
+    call dein#add('Shougo/neosnippet', {'on_i': 1, 'on_ft': ['snippet'], 'depends': ['neosnippet-snippets']})
+    " call dein#add('Shougo/neosnippet', {'on_i': 1})
+    call dein#add('Shougo/neosnippet-snippets')
 
     call dein#add('Shougo/vimfiler')
     call dein#add('kassio/neoterm')
+    " call dein#add('ryanoasis/vim-devicons')
     call dein#add('LeafCage/yankround.vim')
     " call dein#add('ctrlpvim/ctrlp.vim')
     call dein#add('tpope/vim-fugitive')
@@ -196,6 +200,7 @@ if s:use_dein && v:version >= 704
     call dein#add('tomtom/tcomment_vim')
     call dein#add('cohama/lexima.vim')
     call dein#add('mattn/emmet-vim')
+    call dein#add('rhysd/clever-f.vim')
     call dein#add('tpope/vim-endwise')
     call dein#add('slim-template/vim-slim')
     call dein#add('kchmck/vim-coffee-script')
@@ -589,6 +594,7 @@ nnoremap <silent> <Space>cd :<C-u>CD<CR>
 
 " デフォルトで起動するshellはzsh
 set sh=zsh
+" set termkey=<A-w>
 " neovim terminal mapping
 if has('nvim')
   " 新しいタブでターミナルを起動
@@ -602,6 +608,28 @@ if has('nvim')
   tnoremap <silent> <C-j> <C-\><C-n>
 endif
 
+function! s:open(args) abort
+  if empty(term_list())
+    execute "terminal" a:args
+  else
+    let bufnr = term_list()[0]
+    execute term_getsize(bufnr)[0] . "new"
+    execute "buffer + " bufnr
+  endif
+endfunction
+" すでに :terminal が存在していればそのterminal を使用する
+command! -nargs=*
+\   Terminal call s:open(<q-args>)
+
+" terminal起動直後にinsert抜ける(terminalモードへ)
+" if has('nvim')
+"   " Neovim 用
+"   autocmd WinEnter * if &buftype ==# 'terminal' | startinsert | endif
+" else
+"   " Vim 用
+"   autocmd WinEnter * if &buftype ==# 'terminal' | normal i | endif
+" endif
+
 " neotermの設定
 nnoremap @p :T python3 %<CR><c-w>j
 " REPLを自動的に改行
@@ -614,7 +642,7 @@ let g:neoterm_autoscroll=1
 let g:vimfiler_as_default_explorer = 1
 " デフォルトのセーフモードを解除
 let g:vimfiler_safe_mode_by_default = 0
-nnoremap <silent> <Space>vf :VimFiler<CR>
+nnoremap <silent> <Space>vf :VimFilerBufferDir<CR>
 " Open filer
 noremap <silent> ,vf :VimFiler -split -simple -winwidth=40 -no-quit<CR>
 noremap <C-X><C-T> :VimFiler -split -simple -winwidth=40 -no-quit<ENTER>
@@ -625,13 +653,33 @@ let g:vimfiler_edit_action = 'tabopen'
 " Unite bookmarkからEnterでvimfiler上で移動
 " autocmd FileType vimfiler call unite#custom_default_action('directory', 'cd')
 " 自動でカレントディレクトリ変更
-" let g:vimfiler_enable_auto_cd = 1
+let g:vimfiler_enable_auto_cd = 1
 " 開いているファイルをvimfilerで開く
 nnoremap <silent> ,tr :<C-u>VimFilerBufferDir -split -simple -winwidth=35 -no-quit<CR>
 " 開いているファイルをIDEっぽく階層的に表示
 nnoremap <silent> ,ie :<C-u>VimFilerExplorer -find -simple -winwidth=40 -no-quit<CR>
 " 現在開いているバッファのディレクトリを表示(<C-e>で表示/非表示)使い勝手良い
 nnoremap <silent> <C-e> :<C-u>VimFilerBufferDir -split -simple -winwidth=35 -toggle -no-quit<CR>
+let g:vimfiler_tree_leaf_icon = ''
+let g:vimfiler_tree_opened_icon = '▾'
+let g:vimfiler_tree_closed_icon = '▸'
+let g:vimfiler_marked_file_icon = '✓'
+
+" vim-devicons
+let g:webdevicons_conceal_nerdtree_brackets = 1
+let g:WebDevIconsNerdTreeAfterGlyphPadding = ' '
+
+" dir-icons
+let g:WebDevIconsUnicodeDecorateFolderNodes = 1
+let g:DevIconsEnableFoldersOpenClose = 1
+let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
+let g:DevIconsDefaultFolderOpenSymbol = ''
+" file-icons
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = {}
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['html'] = ''
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['css'] = ''
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['md'] = ''
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['txt'] = ''
 
 " QuickLook使ってプレビュー(,v)
 let g:vimfiler_quick_look_command = 'qlmanage -p'
@@ -842,6 +890,25 @@ autocmd InsertLeave * set nopaste
 
 " Use deoplete.
 let g:deoplete#enable_at_startup = 1
+let g:deoplete#auto_complete_delay = 0
+let g:deoplete#auto_complete_start_length = 1
+let g:deoplete#enable_camel_case = 0
+let g:deoplete#enable_ignore_case = 0
+let g:deoplete#enable_refresh_always = 0
+let g:deoplete#enable_smart_case = 1
+let g:deoplete#file#enable_buffer_path = 1
+let g:deoplete#max_list = 10000
+inoremap <expr><tab> pumvisible() ? "\<C-n>" :
+      \ neosnippet#expandable_or_jumpable() ?
+      \    "\<Plug>(neosnippet_expand_or_jump)" : "\<tab>"
+
+" neosnippet
+imap <C-l> <Plug>(neosnippet_expand_or_jump)
+smap <C-l> <Plug>(neosnippet_expand_or_jump)
+xmap <C-l> <Plug>(neosnippet_expand_target)
+if has('conceal')
+  set conceallevel=2 concealcursor=niv
+endif
 
 " vim-airline
 let g:airline_powerline_fonts = 1
@@ -907,9 +974,9 @@ set timeout timeoutlen=1000 ttimeoutlen=50
 " gitの差分を表示
 nnoremap <silent> ,gg :<C-u>GitGutterToggle<CR>
 nnoremap <silent> ,gh :<C-u>GitGutterLineHighlightsToggle<CR>
-nmap ,gv <Plug>GitGutterPreviewHunk
-nmap ,gn <Plug>GitGutterNextHunk
-nmap ,gp <Plug>GitGutterPrevHunk
+nmap gv <Plug>GitGutterPreviewHunk
+nmap gn <Plug>GitGutterNextHunk
+nmap gp <Plug>GitGutterPrevHunk
 set updatetime=250
 
 " ALE(シンタックスチェッカー)
@@ -920,6 +987,15 @@ let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_enter = 0
 " ファイルを保存するときにチェックしない
 let g:ale_lint_on_save = 0
+
+" clever-f.vim
+let g:clever_f_ignore_case = 1
+let g:clever_f_smart_case = 1
+let g:clever_f_fix_key_direction = 1
+let g:clever_f_not_overwrites_standard_mappings = 1
+" f, Fのみ利用(t, Tは使わない)
+map f <Plug>(clever-f-f)
+map F <Plug>(clever-f-F)
 
 " ,scでエラーチェック
 nnoremap ,sc :<C-u>ALELint<CR>
@@ -955,7 +1031,11 @@ set noshowmode
 " 各種メッセージを英語にする
 language C
 
-set clipboard+=unnamedplus
+" set clipboard+=unnamedplus
+if $TMUX == ''
+  set clipboard+=unnamed
+endif
+
 " 選択範囲を<,c>でクリップボードに
 vmap ,c :w !xsel -ib<CR><CR>
 
