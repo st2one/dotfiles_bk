@@ -598,9 +598,9 @@ set sh=zsh
 " neovim terminal mapping
 if has('nvim')
   " 新しいタブでターミナルを起動
-  nnoremap @t :tabe<CR>:terminal<CR>
-  nnoremap ,t :<C-u>16Term<CR>
-  nnoremap ,vt :<C-u>VTerm<CR>:sH<CR>
+  nnoremap <silent> @t :tabe<CR>:terminal<CR>
+  nnoremap <silent> ,t :<C-u>16Term<CR>
+  nnoremap <silent> ,vt :<C-u>VTerm<CR>
   " Ctrl + q でターミナルを終了
   tnoremap <C-q> <C-\><C-n>:q<CR>
   " ESCでターミナルモードからノーマルモードへ
