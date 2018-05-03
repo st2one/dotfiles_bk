@@ -82,10 +82,13 @@ set smartindent     " 改行時に入力された行の末尾に合わせて次�
 "==============================
 "動作環境との統合関連の設定
 "==============================
-set clipboard=unnamed,unnamedplus " OSのクリップボードをレジスタ指定無しで Yank, Put 出来るようにす>る
+"set clipboard=unnamedplus " OSのクリップボードをレジスタ指定無しで Yank, Put 出来るようにする
 "set mouse=a  " マウスの入力を受け付ける
 "set shellslash " Windows でもパスの区切り文字を / にする
 "set iminsert=2 " インサートモードから抜けると自動的にIMEをオフにする
+
+let g:python_host_prog = expand('/usr/local/bin/python2')
+let g:python3_host_prog = $PYENV_ROOT . '/shims/python3'
 
 "==============================
 " コマンドラインの設定
