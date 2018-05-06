@@ -437,7 +437,7 @@ if dein#tap('denite.nvim')
   nnoremap <silent> [denite]g :<C-u>Denite grep<CR>
   nnoremap <silent> [denite]h :<C-u>Denite help<CR>
   nnoremap <silent> [denite]l :<C-u>Denite line<CR>
-  nnoremap <silent> [denite]t :<C-u>Denite tag<CR>
+  nnoremap <silent> [denite]T :<C-u>Denite tag<CR>
   nnoremap <silent> [denite]u :<C-u>Denite file_mru<CR>
   nnoremap <silent> [denite]m :<C-u>Denite menu<CR>
   nnoremap <silent> [denite]y :<C-u>Denite neoyank<CR>
