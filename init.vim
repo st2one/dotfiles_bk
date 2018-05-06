@@ -7,7 +7,6 @@ filetype off
 "===========================
 set number         " 行番号を表示する
 set cursorline     " カーソル行の背景色を変える
-highlight clear CursorLine
 " set cursorcolumn   " カーソル位置のカラムの背景色を変える
 set laststatus=2   " ステータス行を常に表示
 set cmdheight=2    " メッセージ表示欄を2行確保
@@ -95,7 +94,8 @@ let g:python3_host_prog = $PYENV_ROOT . '/shims/python3'
 " コマンドラインの設定
 "==============================
 set wildmenu wildmode=list:longest,full " コマンドラインモードでTABキーによるファイル名補完を有効に>する
-set showcmd " 入力中のコマンドを表示する
+" set showcmd " 入力中のコマンドを表示する
+set noshowcmd " 入力中のコマンドを表示しない
 set history=10000 " コマンドラインの履歴を10000件保存する
 
 "=============================
@@ -282,6 +282,7 @@ highlight LineNr ctermfg=130
 " highlight LineNr ctermfg=148
 " 編集業の行番号の色
 highlight CursorLineNr term=bold ctermfg=11
+highlight clear CursorLine
 
 
 "==============================
