@@ -22,6 +22,8 @@ set encoding=utf-8
 set fileencodings=utf-8
 set fileformats=unix,dos,mac
 set background=dark
+set splitbelow " 新しいウインドウを下に開く
+set splitright " 新しいウインドウを右に開く
 " set termguicolors
 " set ambiwidth=double
 
@@ -844,7 +846,6 @@ let g:quickrun_config['vim'] = {
 \   "hook/output_encode/enable" : 1,
 \   "hook/output_encode/encoding" : "utf-8",
 \}
-set splitright " 新しいウインドウを右に開く
 " 出力バッファ閉じる(Space + q)
 nnoremap <Space>q :<C-u>bw! \[quickrun\ output\]<CR>
 " キーマッピング変更(Space + r)
