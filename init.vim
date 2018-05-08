@@ -218,6 +218,8 @@ if s:use_dein && v:version >= 704
     call dein#add('rcmdnk/vim-markdown')
     call dein#add('joker1007/vim-markdown-quote-syntax')
     call dein#add('kannokanno/previm')
+    call dein#add('iamcco/markdown-preview.vim')
+    call dein#add('iamcco/mathjax-support-for-mkdp')
     call dein#add('airblade/vim-gitgutter')
     call dein#add('zchee/deoplete-jedi')
     call dein#add('w0rp/ale')
