@@ -6,7 +6,7 @@ filetype off
 " 画面表示の設定
 "===========================
 set number         " 行番号を表示する
-set cursorline     " カーソル行の背景色を変える
+" set cursorline     " カーソル行の背景色を変える
 " set cursorcolumn   " カーソル位置のカラムの背景色を変える
 set laststatus=2   " ステータス行を常に表示
 set cmdheight=2    " メッセージ表示欄を2行確保
@@ -271,6 +271,9 @@ endif
 "===============================
 syntax on
 syntax enable
+" autocmd ColorScheme * highlight Normal ctermbg=none
+" autocmd ColorScheme * highlight EndOfBuffer ctermbg=none
+" autocmd ColorScheme * highlight LineNr ctermbg=none
 " colorscheme dracula
 " color Dracula
 " colorscheme solarized
@@ -285,8 +288,8 @@ colorscheme jellybeans
 highlight LineNr ctermfg=130
 " highlight LineNr ctermfg=148
 " 編集業の行番号の色
-highlight CursorLineNr term=bold ctermfg=11
-highlight clear CursorLine
+" highlight CursorLineNr term=bold ctermfg=11
+" highlight clear CursorLine
 
 
 "==============================
