@@ -49,8 +49,8 @@ unsetopt caseglob    # ファイルグロブで大文字小文字を区別しな
 
 ### History ###
 HISTFILE=~/.zsh_history   # ヒストリを保存するファイル
-HISTSIZE=10000            # メモリに保存されるヒストリの件数
-SAVEHIST=10000            # 保存されるヒストリの件数
+HISTSIZE=30000            # メモリに保存されるヒストリの件数
+SAVEHIST=30000            # 保存されるヒストリの件数
 setopt bang_hist          # !を使ったヒストリ展開を行う(d)
 setopt extended_history   # ヒストリに実行時間も保存する
 setopt hist_ignore_dups   # 直前と同じコマンドはヒストリに追加しない
@@ -72,11 +72,16 @@ alias updatedb='sudo /usr/libexec/locate.updatedb' # データベースの更新
 # neovim
 alias vim='nvim'
 
+# normal-vim
+alias oldvim="\vim"
+
 # python
 alias python='python3'
 
 # ocamlのalias
 alias ocaml="rlwrap ocaml"
+
+export EDITOR=nvim
 
 #-------------------------------------------------
 # Path
@@ -390,12 +395,28 @@ zle -N peco-find-all
 bindkey '^ef' peco-find
 bindkey '^ea' peco-find-all
 
-# # agで検索した結果から選択し、ファイルを開く
-# function agvim(){
+# agで検索した結果から選択し、ファイルを開く
+# function peco-grep() {
 #   path=$(ag $* | peco | awk -F: '{printf  $1 " +" $2}'| sed -e 's/\+$//')
 #   if [ -n "$path" ]; then
-#     echo "vim $path"
-#     vim $path
+#     echo "$path"
 #   fi
 # }
-# zle -N agvim
+# zle -N peco-grep
+# bindkey '^eg' peco-grep
+
+# pecoでtmuxのwindowをselect
+function peco-select_window() {
+  tmux list-windows | peco | awk -F':' '{print $1}' | xargs tmux select-window -t
+}
+zle -N peco-select_window
+bindkey '^tw' peco-select_window
+
+# === cool-peco init ===
+FPATH="$FPATH:/Users/takumi/github/cool-peco"
+autoload -Uz cool-peco
+cool-peco
+# ======================
+bindkey '^eh' cool-peco-ssh
+bindkey '^eco' cool-peco-git-checkout
+bindkey '^el' cool-peco-git-log
