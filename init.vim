@@ -84,7 +84,7 @@ set smartindent     " 改行時に入力された行の末尾に合わせて次�
 "==============================
 "動作環境との統合関連の設定
 "==============================
-"set clipboard=unnamedplus " OSのクリップボードをレジスタ指定無しで Yank, Put 出来るようにする
+set clipboard+=unnamedplus " OSのクリップボードをレジスタ指定無しで Yank, Put 出来るようにする
 "set mouse=a  " マウスの入力を受け付ける
 "set shellslash " Windows でもパスの区切り文字を / にする
 "set iminsert=2 " インサートモードから抜けると自動的にIMEをオフにする
@@ -290,6 +290,8 @@ highlight LineNr ctermfg=130
 " 編集業の行番号の色
 " highlight CursorLineNr term=bold ctermfg=11
 " highlight clear CursorLine
+" deniteなどの選択行の色
+highlight CursorLine guibg=#000050
 
 
 "==============================
@@ -315,10 +317,14 @@ let g:unite_enable_ignore_case = 1
 let g:unite_enable_smart_case = 1
 
 " grep検索
-" nnoremap <silent> ,g  :<C-u>Unite grep -buffer-name=search-buffer<CR>
+nnoremap <silent> ,g  :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
+nnoremap <silent> ,dg  :<C-u>Unite grep -buffer-name=search-buffer<CR>
 
 " カーソル位置の単語をgrep検索
-" nnoremap <silent> ,cg :<C-u>Unite grep -buffer-name=search-buffer<CR><C-R><C-W>
+nnoremap <silent> ,cg :<C-u>Unite grep:. -buffer-name=search-buffer<CR><C-R><C-W><CR>
+
+" grep検索結果の再呼出
+nnoremap <silent> ,r  :<C-u>UniteResume -buffer-name=search-buffer<CR>
 
 " Unite.vimの設定
 let g:unite_enable_start_insert=1
@@ -326,14 +332,21 @@ let g:unite_source_history_yank_enable =1
 let g:unite_source_file_mru_limit = 200
 " nnoremap <silent> ,uy :<C-u>Unite history/yank<CR>
 " nnoremap <silent> ,ub :<C-u>Unite buffer<CR>
-nnoremap <silent> ,uB :<C-u>Unite buffer_tab -buffer-name=file<CR>
+nnoremap <silent> <C-u>B :<C-u>Unite buffer_tab -buffer-name=file<CR>
 " nnoremap <silent> ,uf :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
 " nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>
 " nnoremap <silent> ,uu :<C-u>Unite file_mru buffer<CR>
-nnoremap <silent> ,ut :<C-u>Unite tab<CR>
-nnoremap <silent> ,un :<C-u>Unite file/new<CR>
+nnoremap <silent> <C-u>t :<C-u>Unite tab<CR>
+nnoremap <silent> <C-u>n :<C-u>Unite file/new<CR>
 " ファイル非同期検索
 " nnoremap <silent> ,up  :<C-u>Unite file_rec/async:!<CR>
+
+" unite grep に ag(The Silver Searcher) を使う
+if executable('ag')
+  let g:unite_source_grep_command = 'ag'
+  let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
+  let g:unite_source_grep_recursive_opt = ''
+endif
 
 " book-mark list
 noremap ,bm :Unite bookmark<CR>
@@ -423,7 +436,7 @@ if dein#tap('denite.nvim')
         \ ]
   let s:menus.line.command_candidates = [
         \ ['change', 'Denite change'],
-        \ ['grep :grep', 'Denite grep'],
+        \ ['grep', 'Denite grep'],
         \ ['line', 'Denite line'],
         \ ['tag', 'Denite tag']
         \ ]
@@ -435,22 +448,34 @@ if dein#tap('denite.nvim')
 
   call denite#custom#var('menu', 'menus', s:menus)
 
+  call denite#custom#var('file_rec', 'command',
+      \ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
+
   nnoremap [denite] <Nop>
-  nmap ,u [denite]
-  nnoremap <silent> [denite]b :<C-u>Denite buffer<CR>
+  nmap <C-u> [denite]
+  nnoremap <silent> [denite]b :<C-u>Denite buffer -highlight-mode-insert=Search<CR>
   " nnoremap <silent> [denite]B :<C-u>Denite buffer_tab -buffer-name=file<CR>
-  nnoremap <silent> [denite]c :<C-u>Denite change<CR>
-  nnoremap <silent> [denite]f :<C-u>Denite file<CR>
-  nnoremap <silent> [denite]g :<C-u>Denite grep<CR>
-  nnoremap <silent> [denite]h :<C-u>Denite help<CR>
-  nnoremap <silent> [denite]l :<C-u>Denite line<CR>
-  nnoremap <silent> [denite]T :<C-u>Denite tag<CR>
-  nnoremap <silent> [denite]u :<C-u>Denite file_mru<CR>
-  nnoremap <silent> [denite]m :<C-u>Denite menu<CR>
-  nnoremap <silent> [denite]y :<C-u>Denite neoyank<CR>
+  nnoremap <silent> [denite]c :<C-u>Denite change -highlight-mode-insert=Search<CR>
+  nnoremap <silent> [denite]f :<C-u>Denite file -highlight-mode-insert=Search<CR>
+  nnoremap <silent> [denite]g :<C-u>Denite grep -buffer-name=search-buffer-denite -highlight-mode-insert=Search<CR>
+  nnoremap <silent> [denite]h :<C-u>Denite help -highlight-mode-insert=Search<CR>
+  nnoremap <silent> [denite]l :<C-u>Denite line -highlight-mode-insert=Search<CR>
+  nnoremap <silent> [denite]T :<C-u>Denite tag -highlight-mode-insert=Search<CR>
+  nnoremap <silent> [denite]u :<C-u>Denite file_mru -highlight-mode-insert=Search<CR>
+  nnoremap <silent> [denite]r :<C-u>Denite file_rec -highlight-mode-insert=Search<CR>
+  nnoremap <silent> [denite]m :<C-u>Denite menu -highlight-mode-insert=Search<CR>
+  nnoremap <silent> [denite]y :<C-u>Denite neoyank -highlight-mode-insert=Search<CR>
   " nnoremap <silent> [denite]t :<C-u>Denite tab<CR>
   " nnoremap <silent> ,bm :<C-u>Denite -direction=topleft -cursor-wrap=true bookmark<CR>
   " nnoremap <silent> ,ba :<C-u>DeniteBookmarkAdd<CR>
+  " Denite grep検索結果を再表示する
+  nnoremap <silent> <C-g>r :<C-u>Denite -resume -buffer-name=search-buffer-denite<CR>
+  " resumeした検索結果の次の行の結果へ飛ぶ
+  nnoremap <silent> <C-g>n :<C-u>Denite -resume -buffer-name=search-buffer-denite -select=+1 -immediately<CR>
+  " resumeした検索結果の前の行の結果へ飛ぶ
+  nnoremap <silent> <C-g>p :<C-u>Denite -resume -buffer-name=search-buffer-denite -select=-1 -immediately<CR>
+
+  call denite#custom#option('default', 'prompt', '>')
   call denite#custom#map('_', "<C-h>",
         \ '<denite:do_action:split>')
   call denite#custom#map('insert', "<C-h>",
@@ -459,6 +484,10 @@ if dein#tap('denite.nvim')
         \ '<denite:do_action:vsplit>')
   call denite#custom#map('insert',
         \ "<C-v>", '<denite:do_action:vsplit>')
+  call denite#custom#map('_', "<C-t>",
+        \ '<denite:do_action:tabopen>')
+  call denite#custom#map('insert',
+        \ "<C-t>", '<denite:do_action:tabopen>')
   call denite#custom#map('insert',
         \ "jj", '<denite:enter_mode:normal>')
 
@@ -468,7 +497,7 @@ if dein#tap('denite.nvim')
         \ '<denite:move_to_next_line>',
         \ 'noremap'
         \)
-    call denite#custom#map(
+  call denite#custom#map(
         \ 'insert',
         \ '<Up>',
         \ '<denite:move_to_previous_line>',
@@ -486,18 +515,18 @@ if dein#tap('denite.nvim')
         \ '<denite:move_to_previous_line>',
         \ 'noremap'
         \)
-  call denite#custom#map(
-        \ 'insert',
-        \ '<C-G>',
-        \ '<denite:assign_next_txt>',
-        \ 'noremap'
-        \)
-  call denite#custom#map(
-        \ 'insert',
-        \ '<C-T>',
-        \ '<denite:assign_previous_line>',
-        \ 'noremap'
-        \)
+  " call denite#custom#map(
+  "       \ 'insert',
+  "       \ '<C-G>',
+  "       \ '<denite:assign_next_txt>',
+  "       \ 'noremap'
+  "       \)
+  " call denite#custom#map(
+  "       \ 'insert',
+  "       \ '<C-T>',
+  "       \ '<denite:assign_previous_line>',
+  "       \ 'noremap'
+  "       \)
   call denite#custom#map(
         \ 'normal',
         \ '/',
@@ -510,6 +539,33 @@ if dein#tap('denite.nvim')
         \ '<denite:enter_mode:normal>',
         \ 'noremap'
         \)
+  " call denite#custom#var('file_rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
+  " call denite#custom#var('grep', 'command', ['ag'])
+  " call denite#custom#var('grep', 'recursive_opts', [])
+  " call denite#custom#var('grep', 'final_opts', [])
+  " call denite#custom#var('grep', 'separator', [])
+  " call denite#custom#var('grep', 'default_opts', ['--follow', '--nocolor', '--nogroup'])
+  if executable('rg')
+    " call denite#custom#var('file_rec', 'command',
+    "       \ ['rg', '--files', '--glob', '!.git'])
+    " call denite#custom#var('grep', 'command', ['rg'])
+    " Ripgrep command on grep source
+    call denite#custom#var('grep', 'command', ['rg'])
+    call denite#custom#var('grep', 'default_opts',
+      \ ['--vimgrep', '--no-heading'])
+    call denite#custom#var('grep', 'recursive_opts', [])
+    call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
+    call denite#custom#var('grep', 'separator', ['--'])
+    call denite#custom#var('grep', 'final_opts', [])
+  endif
+  " customize ignore globs
+  call denite#custom#source('file_rec', 'matchers', ['matcher_fuzzy','matcher_ignore_globs'])
+  call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
+        \ [
+        \ '.git/', 'build/', '__pycache__/',
+        \ 'images/', '*.o', '*.make',
+        \ '*.min.*',
+        \ 'img/', 'fonts/'])
 endif
 
 
@@ -989,8 +1045,8 @@ set timeout timeoutlen=1000 ttimeoutlen=50
 
 " gitgutter
 " gitの差分を表示
-nnoremap <silent> ,gg :<C-u>GitGutterToggle<CR>
-nnoremap <silent> ,gh :<C-u>GitGutterLineHighlightsToggle<CR>
+nnoremap <silent> <Space>gg :<C-u>GitGutterToggle<CR>
+nnoremap <silent> <Space>gh :<C-u>GitGutterLineHighlightsToggle<CR>
 nmap gv <Plug>GitGutterPreviewHunk
 nmap gn <Plug>GitGutterNextHunk
 nmap gp <Plug>GitGutterPrevHunk
@@ -1046,7 +1102,7 @@ nnoremap <ESC><ESC> :nohlsearch<CR>
 set noshowmode
 
 " 各種メッセージを英語にする
-language C
+language messages C
 
 " set clipboard+=unnamedplus
 if $TMUX == ''
