@@ -15,7 +15,8 @@ fi
 #-------------------------------------------------
 export LANG=ja_JP.UTF-8
 # export TERM=xterm-256color
-[[ $TMUX = "" ]] && export TERM="xterm-256color"
+# [[ $TMUX = "" ]] && export TERM="xterm-256color"
+[[ $TMUX = "" ]] && export TERM="screen-256color"
 
 # command history search
 autoload history-search-end

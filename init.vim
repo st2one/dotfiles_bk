@@ -25,6 +25,10 @@ set background=dark
 set splitbelow " 新しいウインドウを下に開く
 set splitright " 新しいウインドウを右に開く
 " set termguicolors
+" let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+" let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 " set ambiwidth=double
 
 " tabにて対応ペアにジャンプ
@@ -231,6 +235,9 @@ if s:use_dein && v:version >= 704
     call dein#add('jeffreyiacono/vim-colors-wombat')
     call dein#add('croaker/mustang-vim')
     call dein#add('jpo/vim-railscasts-theme')
+    call dein#add('jacoborus/tender.vim')
+    call dein#add('mhartington/oceanic-next')
+    call dein#add('gosukiwi/vim-atom-dark')
 
     call dein#add('vim-airline/vim-airline')
     call dein#add('vim-airline/vim-airline-themes')
@@ -283,6 +290,10 @@ syntax enable
 colorscheme jellybeans
 " colorscheme wombat
 " colorscheme railscasts
+" colorscheme tender
+" colorscheme OceanicNext
+" colorscheme atom-dark
+
 " 行番号の色
 " highlight LineNr ctermfg=darkyellow
 highlight LineNr ctermfg=130
