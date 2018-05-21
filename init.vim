@@ -383,6 +383,8 @@ nnoremap sP :<C-u>bp<CR>
 nnoremap st :<C-u>tabnew<CR>
 nnoremap sn gt
 nnoremap sp gT
+nnoremap <C-n> gt
+nnoremap <C-p> gT
 
 " The prefix key.
 nnoremap    [Tag]   <Nop>
