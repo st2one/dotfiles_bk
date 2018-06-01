@@ -39,6 +39,11 @@ augroup MyAutoGroup
     autocmd!
 augroup END
 
+" jellybeansの背景色をターミナルと同じに
+let g:jellybeans_overrides = {
+\    'background': { 'ctermbg': 'none', '256ctermbg': 'none' },
+\}
+
 "全角スペースの可視化
 "augroup highlightIdegraphicSpace
 "  autocmd!
@@ -94,7 +99,7 @@ set clipboard+=unnamedplus " OSのクリップボードをレジスタ指定無�
 "set iminsert=2 " インサートモードから抜けると自動的にIMEをオフにする
 
 let g:python_host_prog = expand('/usr/local/bin/python2')
-let g:python3_host_prog = $PYENV_ROOT . '/shims/python3'
+let g:python3_host_prog = expand('~/.pyenv/shims/python3')
 
 "==============================
 " コマンドラインの設定
@@ -281,6 +286,11 @@ syntax enable
 " autocmd ColorScheme * highlight Normal ctermbg=none
 " autocmd ColorScheme * highlight EndOfBuffer ctermbg=none
 " autocmd ColorScheme * highlight LineNr ctermbg=none
+autocmd ColorScheme * highlight VertSplit ctermbg=none
+" autocmd ColorScheme * highlight StatusLine ctermbg=none
+" autocmd ColorScheme * highlight TabLine ctermbg=none
+autocmd ColorScheme * highlight IncSearch ctermbg=none
+autocmd ColorScheme * highlight Search ctermbg=none
 " colorscheme dracula
 " color Dracula
 " colorscheme solarized
@@ -301,9 +311,9 @@ highlight LineNr ctermfg=130
 " 編集業の行番号の色
 " highlight CursorLineNr term=bold ctermfg=11
 " highlight clear CursorLine
-" deniteなどの選択行の色
-highlight CursorLine guibg=#000050
-
+" uniteなどの選択行の色
+" highlight CursorLine ctermbg=95
+highlight CursorLine ctermfg=167
 
 "==============================
 " Unite
@@ -328,14 +338,14 @@ let g:unite_enable_ignore_case = 1
 let g:unite_enable_smart_case = 1
 
 " grep検索
-nnoremap <silent> ,g  :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
+nnoremap <silent> ,ug  :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
 nnoremap <silent> ,dg  :<C-u>Unite grep -buffer-name=search-buffer<CR>
 
 " カーソル位置の単語をgrep検索
 nnoremap <silent> ,cg :<C-u>Unite grep:. -buffer-name=search-buffer<CR><C-R><C-W><CR>
 
 " grep検索結果の再呼出
-nnoremap <silent> ,r  :<C-u>UniteResume -buffer-name=search-buffer<CR>
+nnoremap <silent> ,gr  :<C-u>UniteResume -buffer-name=search-buffer<CR>
 
 " Unite.vimの設定
 let g:unite_enable_start_insert=1
@@ -343,12 +353,12 @@ let g:unite_source_history_yank_enable =1
 let g:unite_source_file_mru_limit = 200
 " nnoremap <silent> ,uy :<C-u>Unite history/yank<CR>
 " nnoremap <silent> ,ub :<C-u>Unite buffer<CR>
-nnoremap <silent> <C-u>B :<C-u>Unite buffer_tab -buffer-name=file<CR>
+nnoremap <silent> ;B :<C-u>Unite buffer_tab -buffer-name=file<CR>
 " nnoremap <silent> ,uf :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
 " nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>
 " nnoremap <silent> ,uu :<C-u>Unite file_mru buffer<CR>
-nnoremap <silent> <C-u>t :<C-u>Unite tab<CR>
-nnoremap <silent> <C-u>n :<C-u>Unite file/new<CR>
+nnoremap <silent> ;t :<C-u>Unite tab<CR>
+nnoremap <silent> ;n :<C-u>Unite file/new<CR>
 " ファイル非同期検索
 " nnoremap <silent> ,up  :<C-u>Unite file_rec/async:!<CR>
 
@@ -429,6 +439,9 @@ imap <buffer> <C-w> <Plug>(unite_delete_backward_path)
 " ESCキーを2回押すと終了する
 nmap <silent><buffer> <ESC><ESC> q
 imap <silent><buffer> <ESC><ESC> <ESC>q
+" <C-c>でuniteを終了
+nmap <buffer> <C-c> <Plug>(unite_exit)
+imap <buffer> <C-c> <Plug>(unite_exit)
 endfunction
 
 
@@ -461,21 +474,24 @@ if dein#tap('denite.nvim')
 
   call denite#custom#var('menu', 'menus', s:menus)
 
-  call denite#custom#var('file_rec', 'command',
-      \ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
+  " call denite#custom#var('file_rec', 'command',
+  "     \ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
 
   nnoremap [denite] <Nop>
-  nmap <C-u> [denite]
+  nmap ; [denite]
   nnoremap <silent> [denite]b :<C-u>Denite buffer -highlight-mode-insert=Search<CR>
   " nnoremap <silent> [denite]B :<C-u>Denite buffer_tab -buffer-name=file<CR>
   nnoremap <silent> [denite]c :<C-u>Denite change -highlight-mode-insert=Search<CR>
   nnoremap <silent> [denite]f :<C-u>Denite file -highlight-mode-insert=Search<CR>
   nnoremap <silent> [denite]g :<C-u>Denite grep -buffer-name=search-buffer-denite -highlight-mode-insert=Search<CR>
+  nnoremap <silent> [denite]G :<C-u>DeniteCursorWord grep -buffer-name=search-buffer-denite -highlight-mode-insert=Search<CR>
   nnoremap <silent> [denite]h :<C-u>Denite help -highlight-mode-insert=Search<CR>
   nnoremap <silent> [denite]l :<C-u>Denite line -highlight-mode-insert=Search<CR>
   nnoremap <silent> [denite]T :<C-u>Denite tag -highlight-mode-insert=Search<CR>
   nnoremap <silent> [denite]u :<C-u>Denite file_mru -highlight-mode-insert=Search<CR>
   nnoremap <silent> [denite]r :<C-u>Denite file_rec -highlight-mode-insert=Search<CR>
+  nnoremap <silent> [denite]d :<C-u>Denite directory_mru -highlight-mode-insert=Search<CR>
+  nnoremap <silent> [denite]D :<C-u>Denite directory_rec -highlight-mode-insert=Search<CR>
   nnoremap <silent> [denite]m :<C-u>Denite menu -highlight-mode-insert=Search<CR>
   nnoremap <silent> [denite]y :<C-u>Denite neoyank -highlight-mode-insert=Search<CR>
   " nnoremap <silent> [denite]t :<C-u>Denite tab<CR>
@@ -487,6 +503,8 @@ if dein#tap('denite.nvim')
   nnoremap <silent> <C-g>n :<C-u>Denite -resume -buffer-name=search-buffer-denite -select=+1 -immediately<CR>
   " resumeした検索結果の前の行の結果へ飛ぶ
   nnoremap <silent> <C-g>p :<C-u>Denite -resume -buffer-name=search-buffer-denite -select=-1 -immediately<CR>
+  " resume previous buffer
+  nnoremap <silent> [denite]R :<C-u>Denite -buffer-name=search -resume -mode=normal<CR>
 
   call denite#custom#option('default', 'prompt', '>')
   call denite#custom#map('_', "<C-h>",
@@ -501,8 +519,8 @@ if dein#tap('denite.nvim')
         \ '<denite:do_action:tabopen>')
   call denite#custom#map('insert',
         \ "<C-t>", '<denite:do_action:tabopen>')
-  call denite#custom#map('insert',
-        \ "jj", '<denite:enter_mode:normal>')
+  " call denite#custom#map('insert',
+  "       \ "jj", '<denite:enter_mode:normal>')
 
   call denite#custom#map(
         \ 'insert',
@@ -540,18 +558,21 @@ if dein#tap('denite.nvim')
   "       \ '<denite:assign_previous_line>',
   "       \ 'noremap'
   "       \)
-  call denite#custom#map(
-        \ 'normal',
-        \ '/',
-        \ '<denite:enter_mode:insert>',
-        \ 'noremap'
-        \)
-  call denite#custom#map(
-        \ 'insert',
-        \ '<Esc>',
-        \ '<denite:enter_mode:normal>',
-        \ 'noremap'
-        \)
+  " call denite#custom#map(
+  "       \ 'normal',
+  "       \ '/',
+  "       \ '<denite:enter_mode:insert>',
+  "       \ 'noremap'
+  "       \)
+  " call denite#custom#map(
+  "       \ 'insert',
+  "       \ '<Esc>',
+  "       \ '<denite:enter_mode:normal>',
+  "       \ 'noremap'
+  "       \)
+  "<C-j>でdeniteにおいてインサート,ノーマル切り替え
+  call denite#custom#map('insert', '<C-j>', '<denite:enter_mode:normal>', 'noremap')
+  call denite#custom#map('normal', '<C-j>', '<denite:enter_mode:insert>', 'noremap')
   " call denite#custom#var('file_rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
   " call denite#custom#var('grep', 'command', ['ag'])
   " call denite#custom#var('grep', 'recursive_opts', [])
@@ -559,8 +580,8 @@ if dein#tap('denite.nvim')
   " call denite#custom#var('grep', 'separator', [])
   " call denite#custom#var('grep', 'default_opts', ['--follow', '--nocolor', '--nogroup'])
   if executable('rg')
-    " call denite#custom#var('file_rec', 'command',
-    "       \ ['rg', '--files', '--glob', '!.git'])
+    call denite#custom#var('file_rec', 'command',
+          \ ['rg', '--files', '--glob', '!.git'])
     " call denite#custom#var('grep', 'command', ['rg'])
     " Ripgrep command on grep source
     call denite#custom#var('grep', 'command', ['rg'])
@@ -655,10 +676,10 @@ noremap <Space>s :%s/
 " map <Space>co <S-i># <ESC>
 
 "--------------------------------------------------
-" <Space>uc で1行アンコメント。コメントアウトの行頭の# を削除(Ruby形式)
-map <Space>uc ^xx<ESC>
+" <Space>uc で1行コメントアウト。コメントアウトの行頭の# を削除(Ruby形式)
+map <Space>co ^xx<ESC>
 
-" <Space>cd で編集ファイルのカレントディレクトリへと移動
+" ;cd で編集ファイルのカレントディレクトリへと移動
 command! -nargs=? -complete=dir -bang CD  call s:ChangeCurrentDir('<args>', '<bang>')
 function! s:ChangeCurrentDir(directory, bang)
     if a:directory == ''
@@ -672,7 +693,7 @@ function! s:ChangeCurrentDir(directory, bang)
     endif
 endfunction
 " Change current directory.
-nnoremap <silent> <Space>cd :<C-u>CD<CR>
+nnoremap <silent> ;cd :<C-u>CD<CR>
 
 
 " デフォルトで起動するshellはzsh
@@ -681,7 +702,7 @@ set sh=zsh
 " neovim terminal mapping
 if has('nvim')
   " 新しいタブでターミナルを起動
-  nnoremap <silent> @t :tabe<CR>:terminal<CR>
+  nnoremap <silent> ;t :tabe<CR>:terminal<CR>
   nnoremap <silent> ,t :<C-u>16Term<CR>
   nnoremap <silent> ,vt :<C-u>VTerm<CR>
   " Ctrl + q でターミナルを終了
@@ -1058,8 +1079,8 @@ set timeout timeoutlen=1000 ttimeoutlen=50
 
 " gitgutter
 " gitの差分を表示
-nnoremap <silent> <Space>gg :<C-u>GitGutterToggle<CR>
-nnoremap <silent> <Space>gh :<C-u>GitGutterLineHighlightsToggle<CR>
+nnoremap <silent> ,gg :<C-u>GitGutterToggle<CR>
+nnoremap <silent> ,gh :<C-u>GitGutterLineHighlightsToggle<CR>
 nmap gv <Plug>GitGutterPreviewHunk
 nmap gn <Plug>GitGutterNextHunk
 nmap gp <Plug>GitGutterPrevHunk
@@ -1085,11 +1106,11 @@ map F <Plug>(clever-f-F)
 
 " ,scでエラーチェック
 nnoremap ,sc :<C-u>ALELint<CR>
-nmap <silent> <Space>p <Plug>(ale_previous)
-nmap <silent> <Space>n <Plug>(ale_next)
-nmap <silent> <Space>a <Plug>(ale_toggle)
+nmap <silent> ,p <Plug>(ale_previous)
+nmap <silent> ,n <Plug>(ale_next)
+nmap <silent> ,a <Plug>(ale_toggle)
 command! ALEList call s:ale_list()
-nnoremap <Space>m  :ALEList<CR>
+nnoremap ,m  :ALEList<CR>
 autocmd MyAutoGroup FileType help,qf,man,ref let b:ale_enabled = 0
 " シンボル変更
 let g:ale_sign_error = '⚠'
