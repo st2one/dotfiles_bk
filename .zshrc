@@ -13,7 +13,8 @@ fi
 #-------------------------------------------------
 # General Stteings
 #-------------------------------------------------
-export LANG=ja_JP.UTF-8
+export LANG=en_US.UTF-8
+# export locale=en_US.UTF-8
 # export TERM=xterm-256color
 # [[ $TMUX = "" ]] && export TERM="xterm-256color"
 [[ $TMUX = "" ]] && export TERM="screen-256color"
