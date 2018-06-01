@@ -491,7 +491,7 @@ if dein#tap('denite.nvim')
   nnoremap <silent> [denite]u :<C-u>Denite file_mru -highlight-mode-insert=Search<CR>
   nnoremap <silent> [denite]r :<C-u>Denite file_rec -highlight-mode-insert=Search<CR>
   nnoremap <silent> [denite]d :<C-u>Denite directory_mru -highlight-mode-insert=Search<CR>
-  nnoremap <silent> [denite]D :<C-u>Denite directory_rec -highlight-mode-insert=Search<CR>
+  nnoremap <silent> [denite]s :<C-u>Denite directory_rec -highlight-mode-insert=Search<CR>
   nnoremap <silent> [denite]m :<C-u>Denite menu -highlight-mode-insert=Search<CR>
   nnoremap <silent> [denite]y :<C-u>Denite neoyank -highlight-mode-insert=Search<CR>
   " nnoremap <silent> [denite]t :<C-u>Denite tab<CR>
