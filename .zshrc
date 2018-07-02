@@ -136,10 +136,6 @@ alias conda-deactivate='source $PYENV_ROOT/versions/anaconda3-5.0.0/bin/deactiva
 # Add path for pip
 export PATH="$HOME/Library/Python/2.7/bin:$PATH"
 
-# Ruby
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
-
 # Java
 #export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8
 
@@ -208,6 +204,14 @@ for DIR in $HOME/Library/Python/2.7/bin $HOME/.local/bin ; do
     PATH=${PATH}:${DIR}
   fi
 done
+
+# Ruby
+export PATH="$HOME/.rbenv/bin:$PATH"
+export PATH="$HOME/.rbenv/shims:$PATH"
+eval "$(rbenv init -)"
+
+# Yarn
+export PATH="/usr/local/Cellar/yarn/1.7.0/bin:$PATH"
 
 # サーチパスに~/mybinを追加
 PATH=$PATH:~/mybin
