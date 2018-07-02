@@ -24,6 +24,7 @@ set fileformats=unix,dos,mac
 set background=dark
 set splitbelow " 新しいウインドウを下に開く
 set splitright " 新しいウインドウを右に開く
+set inccommand=split " 文字列置換をインタラクティブに表示
 " set termguicolors
 " let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 " let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
@@ -210,6 +211,9 @@ if s:use_dein && v:version >= 704
     call dein#add('LeafCage/yankround.vim')
     " call dein#add('ctrlpvim/ctrlp.vim')
     call dein#add('tpope/vim-fugitive')
+    " call dein#add('junegunn/fzf', { 'build': './install', 'rtp': '' })
+    call dein#add('junegunn/fzf', { 'build': './install --all', 'merged': 0 })
+    call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
     call dein#add('tpope/vim-surround')
     call dein#add('kana/vim-submode')
     call dein#add('tomtom/tcomment_vim')
@@ -232,6 +236,7 @@ if s:use_dein && v:version >= 704
     call dein#add('airblade/vim-gitgutter')
     call dein#add('zchee/deoplete-jedi')
     call dein#add('w0rp/ale')
+    call dein#add('elzr/vim-json')
 
     call dein#add('nanotech/jellybeans.vim')
     call dein#add('w0ng/vim-hybrid')
@@ -260,6 +265,8 @@ if s:use_dein && v:version >= 704
     "       \ 'on_map': ['<plug>(openbrowser-smart-search)'],
     "       \ 'lazy': 1})
     call dein#add('tyru/open-browser.vim')
+
+    call dein#add('rhysd/nyaovim-markdown-preview')
 
     call dein#end()
 
@@ -291,6 +298,8 @@ autocmd ColorScheme * highlight VertSplit ctermbg=none
 " autocmd ColorScheme * highlight TabLine ctermbg=none
 autocmd ColorScheme * highlight IncSearch ctermbg=none
 autocmd ColorScheme * highlight Search ctermbg=none
+" autocmd ColorScheme * highlight Visual ctermbg=143 ctermfg=232 cterm=bold
+
 " colorscheme dracula
 " color Dracula
 " colorscheme solarized
@@ -504,7 +513,7 @@ if dein#tap('denite.nvim')
   " resumeした検索結果の前の行の結果へ飛ぶ
   nnoremap <silent> <C-g>p :<C-u>Denite -resume -buffer-name=search-buffer-denite -select=-1 -immediately<CR>
   " resume previous buffer
-  nnoremap <silent> [denite]R :<C-u>Denite -buffer-name=search -resume -mode=normal<CR>
+  " nnoremap <silent> [denite]R :<C-u>Denite -buffer-name=search -resume -mode=normal<CR>
 
   call denite#custom#option('default', 'prompt', '>')
   call denite#custom#map('_', "<C-h>",
@@ -515,6 +524,8 @@ if dein#tap('denite.nvim')
         \ '<denite:do_action:vsplit>')
   call denite#custom#map('insert',
         \ "<C-v>", '<denite:do_action:vsplit>')
+  call denite#custom#map('insert',
+        \ "<C-s>", '<denite:do_action:split>')
   call denite#custom#map('_', "<C-t>",
         \ '<denite:do_action:tabopen>')
   call denite#custom#map('insert',
@@ -702,7 +713,7 @@ set sh=zsh
 " neovim terminal mapping
 if has('nvim')
   " 新しいタブでターミナルを起動
-  nnoremap <silent> ;t :tabe<CR>:terminal<CR>
+  nnoremap <silent> <Space>t :tabe<CR>:terminal<CR>
   nnoremap <silent> ,t :<C-u>16Term<CR>
   nnoremap <silent> ,vt :<C-u>VTerm<CR>
   " Ctrl + q でターミナルを終了
@@ -818,10 +829,10 @@ set showtabline=2 " 常にタブラインを表示
 
 
 " tcomment_vimキーマップ変更
-let g:tcommentMapLeader1 = '<C-_>'
-let g:tcommentMapLeader2 = '<Leader>'
-let g:tcommentMapLeaderOp1 = 'gc'
-let g:tcommentMapLeaderOp2 = 'gC'
+let g:tcomment_mapleader1 = '<C-_>'
+let g:tcomment_mapleader2 = '<Leader>'
+let g:tcomment_opleader1 = 'gc'
+let g:tcomment_opleader2 = 'gC'
 
 " tcommentで使用する形式を追加
 if !exists('g:tcomment_types')
@@ -914,6 +925,9 @@ let g:markdown_fenced_languages = [
 " previmのプレビューのデザイン変更
 let g:previm_disable_default_css = 1
 let g:previm_custom_css_path = '~/.previm/markdown.css'
+
+" nyaovim-markdown-preview
+let g:markdown_preview_auto = 1
 
 
 " Vim-Quickrunの設定
@@ -1086,6 +1100,80 @@ nmap gn <Plug>GitGutterNextHunk
 nmap gp <Plug>GitGutterPrevHunk
 set updatetime=250
 
+" fugitive
+nnoremap <silent> <Space>gw :<C-u>Gwrite<CR>
+nnoremap <silent> <Space>gc :<C-u>Gcommit<CR>
+nnoremap <silent> <Space>gca :<C-u>Gcommit --amend<CR>
+nnoremap <silent> <Space>gd :<C-u>Gdiff<CR>
+nnoremap <silent> <Space>gb :<C-u>Gblame<CR>
+nnoremap <silent> <Space>gps :<C-u>Gpush<CR>
+nnoremap <silent> <Space>gpl :<C-u>Gpull<CR>
+
+" fzf
+nnoremap <silent> <Space>b :<C-u>Buffers<CR>
+nnoremap <silent> <Space>x :<C-u>Commands<CR>
+nnoremap <silent> <Space>f :<C-u>Files<CR>
+nnoremap <silent> <Space>l :<C-u>Lines<CR>
+nnoremap <silent> <Space>gf :<C-u>GFiles<CR>
+nnoremap <silent> <Space>cm :<C-u>Commits<CR>
+nnoremap <silent> <Space>rg :<C-u>Rg<CR>
+nnoremap <silent> <Space>u :<C-u>FZFMru<CR>
+
+let g:fzf_action = {
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-s': 'split',
+  \ 'ctrl-v': 'vsplit' }
+
+" 絞り込み画面新規タブ
+" let g:fzf_layout = { 'window': '-tabnew' }
+let g:fzf_layout = { 'down': '~70%' }
+
+" Customize fzf colors to match your color scheme
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
+
+command! -bang Buffers
+  \ call fzf#vim#buffers({'options': '--reverse'})
+
+command! -bang Commands
+  \ call fzf#vim#commands({'options': '--reverse'})
+
+command! -bang Lines
+  \ call fzf#vim#lines({'options': '--reverse'})
+
+command! -bang Commits
+  \ call fzf#vim#commits({'options': '--reverse'})
+
+command! -bang -nargs=* Rg
+      \ call fzf#vim#grep(
+      \   'rg --line-number --no-heading '.shellescape(<q-args>), 0,
+      \   fzf#vim#with_preview({'options': '--reverse'}, 'right:50%:wrap'))
+
+command! FZFMru call fzf#run({
+\  'source':  v:oldfiles,
+\  'sink':    'e',
+\  'options': '-m -x +s --reverse',
+\  'down' : '~70%' })
+
+" command! -bang -nargs=* Rg
+"   \ call fzf#vim#grep(
+"   \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
+"   \   <bang>0 ? fzf#vim#with_preview('up:60%')
+"   \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+"   \   <bang>0)
+
 " ALE(シンタックスチェッカー)
 " Write this in your vimrc file
 let g:ale_lint_on_text_changed = 'never'
@@ -1094,15 +1182,6 @@ let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_enter = 0
 " ファイルを保存するときにチェックしない
 let g:ale_lint_on_save = 0
-
-" clever-f.vim
-let g:clever_f_ignore_case = 1
-let g:clever_f_smart_case = 1
-let g:clever_f_fix_key_direction = 1
-let g:clever_f_not_overwrites_standard_mappings = 1
-" f, Fのみ利用(t, Tは使わない)
-map f <Plug>(clever-f-f)
-map F <Plug>(clever-f-F)
 
 " ,scでエラーチェック
 nnoremap ,sc :<C-u>ALELint<CR>
@@ -1120,11 +1199,29 @@ let g:ale_linters = {
       \   'eruby': [],
       \}
 
+
+" clever-f.vim
+let g:clever_f_ignore_case = 1
+let g:clever_f_smart_case = 1
+let g:clever_f_fix_key_direction = 1
+let g:clever_f_not_overwrites_standard_mappings = 1
+" f, Fのみ利用(t, Tは使わない)
+map f <Plug>(clever-f-f)
+map F <Plug>(clever-f-F)
+
 " Gundo.vim
 if has('python3')
     let g:gundo_prefer_python3 = 1
 endif
 nnoremap U :GundoToggle<CR>
+
+" indentLineの設定
+" let g:indentLine_color_term = 240
+let g:indentLine_color_term = 59
+
+" vim-json
+" jsonでダブルクォーテーション表示されるように
+let g:vim_json_syntax_conceal = 0
 
 "エスケープをcontrol+jにマッピング
 imap <C-j> <esc>
