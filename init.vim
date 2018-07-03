@@ -379,9 +379,9 @@ if executable('ag')
 endif
 
 " book-mark list
-noremap ,bm :Unite bookmark<CR>
+noremap ;m :Unite bookmark<CR>
 " add book-mark
-noremap ,ba :UniteBookmarkAdd<CR>
+noremap ;add :UniteBookmarkAdd<CR>
 
 nnoremap s <Nop>
 nnoremap sj <C-w>j
@@ -494,24 +494,25 @@ if dein#tap('denite.nvim')
   nnoremap <silent> [denite]f :<C-u>Denite file -highlight-mode-insert=Search<CR>
   nnoremap <silent> [denite]g :<C-u>Denite grep -buffer-name=search-buffer-denite -highlight-mode-insert=Search<CR>
   nnoremap <silent> [denite]G :<C-u>DeniteCursorWord grep -buffer-name=search-buffer-denite -highlight-mode-insert=Search<CR>
-  nnoremap <silent> [denite]h :<C-u>Denite help -highlight-mode-insert=Search<CR>
+  nnoremap <silent> [denite]h :<C-u>Denite command_history -highlight-mode-insert=Search<CR>
+  nnoremap <silent> [denite]H :<C-u>Denite help -highlight-mode-insert=Search<CR>
   nnoremap <silent> [denite]l :<C-u>Denite line -highlight-mode-insert=Search<CR>
   nnoremap <silent> [denite]T :<C-u>Denite tag -highlight-mode-insert=Search<CR>
   nnoremap <silent> [denite]u :<C-u>Denite file_mru -highlight-mode-insert=Search<CR>
   nnoremap <silent> [denite]r :<C-u>Denite file_rec -highlight-mode-insert=Search<CR>
   nnoremap <silent> [denite]d :<C-u>Denite directory_mru -highlight-mode-insert=Search<CR>
   nnoremap <silent> [denite]s :<C-u>Denite directory_rec -highlight-mode-insert=Search<CR>
-  nnoremap <silent> [denite]m :<C-u>Denite menu -highlight-mode-insert=Search<CR>
+  nnoremap <silent> [denite]M :<C-u>Denite menu -highlight-mode-insert=Search<CR>
   nnoremap <silent> [denite]y :<C-u>Denite neoyank -highlight-mode-insert=Search<CR>
   " nnoremap <silent> [denite]t :<C-u>Denite tab<CR>
   " nnoremap <silent> ,bm :<C-u>Denite -direction=topleft -cursor-wrap=true bookmark<CR>
   " nnoremap <silent> ,ba :<C-u>DeniteBookmarkAdd<CR>
   " Denite grep検索結果を再表示する
-  nnoremap <silent> <C-g>r :<C-u>Denite -resume -buffer-name=search-buffer-denite<CR>
+  nnoremap <silent> gr :<C-u>Denite -resume -buffer-name=search-buffer-denite<CR>
   " resumeした検索結果の次の行の結果へ飛ぶ
-  nnoremap <silent> <C-g>n :<C-u>Denite -resume -buffer-name=search-buffer-denite -select=+1 -immediately<CR>
+  nnoremap <silent> gn :<C-u>Denite -resume -buffer-name=search-buffer-denite -select=+1 -immediately<CR>
   " resumeした検索結果の前の行の結果へ飛ぶ
-  nnoremap <silent> <C-g>p :<C-u>Denite -resume -buffer-name=search-buffer-denite -select=-1 -immediately<CR>
+  nnoremap <silent> gp :<C-u>Denite -resume -buffer-name=search-buffer-denite -select=-1 -immediately<CR>
   " resume previous buffer
   " nnoremap <silent> [denite]R :<C-u>Denite -buffer-name=search -resume -mode=normal<CR>
 
@@ -595,7 +596,7 @@ if dein#tap('denite.nvim')
           \ ['rg', '--files', '--glob', '!.git'])
     " call denite#custom#var('grep', 'command', ['rg'])
     " Ripgrep command on grep source
-    call denite#custom#var('grep', 'command', ['rg'])
+    call denite#custom#var('grep', 'command', ['rg', '--smart-case'])
     call denite#custom#var('grep', 'default_opts',
       \ ['--vimgrep', '--no-heading'])
     call denite#custom#var('grep', 'recursive_opts', [])
@@ -704,8 +705,8 @@ function! s:ChangeCurrentDir(directory, bang)
     endif
 endfunction
 " Change current directory.
-nnoremap <silent> ;cd :<C-u>CD<CR>
-
+nnoremap <silent> <Space>cd :<C-u>CD<CR>
+nnoremap <silent> <Space>; :<C-u>pwd<CR>
 
 " デフォルトで起動するshellはzsh
 set sh=zsh
@@ -1095,9 +1096,9 @@ set timeout timeoutlen=1000 ttimeoutlen=50
 " gitの差分を表示
 nnoremap <silent> ,gg :<C-u>GitGutterToggle<CR>
 nnoremap <silent> ,gh :<C-u>GitGutterLineHighlightsToggle<CR>
-nmap gv <Plug>GitGutterPreviewHunk
-nmap gn <Plug>GitGutterNextHunk
-nmap gp <Plug>GitGutterPrevHunk
+nmap ,v <Plug>GitGutterPreviewHunk
+nmap ,n <Plug>GitGutterNextHunk
+nmap ,p <Plug>GitGutterPrevHunk
 set updatetime=250
 
 " fugitive
