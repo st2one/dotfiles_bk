@@ -488,20 +488,20 @@ if dein#tap('denite.nvim')
 
   nnoremap [denite] <Nop>
   nmap ; [denite]
-  nnoremap <silent> [denite]b :<C-u>Denite buffer -highlight-mode-insert=Search<CR>
+  nnoremap <silent> [denite]b :<C-u>Denite buffer -smartcase -highlight-mode-insert=Search<CR>
   " nnoremap <silent> [denite]B :<C-u>Denite buffer_tab -buffer-name=file<CR>
-  nnoremap <silent> [denite]c :<C-u>Denite change -highlight-mode-insert=Search<CR>
-  nnoremap <silent> [denite]f :<C-u>Denite file -highlight-mode-insert=Search<CR>
+  nnoremap <silent> [denite]c :<C-u>Denite change -smartcase -highlight-mode-insert=Search<CR>
+  nnoremap <silent> [denite]f :<C-u>Denite file -smartcase -highlight-mode-insert=Search<CR>
   nnoremap <silent> [denite]g :<C-u>Denite grep -buffer-name=search-buffer-denite -highlight-mode-insert=Search<CR>
   nnoremap <silent> [denite]G :<C-u>DeniteCursorWord grep -buffer-name=search-buffer-denite -highlight-mode-insert=Search<CR>
-  nnoremap <silent> [denite]h :<C-u>Denite command_history -highlight-mode-insert=Search<CR>
+  nnoremap <silent> [denite]h :<C-u>Denite command_history -smartcase -highlight-mode-insert=Search<CR>
   nnoremap <silent> [denite]H :<C-u>Denite help -highlight-mode-insert=Search<CR>
-  nnoremap <silent> [denite]l :<C-u>Denite line -highlight-mode-insert=Search<CR>
+  nnoremap <silent> [denite]l :<C-u>Denite line -smartcase -highlight-mode-insert=Search<CR>
   nnoremap <silent> [denite]T :<C-u>Denite tag -highlight-mode-insert=Search<CR>
-  nnoremap <silent> [denite]u :<C-u>Denite file_mru -highlight-mode-insert=Search<CR>
-  nnoremap <silent> [denite]r :<C-u>Denite file_rec -highlight-mode-insert=Search<CR>
-  nnoremap <silent> [denite]d :<C-u>Denite directory_mru -highlight-mode-insert=Search<CR>
-  nnoremap <silent> [denite]s :<C-u>Denite directory_rec -highlight-mode-insert=Search<CR>
+  nnoremap <silent> [denite]u :<C-u>Denite file_mru -smartcase -highlight-mode-insert=Search<CR>
+  nnoremap <silent> [denite]r :<C-u>Denite file_rec -smartcase -highlight-mode-insert=Search<CR>
+  nnoremap <silent> [denite]d :<C-u>Denite directory_mru -smartcase -highlight-mode-insert=Search<CR>
+  nnoremap <silent> [denite]s :<C-u>Denite directory_rec -smartcase -highlight-mode-insert=Search<CR>
   nnoremap <silent> [denite]M :<C-u>Denite menu -highlight-mode-insert=Search<CR>
   nnoremap <silent> [denite]y :<C-u>Denite neoyank -highlight-mode-insert=Search<CR>
   " nnoremap <silent> [denite]t :<C-u>Denite tab<CR>
