@@ -237,6 +237,7 @@ if s:use_dein && v:version >= 704
     call dein#add('zchee/deoplete-jedi')
     call dein#add('w0rp/ale')
     call dein#add('elzr/vim-json')
+    call dein#add('fatih/vim-go')
 
     call dein#add('nanotech/jellybeans.vim')
     call dein#add('w0ng/vim-hybrid')
@@ -393,13 +394,13 @@ nnoremap sK <C-w>K
 nnoremap sL <C-w>L
 nnoremap sH <C-w>H
 nnoremap s= <C-w>=
-nnoremap ss :<C-u>sp<CR>
-nnoremap sv :<C-u>vs<CR>
-nnoremap sq :<C-u>q<CR>
-nnoremap sQ :<C-u>bd<CR>
-nnoremap sN :<C-u>bn<CR>
-nnoremap sP :<C-u>bp<CR>
-nnoremap st :<C-u>tabnew<CR>
+nnoremap <silent>ss :<C-u>sp<CR>
+nnoremap <silent>sv :<C-u>vs<CR>
+nnoremap <silent>sq :<C-u>q<CR>
+nnoremap <silent>sQ :<C-u>bd<CR>
+nnoremap <silent>sN :<C-u>bn<CR>
+nnoremap <silent>sP :<C-u>bp<CR>
+nnoremap <silent>st :<C-u>tabnew<CR>
 nnoremap sn gt
 nnoremap sp gT
 nnoremap <C-n> gt
@@ -769,7 +770,7 @@ let g:vimfiler_edit_action = 'tabopen'
 " Unite bookmarkからEnterでvimfiler上で移動
 " autocmd FileType vimfiler call unite#custom_default_action('directory', 'cd')
 " 自動でカレントディレクトリ変更
-let g:vimfiler_enable_auto_cd = 1
+" let g:vimfiler_enable_auto_cd = 1
 " 開いているファイルをvimfilerで開く
 nnoremap <silent> ,tr :<C-u>VimFilerBufferDir -split -simple -winwidth=35 -no-quit<CR>
 " 開いているファイルをIDEっぽく階層的に表示
@@ -1096,9 +1097,9 @@ set timeout timeoutlen=1000 ttimeoutlen=50
 " gitの差分を表示
 nnoremap <silent> ,gg :<C-u>GitGutterToggle<CR>
 nnoremap <silent> ,gh :<C-u>GitGutterLineHighlightsToggle<CR>
-nmap ,v <Plug>GitGutterPreviewHunk
-nmap ,n <Plug>GitGutterNextHunk
-nmap ,p <Plug>GitGutterPrevHunk
+nmap ,gv <Plug>GitGutterPreviewHunk
+nmap ,gn <Plug>GitGutterNextHunk
+nmap ,gp <Plug>GitGutterPrevHunk
 set updatetime=250
 
 " fugitive
@@ -1223,6 +1224,9 @@ let g:indentLine_color_term = 59
 " vim-json
 " jsonでダブルクォーテーション表示されるように
 let g:vim_json_syntax_conceal = 0
+
+" vim-go
+let g:go_highlight_chan_whitespace_error = 0
 
 "エスケープをcontrol+jにマッピング
 imap <C-j> <esc>

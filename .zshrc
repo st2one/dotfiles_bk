@@ -210,6 +210,11 @@ export PATH="$HOME/.rbenv/bin:$PATH"
 export PATH="$HOME/.rbenv/shims:$PATH"
 eval "$(rbenv init -)"
 
+# Go
+export GOPATH="$HOME/go"
+export GOROOT="$( go env GOROOT )"
+export PATH="$GOPATH/bin:$PATH"
+
 # Yarn
 export PATH="/usr/local/Cellar/yarn/1.7.0/bin:$PATH"
 
@@ -426,3 +431,5 @@ cool-peco
 bindkey '^eh' cool-peco-ssh
 bindkey '^eco' cool-peco-git-checkout
 bindkey '^el' cool-peco-git-log
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
