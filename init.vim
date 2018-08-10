@@ -214,6 +214,7 @@ if s:use_dein && v:version >= 704
     " call dein#add('junegunn/fzf', { 'build': './install', 'rtp': '' })
     call dein#add('junegunn/fzf', { 'build': './install --all', 'merged': 0 })
     call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
+    call dein#add('soramugi/auto-ctags.vim')
     call dein#add('tpope/vim-surround')
     call dein#add('kana/vim-submode')
     call dein#add('tomtom/tcomment_vim')
@@ -716,8 +717,8 @@ set sh=zsh
 if has('nvim')
   " 新しいタブでターミナルを起動
   nnoremap <silent> <Space>t :tabe<CR>:terminal<CR>
-  nnoremap <silent> ,t :<C-u>16Term<CR>
-  nnoremap <silent> ,vt :<C-u>VTerm<CR>
+  " nnoremap <silent> ,t :<C-u>16Term<CR>
+  " nnoremap <silent> ,vt :<C-u>VTerm<CR>
   " Ctrl + q でターミナルを終了
   tnoremap <C-q> <C-\><C-n>:q<CR>
   " ESCでターミナルモードからノーマルモードへ
@@ -772,7 +773,7 @@ let g:vimfiler_edit_action = 'tabopen'
 " 自動でカレントディレクトリ変更
 " let g:vimfiler_enable_auto_cd = 1
 " 開いているファイルをvimfilerで開く
-nnoremap <silent> ,tr :<C-u>VimFilerBufferDir -split -simple -winwidth=35 -no-quit<CR>
+" nnoremap <silent> ,tr :<C-u>VimFilerBufferDir -split -simple -winwidth=35 -no-quit<CR>
 " 開いているファイルをIDEっぽく階層的に表示
 nnoremap <silent> ,ie :<C-u>VimFilerExplorer -find -simple -winwidth=40 -no-quit<CR>
 " 現在開いているバッファのディレクトリを表示(<C-e>で表示/非表示)使い勝手良い
@@ -1176,6 +1177,25 @@ command! FZFMru call fzf#run({
 "   \           : fzf#vim#with_preview('right:50%:hidden', '?'),
 "   \   <bang>0)
 
+" ctags
+" tagsファイルの読み取り場所の設定
+set tags+=.git/tags
+" タグジャンプ先が複数ある場合にリスト表示
+nnoremap ,t g<C-]>
+nnoremap <C-]> g<C-]>
+" タグジャンプ時に画面分割
+nnoremap <silent> ,vt :vsp<CR> :exe("tjump ".expand('<cword>'))<CR>
+nnoremap <silent> ,st :split<CR> :exe("tjump ".expand('<cword>'))<CR>
+
+" auto-ctags
+" セーブしたときに自動でctags実行
+let g:auto_ctags = 1
+" .gitディレクトリにtagsファイルを作成する
+let g:auto_ctags_directory_list = ['.git']
+" ctagsのオプション指定
+let g:auto_ctags_tags_args = '--recurse=yes --append=yes --tag-relative=yes --languages=Ruby,JavaScript,Python,Java --exclude=node_modules --exclude=vendor --exclude=.git --exclude=log'
+
+
 " ALE(シンタックスチェッカー)
 " Write this in your vimrc file
 let g:ale_lint_on_text_changed = 'never'
@@ -1198,7 +1218,8 @@ let g:ale_sign_error = '⚠'
 let g:ale_sign_warning = '⨉'
 
 let g:ale_linters = {
-      \   'eruby': [],
+      \   'javascript': ['eslint'],
+      \   'ruby': ['ruby', 'rubocop'],
       \}
 
 

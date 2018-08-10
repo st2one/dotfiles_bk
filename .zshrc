@@ -77,6 +77,9 @@ alias vim='nvim'
 # normal-vim
 alias oldvim="\vim"
 
+# ctags
+alias ctags="`brew --prefix`/bin/ctags"
+
 # python
 alias python='python3'
 
