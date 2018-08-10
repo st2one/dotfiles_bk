@@ -1,0 +1,6 @@
+--recurse=yes
+--languages=Ruby,JavaScript,Python,Java
+--exclude=node_modules
+--exclude=vendor
+--exclude=.git
+--exclude=log
