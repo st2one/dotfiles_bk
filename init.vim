@@ -717,8 +717,8 @@ set sh=zsh
 if has('nvim')
   " 新しいタブでターミナルを起動
   nnoremap <silent> <Space>t :tabe<CR>:terminal<CR>
-  " nnoremap <silent> ,t :<C-u>16Term<CR>
-  " nnoremap <silent> ,vt :<C-u>VTerm<CR>
+  nnoremap <silent> ,t :<C-u>16Term<CR>
+  nnoremap <silent> ,vt :<C-u>VTerm<CR>
   " Ctrl + q でターミナルを終了
   tnoremap <C-q> <C-\><C-n>:q<CR>
   " ESCでターミナルモードからノーマルモードへ
@@ -1181,11 +1181,11 @@ command! FZFMru call fzf#run({
 " tagsファイルの読み取り場所の設定
 set tags+=.git/tags
 " タグジャンプ先が複数ある場合にリスト表示
-nnoremap ,t g<C-]>
+" nnoremap ,t g<C-]>
 nnoremap <C-]> g<C-]>
 " タグジャンプ時に画面分割
-nnoremap <silent> ,vt :vsp<CR> :exe("tjump ".expand('<cword>'))<CR>
-nnoremap <silent> ,st :split<CR> :exe("tjump ".expand('<cword>'))<CR>
+nnoremap <silent> k<C-]> :vsp<CR> :exe("tjump ".expand('<cword>'))<CR>
+nnoremap <silent> h<C-]> :split<CR> :exe("tjump ".expand('<cword>'))<CR>
 
 " auto-ctags
 " セーブしたときに自動でctags実行
