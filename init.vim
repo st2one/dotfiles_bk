@@ -1183,9 +1183,10 @@ set tags+=.git/tags
 " タグジャンプ先が複数ある場合にリスト表示
 " nnoremap ,t g<C-]>
 nnoremap <C-]> g<C-]>
+nnoremap ,, g<C-]>
 " タグジャンプ時に画面分割
-nnoremap <silent> k<C-]> :vsp<CR> :exe("tjump ".expand('<cword>'))<CR>
-nnoremap <silent> h<C-]> :split<CR> :exe("tjump ".expand('<cword>'))<CR>
+nnoremap <silent> ,k :vsp<CR> :exe("tjump ".expand('<cword>'))<CR>
+nnoremap <silent> ,h :split<CR> :exe("tjump ".expand('<cword>'))<CR>
 
 " auto-ctags
 " セーブしたときに自動でctags実行
