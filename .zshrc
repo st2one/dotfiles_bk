@@ -122,10 +122,6 @@ export PATH=/usr/local/share/npm/bin:$PATH
 # nodebrew
 # export PATH=$HOME/.nodebrew/current/bin:$PATH
 
-# nodenv
-export PATH=$HOME/.nodenv/bin:$PATH
-eval "$(nodenv init -)"
-
 # Python
 export PYENV_ROOT=${HOME}/.pyenv
   export PATH="${PYENV_ROOT}/bin:$PATH"
@@ -149,6 +145,10 @@ export PATH="$HOME/Library/Python/2.7/bin:$PATH"
 # Node.js
 export PATH=$HOME/.nodebrew/current/bin:$PATH
 
+# nodenv
+export PATH=$HOME/.nodenv/bin:$PATH
+eval "$(nodenv init -)"
+
 # Postgres
 export PATH=/Applications/Postgres.app/Contents/MacOS/bin:$PATH
 
@@ -167,7 +167,7 @@ export PYTHONPATH=/usr/local/Cellar/opencv/2.4.9/lib/python2.7/site-packages:$PY
 PATH=$PATH:/usr/local/texlive/2014/bin/x86_64-darwin/
 
 # gcc-6
-export PATH=/usr/local/bin:$PATH
+# export PATH=/usr/local/bin:$PATH
 
 # openmpi
 export MANPATH=/opt/openmpi/share/man:$MANPATH
