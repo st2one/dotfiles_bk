@@ -120,7 +120,11 @@ export PATH=$HOME/Library/Haskell/bin:$PATH
 export PATH=/usr/local/share/npm/bin:$PATH
 
 # nodebrew
-export PATH=$HOME/.nodebrew/current/bin:$PATH
+# export PATH=$HOME/.nodebrew/current/bin:$PATH
+
+# nodenv
+export PATH=$HOME/.nodenv/bin:$PATH
+eval "$(nodenv init -)"
 
 # Python
 export PYENV_ROOT=${HOME}/.pyenv
