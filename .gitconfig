@@ -37,3 +37,5 @@
   list = log --pretty=format:\"<%h> %ad [%an] %Cgreen%d%Creset %s\" --date=short
   loglr = log --left-right -p
   conflictlr = log --merge --left-right -p
+[commit]
+	template = /Users/takumi/.gitmessage.txt

@@ -1,0 +1,31 @@
+# ==== Format ====
+# :emoji: Subject
+
+# Commit body...
+
+# ==== Emojis ====
+# 🎉 イニシャルコミット :tada:
+# ✨ 新規機能追加 :sparkles:
+# 👍 機能修正 :+1:
+# ♻️ リファクタリング :recycle:
+# ✅ テストの追加 :white_check:
+# 🐎 パフォーマンス改善 :horse:
+# 👮 セキュリティ関連の改善 :cop:
+# 📝 ドキュメント追加 :memo:
+# 🔉 ログ追加 :sound:
+# ✏️ タイポなどの修正 :pencil:
+# 🚧 コメントアウトなどの無効化 :construction:
+# 🔥 ファイル削除 :fire:
+# 🔇 ログ削除 :mute:
+# 🐛 バグ修正 :bug:
+# 👌 レビュー対応 :ok:
+# 🔖 バージョンアップ :bookmark:
+# 🐳 ドッカー :whale:
+
+# ==== Messages ====
+# 新規(ファイル)機能追加 Add
+# 機能修正、既存機能追加（バグではない) Update
+# リファクタリング Clean
+# 削除など Remove
+# バグ修正 Fix
+# バージョンアップ Upgrade
