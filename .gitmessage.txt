@@ -15,6 +15,7 @@
 # 🔉 ログ追加 :sound:
 # ✏️ タイポなどの修正 :pencil:
 # 🚧 コメントアウトなどの無効化 :construction:
+# 🚿 関数や機能の削除 :shower:
 # 🔥 ファイル削除 :fire:
 # 🔇 ログ削除 :mute:
 # 🐛 バグ修正 :bug:
