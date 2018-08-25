@@ -95,7 +95,7 @@ set smartindent     " 改行時に入力された行の末尾に合わせて次�
 "動作環境との統合関連の設定
 "==============================
 set clipboard+=unnamedplus " OSのクリップボードをレジスタ指定無しで Yank, Put 出来るようにする
-"set mouse=a  " マウスの入力を受け付ける
+set mouse=n  " マウスの入力を受け付ける
 "set shellslash " Windows でもパスの区切り文字を / にする
 "set iminsert=2 " インサートモードから抜けると自動的にIMEをオフにする
 
@@ -236,6 +236,7 @@ if s:use_dein && v:version >= 704
     call dein#add('iamcco/mathjax-support-for-mkdp')
     call dein#add('airblade/vim-gitgutter')
     call dein#add('zchee/deoplete-jedi')
+    call dein#add('zchee/deoplete-go', {'build': 'make'})
     call dein#add('w0rp/ale')
     call dein#add('elzr/vim-json')
     call dein#add('fatih/vim-go')
@@ -1199,15 +1200,10 @@ let g:auto_ctags_tags_args = '--recurse=yes --append=yes --tag-relative=yes --la
 
 
 " ALE(シンタックスチェッカー)
-" Write this in your vimrc file
 let g:ale_lint_on_text_changed = 'never'
-" You can disable this option too
-" if you don't want linters to run on opening a file
 let g:ale_lint_on_enter = 0
-" ファイルを保存するときにチェックしない
 let g:ale_lint_on_save = 0
 
-" ,scでエラーチェック
 nnoremap ,sc :<C-u>ALELint<CR>
 nmap <silent> ,p <Plug>(ale_previous)
 nmap <silent> ,n <Plug>(ale_next)
@@ -1215,15 +1211,18 @@ nmap <silent> ,a <Plug>(ale_toggle)
 command! ALEList call s:ale_list()
 nnoremap ,m  :ALEList<CR>
 autocmd MyAutoGroup FileType help,qf,man,ref let b:ale_enabled = 0
+
 " シンボル変更
-let g:ale_sign_error = '⚠'
-let g:ale_sign_warning = '⨉'
+let g:ale_sign_error = '⨉'
+let g:ale_sign_warning = '⚠'
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 
 let g:ale_linters = {
-      \   'javascript': ['eslint'],
-      \   'ruby': ['ruby', 'rubocop'],
+      \   'javascript': ['eslint', 'prettier'],
+      \   'ruby': ['rubocop', 'ruby'],
+      \   'eruby': [],
+      \   'go': ['golint'],
       \}
-
 
 " clever-f.vim
 let g:clever_f_ignore_case = 1
@@ -1276,6 +1275,19 @@ let g:vim_json_syntax_conceal = 0
 
 " vim-go
 let g:go_highlight_chan_whitespace_error = 0
+let g:go_fmt_command = "goimports"
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_operators = 1
+let g:go_term_enabled = 1
+let g:go_highlight_build_constraints = 1
+
+" deoplete-go
+let g:deoplete#sources#go#gocode_binary = '$GOPATH/bin/gocode'
+let g:deoplete#sources#go#align_class = 1
+let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
+let g:deoplete#sources#go#package_dot = 1
 
 "エスケープをcontrol+jにマッピング
 imap <C-j> <esc>
