@@ -86,6 +86,14 @@ alias python='python3'
 # ocamlのalias
 alias ocaml="rlwrap ocaml"
 
+# mybin
+alias makedirs="makedirs.sh"
+
+alias cfo="cd ~/github/freee/CFO-Alpha"
+alias line_light="cd ~/github/line_light"
+alias date-adjuster="cd ~/github/date-adjuster"
+alias uniform-navi="cd ~/github/bros/uniform-navi"
+
 export EDITOR=nvim
 
 #-------------------------------------------------
