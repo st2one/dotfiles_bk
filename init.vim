@@ -383,9 +383,9 @@ if executable('ag')
 endif
 
 " book-mark list
-noremap ;m :Unite bookmark<CR>
+noremap <Space>m :Unite bookmark<CR>
 " add book-mark
-noremap ;add :UniteBookmarkAdd<CR>
+noremap <Space>add :UniteBookmarkAdd<CR>
 
 nnoremap s <Nop>
 nnoremap sj <C-w>j
@@ -695,7 +695,7 @@ noremap <Space>s :%s/
 " <Space>uc で1行コメントアウト。コメントアウトの行頭の# を削除(Ruby形式)
 map <Space>co ^xx<ESC>
 
-" ;cd で編集ファイルのカレントディレクトリへと移動
+" <Space>cd で編集ファイルのカレントディレクトリへと移動
 command! -nargs=? -complete=dir -bang CD  call s:ChangeCurrentDir('<args>', '<bang>')
 function! s:ChangeCurrentDir(directory, bang)
     if a:directory == ''
@@ -711,6 +711,7 @@ endfunction
 " Change current directory.
 nnoremap <silent> <Space>cd :<C-u>CD<CR>
 nnoremap <silent> <Space>; :<C-u>pwd<CR>
+nnoremap <Space>h :<C-u>cd ~<CR>
 
 " デフォルトで起動するshellはzsh
 set sh=zsh
