@@ -22,6 +22,7 @@
   cm = commit
   cmm = commit -m
   pom = push origin master
+  pod = push origin develop
   s = status
   d = diff
   dc = diff --cached
