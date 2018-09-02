@@ -95,7 +95,7 @@ set smartindent     " 改行時に入力された行の末尾に合わせて次�
 "動作環境との統合関連の設定
 "==============================
 set clipboard+=unnamedplus " OSのクリップボードをレジスタ指定無しで Yank, Put 出来るようにする
-set mouse=n  " マウスの入力を受け付ける
+" set mouse=n  " マウスの入力を受け付ける
 "set shellslash " Windows でもパスの区切り文字を / にする
 "set iminsert=2 " インサートモードから抜けると自動的にIMEをオフにする
 
@@ -244,6 +244,7 @@ if s:use_dein && v:version >= 704
     call dein#add('nanotech/jellybeans.vim')
     call dein#add('w0ng/vim-hybrid')
     call dein#add('tomasr/molokai')
+    call dein#add('dracula/vim')
     call dein#add('altercation/vim-colors-solarized')
     call dein#add('jeffreyiacono/vim-colors-wombat')
     call dein#add('croaker/mustang-vim')
@@ -327,6 +328,8 @@ highlight LineNr ctermfg=130
 " uniteなどの選択行の色
 " highlight CursorLine ctermbg=95
 highlight CursorLine ctermfg=167
+" ステータスラインの色
+highlight statusline term=bold cterm=bold ctermfg=231 ctermbg=59
 
 "==============================
 " Unite
@@ -1283,6 +1286,7 @@ let g:go_highlight_structs = 1
 let g:go_highlight_operators = 1
 let g:go_term_enabled = 1
 let g:go_highlight_build_constraints = 1
+let g:go_template_autocreate = 0
 
 " deoplete-go
 let g:deoplete#sources#go#gocode_binary = '$GOPATH/bin/gocode'
