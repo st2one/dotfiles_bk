@@ -721,7 +721,7 @@ autocmd QuickFixCmdPost *grep* cwindow
 
 " 全バッファに対してgrepする
 " :bufdo vimgrepa {pattern} %
-nnoremap :bg :<C-u>bufdo vimgrepa 
+nnoremap ,bg :<C-u>bufdo vimgrepa 
 
 " デフォルトで起動するshellはzsh
 set sh=zsh
