@@ -716,6 +716,13 @@ nnoremap <silent> <Space>cd :<C-u>CD<CR>
 nnoremap <silent> <Space>; :<C-u>pwd<CR>
 nnoremap <Space>h :<C-u>cd ~<CR>
 
+" vimgrepなどで自動的にquickfix-windowを開く
+autocmd QuickFixCmdPost *grep* cwindow
+
+" 全バッファに対してgrepする
+" :bufdo vimgrepa {pattern} %
+nnoremap :bg :<C-u>bufdo vimgrepa 
+
 " デフォルトで起動するshellはzsh
 set sh=zsh
 " set termkey=<A-w>
@@ -1317,5 +1324,9 @@ vmap ,c :w !xsel -ib<CR><CR>
 " 挿入モード時にカーソルを移動
 inoremap <C-f> <Right>
 inoremap <C-b> <Left>
+
+if filereadable(expand('~/dotfiles/command-mine.vim'))
+  source ~/dotfiles/command-mine.vim
+endif
 
 filetype plugin indent on
