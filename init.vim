@@ -716,6 +716,9 @@ nnoremap <silent> <Space>cd :<C-u>CD<CR>
 nnoremap <silent> <Space>; :<C-u>pwd<CR>
 nnoremap <Space>h :<C-u>cd ~<CR>
 
+" ファイル再読込み
+nnoremap <Space>re :<C-u>e!<CR>
+
 " vimgrepなどで自動的にquickfix-windowを開く
 autocmd QuickFixCmdPost *grep* cwindow
 
