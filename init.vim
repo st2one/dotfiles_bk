@@ -1232,11 +1232,26 @@ let g:ale_sign_warning = '⚠'
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 
 let g:ale_linters = {
-      \   'javascript': ['eslint', 'prettier'],
-      \   'ruby': ['rubocop', 'ruby'],
-      \   'eruby': [],
-      \   'go': ['golint'],
-      \}
+    \ 'javascript': ['eslint', 'prettier'],
+    \ 'ruby': ['rubocop', 'ruby'],
+    \ 'eruby': [],
+    \ 'python': ['flake8'],
+    \ 'go': ['golint'],
+    \}
+
+let g:ale_fixers = {
+    \ 'python': ['autopep8', 'black', 'isort'],
+    \}
+
+" 各ツールの実行オプションを変更してPythonパスを固定
+let g:ale_python_flake8_executable = g:python3_host_prog
+let g:ale_python_flake8_options = '-m flake8'
+let g:ale_python_autopep8_executable = g:python3_host_prog
+let g:ale_python_autopep8_options = '-m autopep8'
+let g:ale_python_isort_executable = g:python3_host_prog
+let g:ale_python_isort_options = '-m isort'
+let g:ale_python_black_executable = g:python3_host_prog
+let g:ale_python_black_options = '-m black'
 
 " clever-f.vim
 let g:clever_f_ignore_case = 1

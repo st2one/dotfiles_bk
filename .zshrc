@@ -190,6 +190,9 @@ export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 # MAMP PHP
 export PATH="/Applications/MAMP/bin/php/php5.5.26/bin:$PATH"
 
+# carch
+export PATH="/opt/carch/bin:$PATH"
+
 # git使用時HEAD^をHEAD\^と自動エスケープ
 fpath=(~/.functions ${fpath})
 autoload -Uz git-escape-magic
