@@ -1004,9 +1004,9 @@ let g:quickrun_config['vim'] = {
 \   "hook/output_encode/encoding" : "utf-8",
 \}
 " 出力バッファ閉じる(Space + q)
-nnoremap <Space>q :<C-u>bw! \[quickrun\ output\]<CR>
+nnoremap <silent> <Space>q :<C-u>bw! \[quickrun\ output\]<CR>
 " キーマッピング変更(Space + r)
-nnoremap <silent> <Space>r :QuickRun<CR>
+nnoremap <silent> <Space>rr :QuickRun<CR>
 " <C-c>でquickrun停止
 nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
 
@@ -1345,13 +1345,10 @@ let g:go_highlight_interfaces = 1
 let g:go_template_autocreate = 0
 let g:go_list_type = "quickfix"
 
-nnoremap <Space>gob :GoBuild<CR>
-nnoremap <Space>gor :GoRun<CR>
-nnoremap <Space>got :GoTest<CR>
-nnoremap <Space>goi :GoInstall<CR>
-
-autocmd FileType go nmap ;gob <Plug>(go-build)
-autocmd FileType go nmap ;gor <Plug>(go-run)
+autocmd FileType go nnoremap ;gob :GoBuild<CR>
+autocmd FileType go nnoremap ;gor :GoRun<CR>
+autocmd FileType go nnoremap ;got :GoTest<CR>
+autocmd FileType go nnoremap ;goi :GoInstall<CR>
 
 cnoremap goi GoImport<space>
 cnoremap gor GoRename<space>
