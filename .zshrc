@@ -229,9 +229,14 @@ export PATH="$HOME/.rbenv/shims:$PATH"
 eval "$(rbenv init -)"
 
 # Go
+# GOPATH: Goのライブラリがインストールされるパス
 export GOPATH="$HOME/go"
 export GOROOT="$( go env GOROOT )"
 export PATH="$GOPATH/bin:$PATH"
+
+# goenv
+export PATH="$HOME/.goenv/bin:$PATH"
+eval "$(goenv init -)"
 
 # Yarn
 export PATH="/usr/local/Cellar/yarn/1.7.0/bin:$PATH"

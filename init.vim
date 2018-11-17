@@ -19,7 +19,7 @@ set listchars=tab:\▸\-,extends:❯,precedes:❮ " 不可視文字の表示記�
 set title         " ウインドウのタイトルバーにファイルのパス情報等を表示する
 set t_Co=256
 set encoding=utf-8
-set fileencodings=utf-8
+set fileencodings=utf-8,cp932,euc-jp,shift_jis,ucs-bombs
 set fileformats=unix,dos,mac
 set background=dark
 set splitbelow " 新しいウインドウを下に開く
@@ -666,6 +666,18 @@ inoremap jj <esc>
 "Yで行末までヤンク
 nnoremap Y y$
 
+" コマンドラインモードのマッピング
+" 行頭へ移動
+cnoremap <C-a> <Home>
+" 一文字戻る
+cnoremap <C-b> <Left>
+" カーソルの下の文字を削除
+cnoremap <C-d> <Del>
+" 行末へ移動
+cnoremap <C-e> <End>
+" 一文字進む
+cnoremap <C-f> <Right>
+
 "**************************************************
 " <Space>* によるキーバインド設定
 "**************************************************
@@ -793,7 +805,9 @@ let g:vimfiler_edit_action = 'tabopen'
 " 開いているファイルをIDEっぽく階層的に表示
 nnoremap <silent> ,ie :<C-u>VimFilerExplorer -find -simple -winwidth=40 -no-quit<CR>
 " 現在開いているバッファのディレクトリを表示(<C-e>で表示/非表示)使い勝手良い
-nnoremap <silent> <C-e> :<C-u>VimFilerBufferDir -split -simple -winwidth=35 -toggle -no-quit<CR>
+" nnoremap <silent> <C-e> :<C-u>VimFilerBufferDir -split -simple -winwidth=35 -toggle -no-quit<CR>
+" カレントディレクトリを表示(<C-e>で表示/非表示)使い勝手良い
+nnoremap <silent> <C-e> :<C-u>VimFilerCurrentDir -split -simple -winwidth=35 -toggle -no-quit<CR>
 let g:vimfiler_tree_leaf_icon = ''
 let g:vimfiler_tree_opened_icon = '▾'
 let g:vimfiler_tree_closed_icon = '▸'
@@ -1302,6 +1316,7 @@ let g:rainbow_conf = {
 " jsonでダブルクォーテーション表示されるように
 let g:vim_json_syntax_conceal = 0
 
+" Goの設定
 " vim-go
 let g:go_highlight_chan_whitespace_error = 0
 let g:go_fmt_command = "goimports"
@@ -1311,7 +1326,18 @@ let g:go_highlight_structs = 1
 let g:go_highlight_operators = 1
 let g:go_term_enabled = 1
 let g:go_highlight_build_constraints = 1
+let g:go_highlight_interfaces = 1
 let g:go_template_autocreate = 0
+
+" Goのインデント
+autocmd FileType go setlocal noexpandtab tabstop=4 shiftwidth=4
+" errという文字列をハイライト
+autocmd FileType go :highlight goErr cterm=bold ctermfg=214
+autocmd FileType go :match goErr /\<err\>/
+
+"quickrunでgo testを走らせる
+autocmd BufRead,BufNewFile *_test.go set filetype=go.test
+let g:quickrun_config['go.test'] = {'command': 'go', 'exec' : ['%c test']}
 
 " deoplete-go
 let g:deoplete#sources#go#gocode_binary = '$GOPATH/bin/gocode'
