@@ -403,8 +403,11 @@ nnoremap s= <C-w>=
 nnoremap <silent>ss :<C-u>sp<CR>
 nnoremap <silent>sv :<C-u>vs<CR>
 nnoremap <silent>sq :<C-u>q<CR>
+" バッファを消す
 nnoremap <silent>sQ :<C-u>bd<CR>
+" 前のバッファへ
 nnoremap <silent>sN :<C-u>bn<CR>
+" 後ろのバッファへ
 nnoremap <silent>sP :<C-u>bp<CR>
 nnoremap <silent>st :<C-u>tabnew<CR>
 nnoremap sn gt
@@ -677,6 +680,18 @@ cnoremap <C-d> <Del>
 cnoremap <C-e> <End>
 " 一文字進む
 cnoremap <C-f> <Right>
+
+" QuickFix
+" 前へ
+nnoremap [q :<C-u>cprevious<CR>
+" 次へ
+nnoremap q] :<C-u>cnext<CR>
+" 最初へ
+nnoremap [Q :<C-u>cfirst<CR>
+" 最後へ
+nnoremap Q] :<C-u>clast
+" QuickFixウィンドウを閉じる
+nnoremap qc :<C-u>cclose<CR>
 
 "**************************************************
 " <Space>* によるキーバインド設定
@@ -1328,6 +1343,19 @@ let g:go_term_enabled = 1
 let g:go_highlight_build_constraints = 1
 let g:go_highlight_interfaces = 1
 let g:go_template_autocreate = 0
+let g:go_list_type = "quickfix"
+
+nnoremap <Space>gob :GoBuild<CR>
+nnoremap <Space>gor :GoRun<CR>
+nnoremap <Space>got :GoTest<CR>
+nnoremap <Space>goi :GoInstall<CR>
+
+autocmd FileType go nmap ;gob <Plug>(go-build)
+autocmd FileType go nmap ;gor <Plug>(go-run)
+
+cnoremap goi GoImport<space>
+cnoremap gor GoRename<space>
+cnoremap god GoDrop<space>
 
 " Goのインデント
 autocmd FileType go setlocal noexpandtab tabstop=4 shiftwidth=4
