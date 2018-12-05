@@ -86,6 +86,9 @@ alias python='python3'
 # ocamlのalias
 alias ocaml="rlwrap ocaml"
 
+# kubectl
+alias kbc='kubectl'
+
 # mybin
 alias makedirs="makedirs.sh"
 
@@ -243,6 +246,9 @@ export PATH="/usr/local/Cellar/yarn/1.7.0/bin:$PATH"
 
 # サーチパスに~/mybinを追加
 PATH=$PATH:~/mybin
+
+# kubectlの補完機能
+source <(kubectl completion zsh)
 
 # powerlineによりzshの見た目を変更
 # powerline-daemon -q
