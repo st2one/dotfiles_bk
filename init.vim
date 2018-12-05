@@ -237,6 +237,8 @@ if s:use_dein && v:version >= 704
     call dein#add('airblade/vim-gitgutter')
     call dein#add('zchee/deoplete-jedi')
     call dein#add('zchee/deoplete-go', {'build': 'make'})
+    call dein#add('tbodt/deoplete-tabnine', {'do': './install.sh'})
+    call dein#add('zxqfl/tabnine-vim')
     call dein#add('w0rp/ale')
     call dein#add('elzr/vim-json')
     call dein#add('fatih/vim-go')
