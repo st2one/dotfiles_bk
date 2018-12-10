@@ -99,8 +99,10 @@ set clipboard+=unnamedplus " OSのクリップボードをレジスタ指定無�
 "set shellslash " Windows でもパスの区切り文字を / にする
 "set iminsert=2 " インサートモードから抜けると自動的にIMEをオフにする
 
-let g:python_host_prog = expand('/usr/local/bin/python2')
-let g:python3_host_prog = expand('~/.pyenv/shims/python3')
+" let g:python_host_prog = expand('/usr/local/bin/python2')
+" let g:python3_host_prog = expand('~/.pyenv/shims/python3')
+let g:python_host_prog=$PYENV_ROOT.'/versions/neovim-2/bin/python'
+let g:python3_host_prog=$PYENV_ROOT.'/versions/neovim-3/bin/python'
 
 "==============================
 " コマンドラインの設定
@@ -195,6 +197,11 @@ if s:use_dein && v:version >= 704
       call dein#add('Shougo/neocomplete.vim')
     endif
 
+    " call dein#add('autozimu/LanguageClient-neovim', {
+    " \ 'rev': 'next',
+    " \ 'build': 'bash install.sh',
+    " \ })
+
     call dein#add('Shougo/neco-vim')
     call dein#add('Shougo/neco-syntax')
     " call dein#add('ujihisa/neco-look')
@@ -235,10 +242,11 @@ if s:use_dein && v:version >= 704
     call dein#add('iamcco/markdown-preview.vim')
     call dein#add('iamcco/mathjax-support-for-mkdp')
     call dein#add('airblade/vim-gitgutter')
+    call dein#add('ambv/black')
     call dein#add('zchee/deoplete-jedi')
     call dein#add('zchee/deoplete-go', {'build': 'make'})
-    call dein#add('tbodt/deoplete-tabnine', {'do': './install.sh'})
-    call dein#add('zxqfl/tabnine-vim')
+    " call dein#add('tbodt/deoplete-tabnine', {'do': './install.sh'})
+    " call dein#add('zxqfl/tabnine-vim')
     call dein#add('w0rp/ale')
     call dein#add('elzr/vim-json')
     call dein#add('fatih/vim-go')
@@ -1022,7 +1030,7 @@ augroup END
 
 " Ocamlにおけるmerlin(エラーチェック)の設定
 let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
-execute 'set rtp+=' . g:opamshare . '/merlin/vim'
+" execute 'set rtp+=' . g:opamshare . '/merlin/vim'
 
 " Ocamlにおけるocp-indentの設定
 " execute 'set rtp^=' . g:opamshare . '/ocp-indent/vim'
@@ -1069,9 +1077,10 @@ let g:deoplete#enable_refresh_always = 0
 let g:deoplete#enable_smart_case = 1
 let g:deoplete#file#enable_buffer_path = 1
 let g:deoplete#max_list = 10000
-inoremap <expr><tab> pumvisible() ? "\<C-n>" :
-      \ neosnippet#expandable_or_jumpable() ?
-      \    "\<Plug>(neosnippet_expand_or_jump)" : "\<tab>"
+
+" inoremap <expr><tab> pumvisible() ? "\<C-n>" :
+"       \ neosnippet#expandable_or_jumpable() ?
+"       \    "\<Plug>(neosnippet_expand_or_jump)" : "\<tab>"
 
 " neosnippet
 imap <C-l> <Plug>(neosnippet_expand_or_jump)
@@ -1372,6 +1381,17 @@ let g:deoplete#sources#go#align_class = 1
 let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
 let g:deoplete#sources#go#package_dot = 1
 
+" LanguageClient-nvim
+" let g:LanguageClient_serverCommands = {
+"     \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
+"     \ 'javascript': ['/usr/local/bin/javascript-typescript-stdio'],
+"     \ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
+"     \ 'python': ['/usr/local/bin/pyls'],
+"     \ }
+" nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+" nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+" nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+
 "エスケープをcontrol+jにマッピング
 imap <C-j> <esc>
 
@@ -1399,5 +1419,7 @@ inoremap <C-b> <Left>
 if filereadable(expand('~/dotfiles/command-mine.vim'))
   source ~/dotfiles/command-mine.vim
 endif
+
+call map(dein#check_clean(), "delete(v:val, 'rf')")
 
 filetype plugin indent on

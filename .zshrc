@@ -74,6 +74,9 @@ alias updatedb='sudo /usr/libexec/locate.updatedb' # データベースの更新
 # neovim
 alias vim='nvim'
 
+export NVIM_PYTHON_LOG_FILE=/tmp/log
+export NVIM_PYTHON_LOG_LEVEL=DEBUG
+
 # normal-vim
 alias oldvim="\vim"
 
@@ -110,6 +113,8 @@ MANPATH=/opt/local/man:$MANPATH
 
 # brew
 export PATH=/usr/local/bin:$PATH
+
+export HOMEBREW_UPGRADE_CLEANUP=1
 
 #VHDL
 export PATH=$PATH:/Developer/Simulator/GHDL/bin:/Developer/Simulator/GTKwave/bin
