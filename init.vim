@@ -396,9 +396,9 @@ if executable('ag')
 endif
 
 " book-mark list
-noremap <Space>m :Unite bookmark<CR>
+noremap ;m :Unite bookmark<CR>
 " add book-mark
-noremap <Space>add :UniteBookmarkAdd<CR>
+noremap ;add :UniteBookmarkAdd<CR>
 
 nnoremap s <Nop>
 nnoremap sj <C-w>j
@@ -837,6 +837,9 @@ let g:vimfiler_tree_leaf_icon = ''
 let g:vimfiler_tree_opened_icon = '▾'
 let g:vimfiler_tree_closed_icon = '▸'
 let g:vimfiler_marked_file_icon = '✓'
+
+" vimfiler上でunite bookmark
+autocmd FileType vimfiler call unite#custom_default_action('directory', 'lcd')
 
 " vim-devicons
 let g:webdevicons_conceal_nerdtree_brackets = 1
