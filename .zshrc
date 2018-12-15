@@ -206,6 +206,9 @@ fpath=(~/.functions ${fpath})
 autoload -Uz git-escape-magic
 git-escape-magic
 
+# git stashが使えない問題の対処
+export GIT_INTERNAL_GETTEXT_TEST_FALLBACKS=1
+
 # The next line updates PATH for the Google Cloud SDK.
 # source '/Users/st2one/google-cloud-sdk/path.zsh.inc'
 
