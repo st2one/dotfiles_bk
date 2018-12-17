@@ -31,6 +31,7 @@ set inccommand=split " 文字列置換をインタラクティブに表示
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 " set ambiwidth=double
+let mapleader = '\<Space>'
 
 " tabにて対応ペアにジャンプ
 nnoremap <tab> %
@@ -187,15 +188,20 @@ if s:use_dein && v:version >= 704
       call dein#add('Shougo/neomru.vim')
     endif
 
-    if ((has('nvim')  || has('timers')) && has('python3')) && system('pip3 show neovim') !=# ''
-      call dein#add('Shougo/deoplete.nvim', {'on_i': 1})
-      if !has('nvim')
-        call dein#add('roxma/nvim-yarp')
-        call dein#add('roxma/vim-hug-neovim-rpc')
-      endif
-    elseif has('lua')
-      call dein#add('Shougo/neocomplete.vim')
+    call dein#add('Shougo/deoplete.nvim')
+    if !has('nvim')
+      call dein#add('roxma/nvim-yarp')
+      call dein#add('roxma/vim-hug-neovim-rpc')
     endif
+    " if ((has('nvim')  || has('timers')) && has('python3')) && system('pip3 show neovim') !=# ''
+    "   call dein#add('Shougo/deoplete.nvim', {'on_i': 1})
+    "   if !has('nvim')
+    "     call dein#add('roxma/nvim-yarp')
+    "     call dein#add('roxma/vim-hug-neovim-rpc')
+    "   endif
+    " elseif has('lua')
+    "   call dein#add('Shougo/neocomplete.vim')
+    " endif
 
     " call dein#add('autozimu/LanguageClient-neovim', {
     " \ 'rev': 'next',
@@ -228,6 +234,8 @@ if s:use_dein && v:version >= 704
     call dein#add('cohama/lexima.vim')
     call dein#add('mattn/emmet-vim')
     call dein#add('rhysd/clever-f.vim')
+    call dein#add('easymotion/vim-easymotion')
+    " call dein#add('tpope/vim-repeat')
     call dein#add('tpope/vim-endwise')
     call dein#add('slim-template/vim-slim')
     call dein#add('kchmck/vim-coffee-script')
@@ -243,6 +251,7 @@ if s:use_dein && v:version >= 704
     call dein#add('iamcco/mathjax-support-for-mkdp')
     call dein#add('airblade/vim-gitgutter')
     call dein#add('ambv/black')
+    call dein#add('davidhalter/jedi-vim')
     call dein#add('zchee/deoplete-jedi')
     call dein#add('zchee/deoplete-go', {'build': 'make'})
     " call dein#add('tbodt/deoplete-tabnine', {'do': './install.sh'})
@@ -661,7 +670,9 @@ endif
 " vnoremap " "zdi^V"<C-R>z^V"<ESC>
 " vnoremap ' "zdi'<C-R>z'<ESC>
 
+" =======================================
 " 基本的なキーマッピング変更
+" =======================================
 noremap j gj
 noremap k gk
 noremap <S-h> g^
@@ -766,6 +777,7 @@ nnoremap ,bg :<C-u>bufdo vimgrepa
 " デフォルトで起動するshellはzsh
 set sh=zsh
 " set termkey=<A-w>
+
 " neovim terminal mapping
 if has('nvim')
   " 新しいタブでターミナルを起動
@@ -806,7 +818,9 @@ nnoremap @p :T python3 %<CR><c-w>j
 " REPLを自動的に改行
 let g:neoterm_autoscroll=1
 
-" vimfiler設定
+" =======================================
+" vimfiler
+" =======================================
 " ファイル名長くて全て見れないときは<C-g>で全部見れる
 
 " vimfilerをデフォルトのexplorerに
@@ -889,7 +903,9 @@ let &tabline = '%!'. s:SID_PREFIX() . 'my_tabline()'
 set showtabline=2 " 常にタブラインを表示
 
 
+" =======================================
 " tcomment_vimキーマップ変更
+" =======================================
 let g:tcomment_mapleader1 = '<C-_>'
 let g:tcomment_mapleader2 = '<Leader>'
 let g:tcomment_opleader1 = 'gc'
@@ -906,7 +922,9 @@ let g:tcomment_types = {
   \'eruby_surround_equality' : "<%%= %s %%>",
 \}
 
+" =======================================
 " emmetキーマップ変更
+" =======================================
 let g:user_emmet_leader_key = '<C-E>'
 let g:user_emmet_settings = {'variables' : { 'lang' : 'ja' }}
                 
@@ -928,7 +946,9 @@ au FileType php nmap <buffer><C-_>c :TCommentAs php_surround<CR>
 au FileType php vmap <buffer><C-_>c :TCommentAs php_surround<CR>
 
 
+" =======================================
 " Markdownの設定
+" =======================================
 " set syntax=markdown
 set shellslash
 " ,pvでプレビュー
@@ -991,7 +1011,9 @@ let g:previm_custom_css_path = '~/.previm/markdown.css'
 let g:markdown_preview_auto = 1
 
 
-" Vim-Quickrunの設定
+" =======================================
+" Vim-Quickrun
+" =======================================
 let g:quickrun_config = {
 \   "_" :{
 \       'runner'    : 'vimproc',
@@ -1070,7 +1092,9 @@ endif
 " Turn off paste mode when leaving insert
 autocmd InsertLeave * set nopaste
 
-" Use deoplete.
+" =======================================
+" deoplete
+" =======================================
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#auto_complete_delay = 0
 let g:deoplete#auto_complete_start_length = 1
@@ -1081,11 +1105,19 @@ let g:deoplete#enable_smart_case = 1
 let g:deoplete#file#enable_buffer_path = 1
 let g:deoplete#max_list = 10000
 
-" inoremap <expr><tab> pumvisible() ? "\<C-n>" :
-"       \ neosnippet#expandable_or_jumpable() ?
-"       \    "\<Plug>(neosnippet_expand_or_jump)" : "\<tab>"
+inoremap <expr><tab> pumvisible() ? "\<C-n>" :
+      \ neosnippet#expandable_or_jumpable() ?
+      \    "\<Plug>(neosnippet_expand_or_jump)" : "\<tab>"
 
+" jedi
+let g:deoplete#sources#jedi#server_timeout=100
+let g:deoplete#sources#jedi#statement_length=100
+" jedi本体の補完は切る（deoplete-jediで非同期処理をしてくれるため）
+let g:jedi#completions_enabled = 0
+
+" =======================================
 " neosnippet
+" =======================================
 imap <C-l> <Plug>(neosnippet_expand_or_jump)
 smap <C-l> <Plug>(neosnippet_expand_or_jump)
 xmap <C-l> <Plug>(neosnippet_expand_target)
@@ -1093,7 +1125,9 @@ if has('conceal')
   set conceallevel=2 concealcursor=niv
 endif
 
+" =======================================
 " vim-airline
+" =======================================
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_idx_mode = 1
@@ -1153,7 +1187,9 @@ let g:airline#extensions#tabline#buffer_idx_format = {
 
 set timeout timeoutlen=1000 ttimeoutlen=50
 
+" =======================================
 " gitgutter
+" =======================================
 " gitの差分を表示
 nnoremap <silent> ,gg :<C-u>GitGutterToggle<CR>
 nnoremap <silent> ,gh :<C-u>GitGutterLineHighlightsToggle<CR>
@@ -1162,7 +1198,9 @@ nmap ,gn <Plug>GitGutterNextHunk
 nmap ,gp <Plug>GitGutterPrevHunk
 set updatetime=250
 
+" =======================================
 " fugitive
+" =======================================
 nnoremap <silent> <Space>gw :<C-u>Gwrite<CR>
 nnoremap <silent> <Space>gc :<C-u>Gcommit<CR>
 nnoremap <silent> <Space>gca :<C-u>Gcommit --amend<CR>
@@ -1171,7 +1209,9 @@ nnoremap <silent> <Space>gb :<C-u>Gblame<CR>
 nnoremap <silent> <Space>gps :<C-u>Gpush<CR>
 nnoremap <silent> <Space>gpl :<C-u>Gpull<CR>
 
+" =======================================
 " fzf
+" =======================================
 nnoremap <silent> <Space>b :<C-u>Buffers<CR>
 nnoremap <silent> <Space>x :<C-u>Commands<CR>
 nnoremap <silent> <Space>f :<C-u>Files<CR>
@@ -1236,7 +1276,9 @@ command! FZFMru call fzf#run({
 "   \           : fzf#vim#with_preview('right:50%:hidden', '?'),
 "   \   <bang>0)
 
+" =======================================
 " ctags
+" =======================================
 " tagsファイルの読み取り場所の設定
 set tags+=.git/tags
 " タグジャンプ先が複数ある場合にリスト表示
@@ -1256,7 +1298,9 @@ let g:auto_ctags_directory_list = ['.git']
 let g:auto_ctags_tags_args = '--recurse=yes --append=yes --tag-relative=yes --languages=Ruby,JavaScript,Python,Java --exclude=node_modules --exclude=vendor --exclude=.git --exclude=log'
 
 
+" =======================================
 " ALE(シンタックスチェッカー)
+" =======================================
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_enter = 0
 let g:ale_lint_on_save = 0
@@ -1296,7 +1340,43 @@ let g:ale_python_isort_options = '-m isort'
 let g:ale_python_black_executable = g:python3_host_prog
 let g:ale_python_black_options = '-m black'
 
+" =======================================
+" vim-easymotion
+" =======================================
+" general config
+let g:EasyMotion_do_mapping = 0
+let g:EasyMotion_smartcase = 1
+let g:EasyMotion_keys = ';HKLYUIOPNM,QWERTASDGZXCVBJF'
+" Show target key with upper case to improve readability
+let g:EasyMotion_use_upper = 1
+" Jump to first match with enter & space
+let g:EasyMotion_enter_jump_first = 1
+let g:EasyMotion_space_jump_first = 1
+
+nnoremap [em] <Nop>
+nmap <Space><Space> [em]
+" FindMotion
+map [em]f <Plug>(easymotion-fl)
+map [em]t <Plug>(easymotion-tl)
+map [em]F <Plug>(easymotion-Fl)
+map [em]T <Plug>(easymotion-Tl)
+map <C-s> <Plug>(easymotion-s2)
+" LineMotion
+map <Space>j <Plug>(easymotion-j)
+map <Space>k <Plug>(easymotion-k)
+" keep cursor column with `JK` motions
+let g:EasyMotion_startofline = 0
+" SearchMotion
+nmap <C-w> <Plug>(easymotion-sn)
+xmap <C-w> <Plug>(easymotion-sn)
+" RepeatMotion
+map <Space>. <Plug>(easymotion-repeat)
+map <Space>n <Plug>(easymotion-next)
+map <Space>p <Plug>(easymotion-prev)
+
+" =======================================
 " clever-f.vim
+" =======================================
 let g:clever_f_ignore_case = 1
 let g:clever_f_smart_case = 1
 let g:clever_f_fix_key_direction = 1
@@ -1305,7 +1385,9 @@ let g:clever_f_not_overwrites_standard_mappings = 1
 map f <Plug>(clever-f-f)
 map F <Plug>(clever-f-F)
 
+" =======================================
 " Gundo.vim
+" =======================================
 if has('python3')
     let g:gundo_prefer_python3 = 1
 endif
