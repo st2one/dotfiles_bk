@@ -24,12 +24,7 @@
   },
   // 左右にファイルを開いた時の切り替え
   {
-      "key": "ctrl+w ctrl+l",
-      "command": "workbench.action.focusFirstEditorGroup",
-      "when": "!editorFocus"
-  },
-  {
-      "key": "ctrl+w ctrl+h",
+      "key": "ctrl+h",
       "command": "workbench.action.focusPreviousGroup",
       "when": "editorFocus"
   },
@@ -95,7 +90,7 @@
   },
   // サイドバーでソースツリーを開いている時
   {
-      "key": "r",
+      "key": "ctrl+o r",
       "command": "renameFile",
       "when": "explorerViewletVisible && filesExplorerFocus"
   },
@@ -123,12 +118,12 @@
   },
   // サイドバーの表示切り替え
   {
-      "key": "ctrl+e",
+      "key": "ctrl+o ctrl+e",
       "command": "workbench.view.explorer",
       "when": "!explorerViewletVisible && vim.mode != 'SearchInProgressMode'"
   },
   {
-      "key": "ctrl+e",
+      "key": "ctrl+o ctrl+e",
       "command": "workbench.action.toggleSidebarVisibility",
       "when": "explorerViewletVisible && !searchViewletVisible && !inDebugMode && vim.mode != 'SearchInProgressMode'"
   },
@@ -146,9 +141,9 @@
       "key": "ctrl+w",
       "command": "workbench.action.focusActiveEditorGroup"
   },
-  // Emmetをtabで展開
+  // Emmetを<C-e>で展開
   {
-      "key": "tab",
+      "key": "ctrl+e",
       "command": "editor.emmet.action.expandAbbreviation",
       "when": "config.emmet.triggerExpansionOnTab && editorTextFocus && !editorReadonly && !editorTabMovesFocus"
   },
@@ -168,5 +163,10 @@
       "key": "escape",
       "command": "workbench.action.closeMessages",
       "when": "globalMessageVisible"
-  }
+},
+{
+    "key": "tab",
+    "command": "-editor.emmet.action.expandAbbreviation",
+    "when": "config.emmet.triggerExpansionOnTab && editorTextFocus && !editorReadonly && !editorTabMovesFocus"
+}
 ]
