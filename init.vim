@@ -259,6 +259,7 @@ if s:use_dein && v:version >= 704
     call dein#add('w0rp/ale')
     call dein#add('elzr/vim-json')
     call dein#add('fatih/vim-go')
+    call dein#add('Vimjas/vim-python-pep8-indent')
 
     call dein#add('nanotech/jellybeans.vim')
     call dein#add('w0ng/vim-hybrid')
@@ -1291,7 +1292,7 @@ nnoremap <silent> ,h :split<CR> :exe("tjump ".expand('<cword>'))<CR>
 
 " auto-ctags
 " セーブしたときに自動でctags実行
-let g:auto_ctags = 1
+" let g:auto_ctags = 1
 " .gitディレクトリにtagsファイルを作成する
 let g:auto_ctags_directory_list = ['.git']
 " ctagsのオプション指定

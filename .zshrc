@@ -162,7 +162,8 @@ export PATH="$HOME/Library/Python/2.7/bin:$PATH"
 export PATH=$HOME/.nodebrew/current/bin:$PATH
 
 # nodenv
-export PATH=$HOME/.nodenv/bin:$PATH
+# export PATH=$HOME/.nodenv/bin:$PATH
+export PATH="/usr/local/Cellar/nodenv/1.1.2/bin:$PATH"
 eval "$(nodenv init -)"
 
 # Postgres
