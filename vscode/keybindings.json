@@ -23,13 +23,7 @@
       "when": "!editorFocus"
   },
   // 左右にファイルを開いた時の切り替え
-  {
-      "key": "ctrl+h",
-      "command": "workbench.action.focusPreviousGroup",
-      "when": "editorFocus"
-  },
-  // タブの切り替え
-  {
+{
       "key": "ctrl+p",
       "command": "workbench.action.previousEditor",
       "when": "editorFocus && vim.mode == 'Normal'"
@@ -117,15 +111,10 @@
       "command": "workbench.view.scm"
   },
   // サイドバーの表示切り替え
-  {
-      "key": "ctrl+o ctrl+e",
-      "command": "workbench.view.explorer",
-      "when": "!explorerViewletVisible && vim.mode != 'SearchInProgressMode'"
-  },
-  {
-      "key": "ctrl+o ctrl+e",
+{
+      "key": "ctrl+[Semicolon]",
       "command": "workbench.action.toggleSidebarVisibility",
-      "when": "explorerViewletVisible && !searchViewletVisible && !inDebugMode && vim.mode != 'SearchInProgressMode'"
+    //   "when": "explorerViewletVisible && !searchViewletVisible && !inDebugMode && vim.mode != 'SearchInProgressMode'"
   },
   // コマンドパレットオープン
   {
@@ -137,12 +126,7 @@
       "command": "workbench.action.showCommands"
   },
   // エディター以外のビューから抜けてくるときに
-  {
-      "key": "ctrl+w",
-      "command": "workbench.action.focusActiveEditorGroup"
-  },
-  // Emmetを<C-e>で展開
-  {
+{
       "key": "ctrl+e",
       "command": "editor.emmet.action.expandAbbreviation",
       "when": "config.emmet.triggerExpansionOnTab && editorTextFocus && !editorReadonly && !editorTabMovesFocus"
@@ -163,10 +147,146 @@
       "key": "escape",
       "command": "workbench.action.closeMessages",
       "when": "globalMessageVisible"
-},
+  },
 {
     "key": "tab",
     "command": "-editor.emmet.action.expandAbbreviation",
     "when": "config.emmet.triggerExpansionOnTab && editorTextFocus && !editorReadonly && !editorTabMovesFocus"
-}
+},
+{
+    "key": "ctrl+o ctrl+a",
+    "command": "workbench.action.toggleActivityBarVisibility"
+},
+{
+    "key": "ctrl+o ctrl+e",
+    "command": "workbench.view.explorer"
+},
+{
+    "key": "shift+cmd+e",
+    "command": "-workbench.view.explorer"
+},
+{
+    "key": "ctrl+o ctrl+x",
+    "command": "workbench.view.extensions"
+},
+{
+    "key": "shift+cmd+x",
+    "command": "-workbench.view.extensions"
+},
+{
+    "key": "ctrl+o ctrl+l",
+    "command": "workbench.view.extension.gitlens"
+},
+{
+    "key": "ctrl+k v",
+    "command": "workbench.action.splitEditorRight",
+},
+{
+    "key": "ctrl+k s",
+    "command": "workbench.action.splitEditorDown",
+},
+{
+    "key": "ctrl+o ctrl+c",
+    "command": "workbench.action.closePanel"
+},
+{
+    "key": "ctrl+e",
+    "command": "extension.vim_ctrl+e",
+    "when": "editorTextFocus && vim.active && vim.use<C-e> && !inDebugRepl"
+},
+{
+    "key": "ctrl+e",
+    "command": "-extension.vim_ctrl+e",
+    "when": "editorTextFocus && vim.active && vim.use<C-e> && !inDebugRepl"
+},
+{
+    "key": "ctrl+k ctrl+k",
+    "command": "workbench.action.focusAboveGroup",
+},
+{
+    "key": "cmd+k cmd+up",
+    "command": "-workbench.action.focusAboveGroup"
+},
+{
+    "key": "ctrl+k ctrl+j",
+    "command": "workbench.action.focusBelowGroup",
+},
+{
+    "key": "cmd+k cmd+down",
+    "command": "-workbench.action.focusBelowGroup"
+},
+{
+    "key": "ctrl+k w",
+    "command": "workbench.action.switchWindow"
+},
+{
+    "key": "ctrl+w",
+    "command": "-workbench.action.switchWindow"
+},
+{
+    "key": "ctrl+k ctrl+h",
+    "command": "workbench.action.focusLeftGroup"
+},
+{
+    "key": "cmd+k cmd+left",
+    "command": "-workbench.action.focusLeftGroup"
+},
+{
+    "key": "ctrl+k ctrl+l",
+    "command": "workbench.action.focusRightGroup"
+},
+{
+    "key": "cmd+k cmd+right",
+    "command": "-workbench.action.focusRightGroup"
+},
+{
+    "key": "ctrl+k r",
+    "command": "workbench.action.evenEditorWidths"
+},
+{
+    "key": "ctrl+o ctrl+m",
+    "command": "editor.action.toggleMinimap"
+},
+{
+    "key": "ctrl+cmd+t",
+    "command": "extension.showNavigationHistory",
+    "when": "editorTextFocus"
+},
+{
+    "key": "shift+cmd+t",
+    "command": "-extension.showNavigationHistory",
+    "when": "editorTextFocus"
+},
+{
+    "key": "ctrl+g ctrl+g",
+    "command": "workbench.action.gotoLine"
+},
+{
+    "key": "ctrl+g",
+    "command": "-workbench.action.gotoLine"
+},
+{
+    "key": "ctrl+g ,",
+    "command": "extension.vim_ctrl+i",
+    "when": "editorTextFocus && vim.active && vim.use<C-i> && !inDebugRepl"
+},
+{
+    "key": "ctrl+i",
+    "command": "-extension.vim_ctrl+i",
+    "when": "editorTextFocus && vim.active && vim.use<C-i> && !inDebugRepl"
+},
+{
+    "key": "ctrl+g [Semicolon]",
+    "command": "extension.vim_ctrl+o",
+    "when": "editorTextFocus && vim.active && vim.use<C-o> && !inDebugRepl"
+},
+{
+    "key": "ctrl+o",
+    "command": "-extension.vim_ctrl+o",
+    "when": "editorTextFocus && vim.active && vim.use<C-o> && !inDebugRepl"
+},
+{
+    "key": "ctrl+o ctrl+t",
+    "command": "workbench.view.extension.todo"
+},
 ]

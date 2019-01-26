@@ -6,8 +6,6 @@
   "editor.fontSize":10.5,
   // コードの一行が長くなるための可読性向上
   "editor.wordWrap": "on",
-  // ミニマップはいらない
-  "editor.minimap.enabled": false,
   // tab キーを押すとスペースが挿入されます。
   "editor.insertSpaces": true,
   // tabをデフォルトで2スペースにする
@@ -20,8 +18,6 @@
   // スニペットを候補の上部に表示する
   "editor.snippetSuggestions": "top",
   "editor.tabCompletion": "on",
-
-  "files.autoGuessEncoding": true,
   // 拡張子とファイルの関連付け
   "files.associations": {
     "*.sql": "sql",
@@ -57,15 +53,8 @@
   "workbench.editor.showTabs": true,
   "workbench.editor.enablePreview": false,
   "workbench.editor.enablePreviewFromQuickOpen": true,
-  // { "key": "cmd+w", "command": "workbench.action.closeeditorsingroup" }
-  // { "key": "ctrl+tab", "command": "workbench.action.openpreviouseditorfromhistory" },
-  // { "key": "ctrl+tab", "command": "workbench.action.quickopennavigatenext", "when": "inquickopen" },
-  ////////////////////////////// https://code.visualstudio.com/docs/getstarted/userinterface#_working-without-tabs
-  // エディターのタブの大きさを制御します。常に完全なエディター ラベルを表示するのに足りるタブの大きさを維持するには 'fit' を設定します。すべてのタブを一度に表示するには利用可能なスペースが足りない場合に、タブを縮小可能にするには 'shrink' を設定します。
-  "workbench.editor.tabSizing": "shrink",
   // エディター タブの閉じるボタンの位置を制御するか、[off] に設定した場合に無効にします。
   // "workbench.editor.tabCloseButton": "off",
-  // todo エディターグループにアクティブなエディターが一つしか存在できない
   // 前のセッションからエディターが復元されていない場合に、起動時に表示するかどうかを制御します。'none' を選択するとエディターなしで開始します。'welcomepage' を選択するとウェルカム ページを開きます (既定)。'newuntitledfile' を選択すると新しい無題のファイルを開きます (空のワークスペースを開いているときのみ)。
   "workbench.startupEditor": "none",
   // エディターを開く場所を制御します。'left' または 'right' を選択すると現在アクティブになっているエディターの左または右にエディターを開きます。'first' または 'last' を選択すると現在アクティブになっているエディターとは別個にエディターを開きます。
@@ -127,18 +116,32 @@
   "vim.normalModeKeyBindingsNonRecursive": [
     {
       "before":["\n"],
-        "after":[],
-        "commands": [
-          { "command": ":nohl" }
-        ]
+      "after":[],
+      "commands": [
+        { "command": ":nohl" }
+      ]
     },
     {
       "before": ["j"],
-      "after": ["g", "j"]
+      "after": ["<silent>", "g", "<silent>", "j"]
     },
     {
       "before": ["k"],
-      "after": ["g", "k"]
+      "after": ["<silent>", "g", "<silent>", "k"]
+    },
+    {
+      "before": ["u"],
+      "after": [],
+      "commands": [
+        { "command": "undo" }
+      ]
+    },
+    {
+      "before": ["<C-r>"],
+      "after": [],
+      "commands": [
+        { "command": "redo" }
+      ]
     },
     {
       "before": ["<leader>", "f"],
@@ -157,7 +160,19 @@
     {
       "before": ["tab"],
       "after": ["%"]
-    }
+    },
+    {
+      "before": ["<leader>", "s"],
+      "after": ["<leader>", "<leader>", "2", "s"],
+    },
+    {
+      "before": ["<leader>", "j"],
+      "after": ["<leader>", "<leader>", "j"],
+    },
+    {
+      "before": ["<leader>", "k"],
+      "after": ["<leader>", "<leader>", "k"],
+    },
   ],
 
   "vim.visualModeKeyBindingsNonRecursive": [
@@ -303,14 +318,7 @@
   "editor.fontFamily": "Ricty Diminished, Menlo, Monaco, 'Courier New', monospace",
   "vim.history": 100,
   "window.title": "${activeEditorMedium}${separator}${rootName}",
-  "workbench.colorTheme": "Dracula Soft",
   "vim.easymotionMarkerForegroundColorOneChar": "black",
-  "vim.statusBarColorControl": true,
-  "workbench.colorCustomizations": {
-    "statusBar.background": "#214d39",
-    "statusBar.noFolderBackground": "#214d39",
-    "statusBar.debuggingBackground": "#214d39"
-  },
   "vim.statusBarColors.normal": "#263778",
   "vim.statusBarColors.insert": "#214d39",
   "vim.statusBarColors.replace": "#760f28",
@@ -324,4 +332,38 @@
   "python.linting.pylintEnabled": false,
   "python.linting.flake8Enabled": true,
   "python.linting.flake8Args": ["--ignore=E501"],
+  "flow.useNPMPackagedFlow": true,
+  "javascript.validate.enable": false,
+  "workbench.editor.tabSizing": "shrink",
+  "[python]": {
+    "editor.tabSize": 4
+  },
+  "terminal.integrated.rendererType": "dom",
+  "workbench.statusBar.feedback.visible": false,
+  "workbench.activityBar.visible": false,
+  "workbench.colorCustomizations": {
+    "statusBar.background": "#1f486ef6",
+    "statusBar.noFolderBackground": "#1f486ef6",
+    "statusBar.debuggingBackground": "#1f486ef6",
+    "editorCursor.foreground": "#d3c37dee",
+    "activityBar.background": "#13304ba9",
+    "activityBar.foreground": "#e9781bee",
+    "activityBarBadge.background": "#3cb4b4f5",
+    "activityBarBadge.foreground": "#202020"
+  },
+  "gitlens.codeLens.enabled": false,
+  "gitlens.currentLine.enabled": false,
+  "editor.folding": false,
+  "vim.easymotionKeys": ";hklyuiopnm,qwertasdgzxcvbjf",
+  "material-icon-theme.folders.theme": "classic",
+  "sync.quietSync": true,
+  "workbench.colorTheme": "Dracula Soft",
+  "material-icon-theme.hidesExplorerArrows": true,
+  "material-icon-theme.folders.color": "#2bc4c4",
+  "vim.easymotionMarkerBackgroundColor": "#ff6210",
+  "vim.easymotionMarkerFontSize": "12",
+  "vim.easymotionMarkerFontFamily": "ricty diminished",
+  "editor.minimap.enabled": false,
+  "eslint.autoFixOnSave": true,
+  "editor.cursorBlinking": "smooth",
 }
