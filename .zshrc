@@ -60,7 +60,33 @@ setopt share_history      # 他のシェルのヒストリをリアルタイム�
 setopt hist_reduce_blanks # 余分なスペースを削除してヒストリに保存する
 
 ### KeyBinding ###
-#bindkey -e # emacs キーマップを選択
+# bindkey -e # emacs キーマップ
+bindkey -v # vim キーマップ
+bindkey -M viins '^J' vi-cmd-mode
+
+# viinsをemacsモードのように
+bindkey -M viins '^A' beginning-of-line
+bindkey -M viins '^E' end-of-line
+bindkey -M viins '^N'  down-line-or-history
+bindkey -M viins '^P'  up-line-or-history
+bindkey -M viins '^B'  backward-char
+bindkey -M viins '^F'  forward-char
+bindkey -M viins '^H'  backward-delete-char
+bindkey -M viins '^U'  backward-kill-line
+bindkey -M viins '^W'  backward-kill-word
+bindkey -M viins '^Y'  yank
+
+# モードを表示
+function zle-line-init zle-keymap-select {
+  VIM_NORMAL="%K{208}%F%k%f%K{166}%F{255} % NORMAL %k%f%K%F{166}%k%f"
+  VIM_INSERT="%K{075}%F%k%f%K{032}%F{255} % INSERT %k%f%K%F{032}%k%f"
+  RPS1="${${KEYMAP/vicmd/$VIM_NORMAL}/(main|viins)/$VIM_INSERT}"
+  RPS2=$RPS1
+  zle reset-prompt
+}
+zle -N zle-line-init
+zle -N zle-keymap-select
+
 : "Ctrl-Wでパスの文字列などをスラッシュ単位で削除する" && {
  autoload -U select-word-style
  select-word-style bash
@@ -246,8 +272,8 @@ eval "$(rbenv init -)"
 # Go
 # GOPATH: Goのライブラリがインストールされるパス
 export GOPATH="$HOME/go"
-export GOROOT="$( go env GOROOT )"
 export PATH="$GOPATH/bin:$PATH"
+# export GOROOT="$( go env GOROOT )"
 
 # goenv
 export PATH="$HOME/.goenv/bin:$PATH"
