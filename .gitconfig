@@ -39,4 +39,4 @@
   loglr = log --left-right -p
   conflictlr = log --merge --left-right -p
 [commit]
-	template = /Users/takumi/.gitmessage.txt
+  template = /Users/takumi/.gitmessage.txt
