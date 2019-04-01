@@ -28,6 +28,9 @@ nnoremap sq :<C-u>action CloseEditor<CR>
 nnoremap sQ :<C-u>action VimWindowClose<CR>
 
 nnoremap <Space><Space> :<C-u>action AceAction<CR>
+nnoremap <Space>s :<C-u>action KJumpAction<CR>
+nnoremap <Space>w :<C-u>action KJumpAction.Word1<CR>
+nnoremap <Space>l :<C-u>action KJumpAction.Line<CR>
 
 nnoremap / :<C-u>action Find<CR>
 
@@ -43,6 +46,9 @@ nnoremap ]c :<C-u>action VcsShowNextChangeMarker<CR>
 nnoremap [e :<C-u>action GotoPreviousError<CR>
 nnoremap ]e :<C-u>action GotoNextError<CR>
 
+nnoremap <C-h> :<C-u>action Back<CR>
+nnoremap <C-l> :<C-u>action Forward<CR>
+
 nnoremap <C-o>k :<C-u>action GotoDeclaration<CR>
 nnoremap <C-o>K :<C-u>action GotoTypeDeclaration<CR>
 nnoremap <C-o>i :<C-u>action GotoImplementation<CR>
@@ -52,7 +58,7 @@ nnoremap <C-o>f :<C-u>action ShowUsages<CR>
 
 nnoremap <Space>f :<C-u>action GotoFile<CR>
 nnoremap <Space>c :<C-u>action GotoClass<CR>
-nnoremap <Space>s :<C-u>action GotoSymbol<CR>
+nnoremap <Space>m :<C-u>action GotoSymbol<CR>
 
 nnoremap <C-o><C-o> :<C-u>action GotoAction<CR>
 nnoremap <C-f> :<C-u>action FindInPath<CR>
