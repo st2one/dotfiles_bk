@@ -32,6 +32,7 @@
   b = branch
   bv = branch -vv
   co = checkout
+  cp = cherry-pick
   f = fetch
   ll = log -p --stat --reverse --abbrev-commit --decorate --topo-order
   tree = log --graph --date=iso --pretty='[%ad]%C(auto) %h%d %C(white bold)%an%Creset: %s'
