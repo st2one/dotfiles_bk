@@ -370,7 +370,7 @@ function peco-history-selection() {
 zle -N peco-history-selection
 bindkey '^R' peco-history-selection
 
-# ^ebでブランチをフィルタリング
+# ^gbでブランチをフィルタリング
 function peco-git-branch () {
   local current_buffer=$BUFFER
   local selected_branch_name="$(git branch -a | peco | tr -d ' ' | tr -d '*')"
@@ -387,20 +387,20 @@ function peco-git-branch () {
   fi
 }
 zle -N peco-git-branch
-bindkey '^eb' peco-git-branch
+bindkey '^gb' peco-git-branch
 
-# ^ecでgitのコミットハッシュをフィルタリング
-function peco-git-hash () {
-  local current_buffer=$BUFFER
-  local git_hash="$(git log --oneline --branches | peco | awk '{print $1}')"
-  BUFFER="${current_buffer}${git_hash}"
-  # カーソル位置を末尾に移動
-  CURSOR=$#BUFFER
-}
-zle -N peco-git-hash
-bindkey '^ec' peco-git-hash
+# ^ghでgitのコミットハッシュをフィルタリング
+# function peco-git-hash () {
+#   local current_buffer=$BUFFER
+#   local git_hash="$(git log --oneline --branches | peco | awk '{print $1}')"
+#   BUFFER="${current_buffer}${git_hash}"
+#   # カーソル位置を末尾に移動
+#   CURSOR=$#BUFFER
+# }
+# zle -N peco-git-hash
+# bindkey '^gh' peco-git-hash
 
-# ^esでgitのstashのIDを取得
+# ^gsでgitのstashのIDを取得
 function peco-git-stash () {
   local current_buffer=$BUFFER
   local stash="$(git stash list | peco | awk -F'[ :]' '{print $1}')"
@@ -409,7 +409,7 @@ function peco-git-stash () {
   CURSOR=$#BUFFER
 }
 zle -N peco-git-stash
-bindkey '^es' peco-git-stash
+bindkey '^gs' peco-git-stash
 
 # ^eaエイリアスをフィルタリング
 function aliasp () {
@@ -425,7 +425,7 @@ function ssh-peco(){
   ssh ${ip}
 }
 
-# ^epでプロセスID取得
+# ^e^pでプロセスID取得
 function peco-ps () {
   local current_buffer=$BUFFER
   local process_id="$(ps aux | peco | awk '{print $2}')"
@@ -434,7 +434,7 @@ function peco-ps () {
   CURSOR=$#BUFFER
 }
 zle -N peco-ps
-bindkey '^ep' peco-ps
+bindkey '^e^p' peco-ps
 
 # search repository(ローカルリポジトリのファイル, ディレクトリ検索)
 function peco-cd-repository() {
@@ -450,8 +450,8 @@ function peco-find-repository() {
 }
 zle -N peco-cd-repository
 zle -N peco-find-repository
-bindkey '^ed' peco-cd-repository
-bindkey '^er' peco-find-repository
+bindkey '^e^d' peco-cd-repository
+bindkey '^e^r' peco-find-repository
 
 # search current directory(カレントディレクトリ下の検索)
 # peco-find: ドットファイルを検索対象としない
@@ -470,8 +470,8 @@ function peco-find-all() {
 }
 zle -N peco-find
 zle -N peco-find-all
-bindkey '^ef' peco-find
-bindkey '^ea' peco-find-all
+bindkey '^e^f' peco-find
+bindkey '^e^e' peco-find-all
 
 # agで検索した結果から選択し、ファイルを開く
 # function peco-grep() {
@@ -488,15 +488,15 @@ function peco-select_window() {
   tmux list-windows | peco | awk -F':' '{print $1}' | xargs tmux select-window -t
 }
 zle -N peco-select_window
-bindkey '^tw' peco-select_window
+bindkey '^e^w' peco-select_window
 
 # === cool-peco init ===
 FPATH="$FPATH:/Users/takumi/github/cool-peco"
 autoload -Uz cool-peco
 cool-peco
 # ======================
-bindkey '^eh' cool-peco-ssh
-bindkey '^eco' cool-peco-git-checkout
-bindkey '^el' cool-peco-git-log
+bindkey '^e^h' cool-peco-ssh
+bindkey '^go' cool-peco-git-checkout
+bindkey '^gl' cool-peco-git-log
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
