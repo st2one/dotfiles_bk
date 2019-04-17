@@ -78,8 +78,8 @@ bindkey -M viins '^Y'  yank
 
 # モードを表示
 function zle-line-init zle-keymap-select {
-  VIM_NORMAL="%K{208}%F%k%f%K{166}%F{255} % NORMAL %k%f%K%F{166}%k%f"
-  VIM_INSERT="%K{075}%F%k%f%K{032}%F{255} % INSERT %k%f%K%F{032}%k%f"
+  VIM_NORMAL="%K{208}%F%k%f%K{166}%F{255} % N %k%f%K%F{166}%k%f"
+  VIM_INSERT="%K{075}%F%k%f%K{032}%F{255} % I %k%f%K%F{032}%k%f"
   RPS1="${${KEYMAP/vicmd/$VIM_NORMAL}/(main|viins)/$VIM_INSERT}"
   RPS2=$RPS1
   zle reset-prompt
