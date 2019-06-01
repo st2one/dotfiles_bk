@@ -231,6 +231,9 @@ export PATH="/Applications/MAMP/bin/php/php5.5.26/bin:$PATH"
 # carch
 export PATH="/opt/carch/bin:$PATH"
 
+# flutter
+export PATH="$PATH:$HOME/flutter/bin"
+
 # git使用時HEAD^をHEAD\^と自動エスケープ
 fpath=(~/.functions ${fpath})
 autoload -Uz git-escape-magic

@@ -272,6 +272,7 @@ if s:use_dein && v:version >= 704
     call dein#add('jacoborus/tender.vim')
     call dein#add('mhartington/oceanic-next')
     call dein#add('gosukiwi/vim-atom-dark')
+    call dein#add('morhetz/gruvbox')
 
     call dein#add('vim-airline/vim-airline')
     call dein#add('vim-airline/vim-airline-themes')
@@ -324,6 +325,7 @@ autocmd ColorScheme * highlight VertSplit ctermbg=none
 autocmd ColorScheme * highlight IncSearch ctermbg=none
 autocmd ColorScheme * highlight Search ctermbg=none
 " autocmd ColorScheme * highlight Visual ctermbg=143 ctermfg=232 cterm=bold
+" autocmd ColorScheme * highlight Visual ctermbg=238 cterm=bold
 
 " colorscheme dracula
 " color Dracula
@@ -337,6 +339,7 @@ colorscheme jellybeans
 " colorscheme tender
 " colorscheme OceanicNext
 " colorscheme atom-dark
+" colorscheme gruvbox
 
 " 行番号の色
 " highlight LineNr ctermfg=darkyellow
@@ -1138,6 +1141,7 @@ let g:airline#extensions#whitespace#enabled = 0
 " 上部タブバー右にバッファを表示させない
 " let g:airline#extensions#tabline#show_splits = 0
 let g:airline_theme = 'jellybeans'
+" let g:airline_theme = 'gruvbox'
 
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
