@@ -26,6 +26,7 @@ zle -N history-beginning-search-forward-end history-search-end
 bindkey "^P" history-beginning-search-backward-end
 bindkey "^N" history-beginning-search-forward-end
 
+DIRSTACKSIZE=100
 setopt no_beep           # ビープ音を鳴らさないようにする
 setopt auto_cd           # ディレクトリ名の入力のみで移動する
 setopt auto_pushd        # cd時にディレクトリスタックにpushdする
@@ -474,7 +475,7 @@ function peco-find-all() {
 zle -N peco-find
 zle -N peco-find-all
 bindkey '^e^f' peco-find
-bindkey '^e^e' peco-find-all
+bindkey '^e^a' peco-find-all
 
 # agで検索した結果から選択し、ファイルを開く
 # function peco-grep() {
@@ -501,5 +502,16 @@ cool-peco
 bindkey '^e^h' cool-peco-ssh
 bindkey '^go' cool-peco-git-checkout
 bindkey '^gl' cool-peco-git-log
+
+
+# ディレクトリスタックからディレクトリ移動
+function peco-pushd() {
+  local pushd_number=$(dirs -v | peco | awk {'print $1'})
+  pushd +$pushd_number
+  zle clear-screen
+}
+zle -N peco-pushd
+bindkey '^e^e' peco-pushd
+
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
