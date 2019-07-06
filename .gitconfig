@@ -24,20 +24,29 @@
   pom = push origin master
   pod = push origin develop
   s = status
+  sh = show
   d = diff
   dc = diff --cached
   dw = diff -w
   dn = diff --name-only
   dww = diff --word-diff
+  d1 = diff HEAD~
+  d2 = diff HEAD~2
+  d3 = diff HEAD~3
   b = branch
   bv = branch -vv
   co = checkout
   cp = cherry-pick
+  sp = stash pop
+  ss = stash save
+  sl = stash list
   f = fetch
-  ll = log -p --stat --reverse --abbrev-commit --decorate --topo-order
+  l = log --oneline --graph
+  ll = log -p --stat --abbrev-commit --decorate --topo-order
   tree = log --graph --date=iso --pretty='[%ad]%C(auto) %h%d %C(white bold)%an%Creset: %s'
   list = log --pretty=format:\"<%h> %ad [%an] %Cgreen%d%Creset %s\" --date=short
   loglr = log --left-right -p
   conflictlr = log --merge --left-right -p
+  unstage = reset HEAD
 [commit]
   template = /Users/takumi/.gitmessage.txt
