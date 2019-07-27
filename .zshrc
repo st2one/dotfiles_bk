@@ -129,6 +129,8 @@ alias uniform-navi="cd ~/github/bros/uniform-navi"
 
 export EDITOR=nvim
 
+export PGDATA='/usr/local/var/postgres'
+
 #-------------------------------------------------
 # Path
 #-------------------------------------------------
