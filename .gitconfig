@@ -49,4 +49,4 @@
   conflictlr = log --merge --left-right -p
   unstage = reset HEAD
 [commit]
-  template = /Users/takumi/.gitmessage.txt
+  template = ~/.gitmessage.txt
