@@ -16,7 +16,6 @@ function link_dotfiles() {
     .peco/config.json
     .config/nvim/init.vim
     .config/tmux/get_buttery_tmux.sh
-    .config/karabiner/karabiner.json
   )
 
   for file in files[@]; do
