@@ -15,7 +15,7 @@ link_dotfiles() {
     .zshrc
     .peco/config.json
     .config/nvim/init.vim
-    .config/tmux/get_buttery_tmux.sh
+    .config/tmux/get_battery_tmux.sh
   )
 
   for file in ${files[@]}; do
