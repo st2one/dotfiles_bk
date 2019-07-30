@@ -4,7 +4,7 @@ set -u
 DIR="$(cd "$(dirname $0)" && pwd)"
 cd "$DIR"
 
-function link_dotfiles() {
+link_dotfiles() {
   local files=(
     .ctags
     .gitconfig
@@ -32,7 +32,7 @@ function link_dotfiles() {
   done
 }
 
-function run() {
+run() {
   link_dotfiles
 }
 
