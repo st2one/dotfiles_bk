@@ -18,7 +18,7 @@ link_dotfiles() {
     .config/tmux/get_buttery_tmux.sh
   )
 
-  for file in files[@]; do
+  for file in ${files[@]}; do
     local src="$DIR/$file"
     local dst="$HOME/$file"
 
