@@ -79,8 +79,8 @@ bindkey -M viins '^Y'  yank
 
 # モードを表示
 function zle-line-init zle-keymap-select {
-  VIM_NORMAL="%K{208}%F%k%f%K{166}%F{255} % N %k%f%K%F{166}%k%f"
-  VIM_INSERT="%K{075}%F%k%f%K{032}%F{255} % I %k%f%K%F{032}%k%f"
+  VIM_NORMAL="%K{208}%F%k%f%K{166}%F{237} % N %k%f%K%F{166}%k%f"
+  VIM_INSERT="%K{075}%F%k%f%K{032}%F{237} % I %k%f%K%F{032}%k%f"
   RPS1="${${KEYMAP/vicmd/$VIM_NORMAL}/(main|viins)/$VIM_INSERT}"
   RPS2=$RPS1
   zle reset-prompt
@@ -121,11 +121,6 @@ alias kbc='kubectl'
 
 # mybin
 alias makedirs="makedirs.sh"
-
-alias cfo="cd ~/github/freee/CFO-Alpha"
-alias line_light="cd ~/github/line_light"
-alias date-adjuster="cd ~/github/date-adjuster"
-alias uniform-navi="cd ~/github/bros/uniform-navi"
 
 export EDITOR=nvim
 
@@ -169,9 +164,9 @@ export PATH=/usr/local/share/npm/bin:$PATH
 
 # Python
 export PYENV_ROOT=${HOME}/.pyenv
-  export PATH="${PYENV_ROOT}/bin:$PATH"
-  eval "$(pyenv init -)"
-  eval "$(pyenv virtualenv-init -)"
+export PATH="${PYENV_ROOT}/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
 
 # Alias(activate / deactivate)
 alias conda-activate='source $PYENV_ROOT/versions/anaconda3-5.0.0/bin/activate'
@@ -368,11 +363,10 @@ tmux_automatically_attach_session
 
 # peco(ヒストリを便利に)の設定
 function peco-history-selection() {
-    BUFFER=`history -n 1 | tail -r  | awk '!a[$0]++' | peco`
-    CURSOR=$#BUFFER
-    zle reset-prompt
+  BUFFER=`history -n 1 | tail -r  | awk '!a[$0]++' | peco`
+  CURSOR=$#BUFFER
+  zle reset-prompt
 }
-
 zle -N peco-history-selection
 bindkey '^R' peco-history-selection
 
@@ -497,7 +491,7 @@ zle -N peco-select_window
 bindkey '^e^w' peco-select_window
 
 # === cool-peco init ===
-FPATH="$FPATH:/Users/takumi/github/cool-peco"
+FPATH="$FPATH:/Users/takumi/.ghq/github.com/ryoppy/cool-peco"
 autoload -Uz cool-peco
 cool-peco
 # ======================
@@ -505,6 +499,16 @@ bindkey '^e^h' cool-peco-ssh
 bindkey '^go' cool-peco-git-checkout
 bindkey '^gl' cool-peco-git-log
 
+function peco-ghq() {
+  local repo="$(ghq list | peco)"
+  if [[ -n "$repo" ]]; then
+    local dst="${HOME}/.ghq/${repo}"
+    cd "${dst}"
+    zle reset-prompt
+  fi
+}
+zle -N peco-ghq
+bindkey '^g^g' peco-ghq
 
 # ディレクトリスタックからディレクトリ移動
 function peco-pushd() {
@@ -516,4 +520,4 @@ zle -N peco-pushd
 bindkey '^e^e' peco-pushd
 
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

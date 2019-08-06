@@ -102,8 +102,8 @@ set clipboard+=unnamedplus " OSのクリップボードをレジスタ指定無�
 
 " let g:python_host_prog = expand('/usr/local/bin/python2')
 " let g:python3_host_prog = expand('~/.pyenv/shims/python3')
-let g:python_host_prog=$PYENV_ROOT.'/versions/neovim-2/bin/python'
-let g:python3_host_prog=$PYENV_ROOT.'/versions/neovim-3/bin/python'
+let g:python_host_prog=$PYENV_ROOT.'/versions/neovim2/bin/python'
+let g:python3_host_prog=$PYENV_ROOT.'/versions/neovim3/bin/python'
 
 "==============================
 " コマンドラインの設定
