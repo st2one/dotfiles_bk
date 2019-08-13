@@ -168,6 +168,9 @@ export PATH="${PYENV_ROOT}/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
+# Pipenv
+export PIPENV_VENV_IN_PROJECT=true
+
 # Alias(activate / deactivate)
 alias conda-activate='source $PYENV_ROOT/versions/anaconda3-5.0.0/bin/activate'
 alias conda-deactivate='source $PYENV_ROOT/versions/anaconda3-5.0.0/bin/deactivate'
