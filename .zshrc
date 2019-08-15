@@ -104,6 +104,9 @@ alias vim='nvim'
 export NVIM_PYTHON_LOG_FILE=/tmp/log
 export NVIM_PYTHON_LOG_LEVEL=DEBUG
 
+export XDG_CONFIG_HOME="/Users/takumi/.config"
+export XDG_CACHE_HOME="/Users/takumi/.cache"
+
 # normal-vim
 alias oldvim="\vim"
 

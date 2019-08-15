@@ -39,20 +39,13 @@ nnoremap <tab> %
 vnoremap <tab> %
 
 augroup MyAutoGroup
-    autocmd!
+  autocmd!
 augroup END
 
 " jellybeansの背景色をターミナルと同じに
 let g:jellybeans_overrides = {
 \    'background': { 'ctermbg': 'none', '256ctermbg': 'none' },
 \}
-
-"全角スペースの可視化
-"augroup highlightIdegraphicSpace
-"  autocmd!
-"  autocmd Colorscheme * highlight IdeographicSpace term=underline ctermbg=DarkGray guibg=DarkGray
-"  autocmd VimEnter,WinEnter * match IdeographicSpace /　/
-"augroup END
 
 "===========================
 " カーソル移動関連の設定
@@ -121,190 +114,42 @@ set noerrorbells "エラーメッセージの表示時にビープを鳴らさ�
 "================================
 " dein
 "================================
-" Flags
-let s:use_dein = 1
+let s:dein_config_dir = $XDG_CONFIG_HOME . '/nvim'
+let s:dein_cache_dir = $XDG_CACHE_HOME . '/dein'
+let s:dein_repo_dir = s:dein_cache_dir . '/repos/github.com/Shougo/dein.vim'
 
-" vi compatibility
-if !&compatible
+if &compatible
   set nocompatible
 endif
 
-" Prepare .vim dir
-let s:vimdir = $HOME . "/.vim"
-if has("vim_starting")
-  if ! isdirectory(s:vimdir)
-    call system("mkdir " . s:vimdir)
-  endif
+" Check dein has been installed or not.
+if !isdirectory(s:dein_repo_dir)
+  echo "dein is not installed, install now "
+  let s:dein_repo = "https://github.com/Shougo/dein.vim"
+  echo "git clone " . s:dein_repo . " " . s:dein_repo_dir
+  execute '!git clone https://github.com/Shougo/dein.vim' s:dein_repo_dir
 endif
 
-" dein
-let s:dein_enabled  = 0
-if s:use_dein && v:version >= 704
-  let s:dein_enabled = 1
+" Add the dein installation directory into runtimepath
+set runtimepath+=$XDG_CACHE_HOME/dein/repos/github.com/Shougo/dein.vim
 
-  " Set dein paths
-  let s:dein_dir = s:vimdir . '/dein'
-  let s:dein_github = s:dein_dir . '/repos/github.com'
-  let s:dein_repo_name = "Shougo/dein.vim"
-  let s:dein_repo_dir = s:dein_github . '/' . s:dein_repo_name
+if dein#load_state(s:dein_cache_dir)
+  call dein#begin(s:dein_cache_dir)
 
-  " Check dein has been installed or not.
-  if !isdirectory(s:dein_repo_dir)
-    echo "dein is not installed, install now "
-    let s:dein_repo = "https://github.com/" . s:dein_repo_name
-    echo "git clone " . s:dein_repo . " " . s:dein_repo_dir
-    call system("git clone " . s:dein_repo . " " . s:dein_repo_dir)
-  endif
-  let &runtimepath = &runtimepath . "," . s:dein_repo_dir
+  call dein#load_toml(s:dein_config_dir . '/dein.toml', {'lazy': 0})
+  call dein#load_toml(s:dein_config_dir . '/dein_lazy.toml', {'lazy': 1})
 
-
-  " Check cache
-  if dein#load_state(s:dein_dir)
-    " Begin plugin part
-    call dein#begin(s:dein_dir)
-
-    call dein#add('Shougo/dein.vim')
-
-    call dein#add('Shougo/vimproc', {
-          \ 'build': {
-          \     'windows': 'tools\\update-dll-mingw',
-          \     'cygwin': 'make -f make_cygwin.mak',
-          \     'mac': 'make -f make_mac.mak',
-          \     'linux': 'make',
-          \     'unix': 'gmake'}})
-
-    " call dein#add('Shougo/unite.vim', {
-    "       \ 'depends': ['vimproc'],
-    "       \ 'on_cmd': ['Unite'],
-    "       \ 'lazy': 1})
-    call dein#add('Shougo/unite.vim')
-
-    if has('python3')
-      call dein#add('Shougo/denite.nvim')
-      call dein#add('Shougo/neomru.vim')
-    else
-      call dein#add('Shougo/unite.vim')
-      call dein#add('Shougo/neomru.vim')
-    endif
-
-    call dein#add('Shougo/deoplete.nvim')
-    if !has('nvim')
-      call dein#add('roxma/nvim-yarp')
-      call dein#add('roxma/vim-hug-neovim-rpc')
-    endif
-    " if ((has('nvim')  || has('timers')) && has('python3')) && system('pip3 show neovim') !=# ''
-    "   call dein#add('Shougo/deoplete.nvim', {'on_i': 1})
-    "   if !has('nvim')
-    "     call dein#add('roxma/nvim-yarp')
-    "     call dein#add('roxma/vim-hug-neovim-rpc')
-    "   endif
-    " elseif has('lua')
-    "   call dein#add('Shougo/neocomplete.vim')
-    " endif
-
-    " call dein#add('autozimu/LanguageClient-neovim', {
-    " \ 'rev': 'next',
-    " \ 'build': 'bash install.sh',
-    " \ })
-
-    call dein#add('Shougo/neco-vim')
-    call dein#add('Shougo/neco-syntax')
-    " call dein#add('ujihisa/neco-look')
-    call dein#add('Shougo/neoyank.vim')
-    call dein#add('mklabs/split-term.vim')
-    call dein#add('Shougo/tabpagebuffer.vim')
-    call dein#add('Shougo/neosnippet', {'on_i': 1, 'on_ft': ['snippet'], 'depends': ['neosnippet-snippets']})
-    " call dein#add('Shougo/neosnippet', {'on_i': 1})
-    call dein#add('Shougo/neosnippet-snippets')
-
-    call dein#add('Shougo/vimfiler')
-    call dein#add('kassio/neoterm')
-    " call dein#add('ryanoasis/vim-devicons')
-    call dein#add('LeafCage/yankround.vim')
-    " call dein#add('ctrlpvim/ctrlp.vim')
-    call dein#add('tpope/vim-fugitive')
-    " call dein#add('junegunn/fzf', { 'build': './install', 'rtp': '' })
-    call dein#add('junegunn/fzf', { 'build': './install --all', 'merged': 0 })
-    call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
-    call dein#add('soramugi/auto-ctags.vim')
-    call dein#add('tpope/vim-surround')
-    call dein#add('kana/vim-submode')
-    call dein#add('tomtom/tcomment_vim')
-    call dein#add('cohama/lexima.vim')
-    call dein#add('mattn/emmet-vim')
-    call dein#add('rhysd/clever-f.vim')
-    call dein#add('easymotion/vim-easymotion')
-    " call dein#add('tpope/vim-repeat')
-    call dein#add('tpope/vim-endwise')
-    call dein#add('slim-template/vim-slim')
-    call dein#add('kchmck/vim-coffee-script')
-    call dein#add("Yggdroot/indentLine")
-    call dein#add('sjl/gundo.vim')
-    call dein#add('thinca/vim-quickrun')
-    call dein#add('nathanaelkane/vim-indent-guides')
-    call dein#add('godlygeek/tabular')
-    call dein#add('rcmdnk/vim-markdown')
-    call dein#add('joker1007/vim-markdown-quote-syntax')
-    call dein#add('kannokanno/previm')
-    call dein#add('iamcco/markdown-preview.vim')
-    call dein#add('iamcco/mathjax-support-for-mkdp')
-    call dein#add('airblade/vim-gitgutter')
-    call dein#add('ambv/black')
-    call dein#add('davidhalter/jedi-vim')
-    call dein#add('zchee/deoplete-jedi')
-    call dein#add('zchee/deoplete-go', {'build': 'make'})
-    " call dein#add('tbodt/deoplete-tabnine', {'do': './install.sh'})
-    " call dein#add('zxqfl/tabnine-vim')
-    call dein#add('w0rp/ale')
-    call dein#add('elzr/vim-json')
-    call dein#add('fatih/vim-go')
-    call dein#add('Vimjas/vim-python-pep8-indent')
-
-    call dein#add('nanotech/jellybeans.vim')
-    call dein#add('w0ng/vim-hybrid')
-    call dein#add('tomasr/molokai')
-    call dein#add('dracula/vim')
-    call dein#add('altercation/vim-colors-solarized')
-    call dein#add('jeffreyiacono/vim-colors-wombat')
-    call dein#add('croaker/mustang-vim')
-    call dein#add('jpo/vim-railscasts-theme')
-    call dein#add('jacoborus/tender.vim')
-    call dein#add('mhartington/oceanic-next')
-    call dein#add('gosukiwi/vim-atom-dark')
-    call dein#add('morhetz/gruvbox')
-
-    call dein#add('vim-airline/vim-airline')
-    call dein#add('vim-airline/vim-airline-themes')
-    call dein#add('luochen1990/rainbow')
-
-    " if has('lua')
-    "   call dein#add('Shougo/neocomplete.vim', {
-    "         \ 'on_i': 1,
-    "         \ 'lazy': 1})
-    "
-    "   call dein#add('ujihisa/neco-look', {
-    "         \ 'depends': ['neocomplete.vim']})
-    " endif
-
-    " call dein#add('tyru/open-browser.vim', {
-    "       \ 'on_map': ['<plug>(openbrowser-smart-search)'],
-    "       \ 'lazy': 1})
-    call dein#add('tyru/open-browser.vim')
-
-    call dein#add('rhysd/nyaovim-markdown-preview')
-
-    call dein#end()
-
-    call dein#save_state()
-  endif
- 
-  " Installation check.
-  if dein#check_install()
-    call dein#install()
-  endif
+  call dein#end()
+  call dein#save_state()
 endif
 
-if s:dein_enabled && dein#tap("unite.vim")
+" Installation check.
+if dein#check_install()
+  call dein#install()
+endif
+
+
+if dein#tap("unite.vim")
   nnoremap [unite] <Nop>
   nmap <Leader>u [unite]
   nnoremap <silent> [unite]b :Unite buffer<CR>
