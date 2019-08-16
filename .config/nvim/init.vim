@@ -26,17 +26,15 @@ set background=dark
 set splitbelow " 新しいウインドウを下に開く
 set splitright " 新しいウインドウを右に開く
 set inccommand=split " 文字列置換をインタラクティブに表示
+set noshowmode " 左下のinsertモードなどの表示をしない
+" set ambiwidth=double
 " set termguicolors
 " let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 " let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-" set ambiwidth=double
 let mapleader = '\<Space>'
-
-" tabにて対応ペアにジャンプ
-nnoremap <tab> %
-vnoremap <tab> %
+language messages C " 各種メッセージを英語にする
 
 augroup MyAutoGroup
   autocmd!
@@ -283,8 +281,8 @@ nnoremap <C-n> gt
 nnoremap <C-p> gT
 
 " The prefix key.
-nnoremap    [Tag]   <Nop>
-nmap    s [Tag]
+nnoremap [Tag] <Nop>
+nmap s [Tag]
 " Tab jump
 for n in range(1, 9)
   execute 'nnoremap <silent> [Tag]'.n  ':<C-u>tabnext'.n.'<CR>'
@@ -300,14 +298,14 @@ call submode#map('bufmove', 'n', '', '+', '<C-w>+')
 call submode#map('bufmove', 'n', '', '-', '<C-w>-')
 
 " The prefix key.
-nnoremap    [Tag]   <Nop>
-nmap    t [Tag]
+nnoremap [Tag] <Nop>
+nmap t [Tag]
 " Tab jump
 for n in range(1, 9)
   execute 'nnoremap <silent> [Tag]'.n  ':<C-u>tabnext'.n.'<CR>'
 endfor
 " t1 で1番左のタブ、t2 で1番左から2番目のタブにジャンプ
-    
+
 " tc 新しいタブを一番右に作る
 map <silent> [Tag]c :tablast <bar> tabnew<CR>
 " tx タブ閉じる
@@ -316,18 +314,18 @@ map <silent> [Tag]x :tabclose<CR>
 map <silent> [Tag]n :tabnext<CR>
 " tp 前のタブ
 map <silent> [Tag]p :tabprevious<CR>
-    
+
 " unite.vim上でのキーマッピング
 autocmd FileType unite call s:unite_my_settings()
 function! s:unite_my_settings()
-" 単語単位からパス単位で削除するように変更
-imap <buffer> <C-w> <Plug>(unite_delete_backward_path)
-" ESCキーを2回押すと終了する
-nmap <silent><buffer> <ESC><ESC> q
-imap <silent><buffer> <ESC><ESC> <ESC>q
-" <C-c>でuniteを終了
-nmap <buffer> <C-c> <Plug>(unite_exit)
-imap <buffer> <C-c> <Plug>(unite_exit)
+  " 単語単位からパス単位で削除するように変更
+  imap <buffer> <C-w> <Plug>(unite_delete_backward_path)
+  " ESCキーを2回押すと終了する
+  nmap <silent><buffer> <ESC><ESC> q
+  imap <silent><buffer> <ESC><ESC> <ESC>q
+  " <C-c>でuniteを終了
+  nmap <buffer> <C-c> <Plug>(unite_exit)
+  imap <buffer> <C-c> <Plug>(unite_exit)
 endfunction
 
 
@@ -549,6 +547,20 @@ noremap <S-k> {
 "jjでノーマルモード
 inoremap jj <esc>
 
+"エスケープをcontrol+jにマッピング
+imap <C-j> <esc>
+
+" 検索結果のハイライトをEsc連打でクリアする
+nnoremap <ESC><ESC> :nohlsearch<CR>
+
+" 挿入モード時にカーソルを移動
+inoremap <C-f> <Right>
+inoremap <C-b> <Left>
+
+" tabにて対応ペアにジャンプ
+nnoremap <tab> %
+vnoremap <tab> %
+
 "rだけでリドゥ
 " nnoremap r <C-r>
 
@@ -604,11 +616,7 @@ noremap <Space>y 0v$hy
 noremap <Space>s :%s/
 
 "--------------------------------------------------
-" <Space>co で1行コメントアウト(Ruby形式)
-" map <Space>co <S-i># <ESC>
-
-"--------------------------------------------------
-" <Space>uc で1行コメントアウト。コメントアウトの行頭の# を削除(Ruby形式)
+" <Space>co でコメントアウトの行頭の# を削除(Ruby形式)
 map <Space>co ^xx<ESC>
 
 " <Space>cd で編集ファイルのカレントディレクトリへと移動
@@ -637,7 +645,7 @@ autocmd QuickFixCmdPost *grep* cwindow
 
 " 全バッファに対してgrepする
 " :bufdo vimgrepa {pattern} %
-nnoremap ,bg :<C-u>bufdo vimgrepa 
+nnoremap ,bg :<C-u>bufdo vimgrepa
 
 " デフォルトで起動するshellはzsh
 set sh=zsh
@@ -792,18 +800,18 @@ let g:tcomment_types = {
 " =======================================
 let g:user_emmet_leader_key = '<C-E>'
 let g:user_emmet_settings = {'variables' : { 'lang' : 'ja' }}
-                
+
 " マッピングを追加
 function! SetErubyMapping2()
   nmap <buffer> <C-_>c :TCommentAs eruby_surround<CR>
   nmap <buffer> <C-_>- :TCommentAs eruby_surround_minus<CR>
   nmap <buffer> <C-_>= :TCommentAs eruby_surround_equality<CR>
-                      
+
   vmap <buffer> <C-_>c :TCommentAs eruby_surround<CR>
   vmap <buffer> <C-_>- :TCommentAs eruby_surround_minus<CR>
   vmap <buffer> <C-_>= :TCommentAs eruby_surround_equality<CR>
 endfunction
-                            
+
 " erubyのときだけ設定を追加
 au FileType eruby call SetErubyMapping2()
 " phpのときだけ設定を追加
@@ -1343,17 +1351,6 @@ let g:deoplete#sources#go#package_dot = 1
 " nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 " nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 
-"エスケープをcontrol+jにマッピング
-imap <C-j> <esc>
-
-" 検索結果のハイライトをEsc連打でクリアする
-nnoremap <ESC><ESC> :nohlsearch<CR>
-
-" 左下のinsertモードなどの表示をしない
-set noshowmode
-
-" 各種メッセージを英語にする
-language messages C
 
 " set clipboard+=unnamedplus
 if $TMUX == ''
@@ -1363,9 +1360,21 @@ endif
 " 選択範囲を<,c>でクリップボードに
 vmap ,c :w !xsel -ib<CR><CR>
 
-" 挿入モード時にカーソルを移動
-inoremap <C-f> <Right>
-inoremap <C-b> <Left>
+function! TrimTailSpaces()
+  let s:tmppos = getpos(".")
+  if &filetype == "markdown"
+    " 行末に2space以上ある場合は2spaceまで切り詰める
+    " 1spaceなら消去
+    %s/\v(\s{2})?(\s+)?$/\1/e
+    match Underlined /\s\{2}$/
+  else
+    " 行末のspaceを消去
+    %s/\v\s+$//e
+  endif
+  call setpos(".", s:tmppos)
+endfunction
+" 保存時に行末スペースを除く
+autocmd BufWritePre * :call TrimTailSpaces()
 
 if filereadable(expand('~/dotfiles/command-mine.vim'))
   source ~/dotfiles/command-mine.vim
