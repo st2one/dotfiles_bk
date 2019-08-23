@@ -238,10 +238,14 @@ export PATH="/opt/carch/bin:$PATH"
 # flutter
 export PATH="$PATH:$HOME/flutter/bin"
 
-# git使用時HEAD^をHEAD\^と自動エスケープ
+# git-escape-magic (git使用時HEAD^をHEAD\^と自動エスケープ)
 fpath=(~/.functions ${fpath})
 autoload -Uz git-escape-magic
 git-escape-magic
+
+# cd-bookmark (ディレクトリをブックマーク)
+fpath=(~/.zsh/functions/cd-bookmark(N-/) $fpath)
+autoload -Uz cd-bookmark
 
 # git stashが使えない問題の対処
 export GIT_INTERNAL_GETTEXT_TEST_FALLBACKS=1
@@ -524,6 +528,22 @@ function peco-pushd() {
 }
 zle -N peco-pushd
 bindkey '^e^e' peco-pushd
+
+# cd-bookmarkでブックマークしたディレクトリに移動
+function peco-cd-bookmark() {
+  local selected_bm=$(cd-bookmark | peco | awk -F "|" '{ print $1 }')
+  cd-bookmark "${selected_bm}"
+  zle clear-screen
+}
+zle -N peco-cd-bookmark
+bindkey '^e^b' peco-cd-bookmark
+
+# cd-bookmarkでブックマークしたディレクトリをfinderで開く
+function peco-open-bookmark() {
+  cd-bookmark | peco | awk -F "|" '{ print $2 }' | xargs open
+}
+zle -N peco-open-bookmark
+bindkey '^e^m' peco-open-bookmark
 
 
 # [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
