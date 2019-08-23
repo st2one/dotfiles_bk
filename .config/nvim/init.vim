@@ -181,6 +181,7 @@ colorscheme jellybeans
 " colorscheme tender
 " colorscheme OceanicNext
 " colorscheme atom-dark
+" colorscheme onedark
 " colorscheme gruvbox
 
 " 行番号の色
@@ -1010,7 +1011,6 @@ let g:airline#extensions#whitespace#enabled = 0
 " 上部タブバー右にバッファを表示させない
 " let g:airline#extensions#tabline#show_splits = 0
 let g:airline_theme = 'jellybeans'
-" let g:airline_theme = 'gruvbox'
 
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}

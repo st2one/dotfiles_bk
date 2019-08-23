@@ -135,4 +135,7 @@ repo = 'jacoborus/tender.vim'
 repo = 'gosukiwi/vim-atom-dark'
 
 [[plugins]]
+repo = 'joshdick/onedark.vim'
+
+[[plugins]]
 repo = 'w0ng/vim-hybrid'
