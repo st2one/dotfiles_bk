@@ -448,20 +448,20 @@ bindkey '^e^p' peco-ps
 
 # search repository(ローカルリポジトリのファイル, ディレクトリ検索)
 function peco-cd-repository() {
-  DIR=$(\find ~/gitrepos ~/my/go/src/github.com -type d -a \! -regex '.*/\.git.*' | peco | head -n 1)
+  DIR=$(\find ~/.ghq/github.com ~/go/src/github.com -type d -a \! -regex '.*/\.git.*' | peco | head -n 1)
   pushd $DIR > /dev/null
   zle clear-screen
 }
 function peco-find-repository() {
-  local l=$(\find ~/gitrepos ~/my/go/src/github.com -a \! -regex '.*/\.git.*' | peco)
+  local l=$(\find ~/.ghq/github.com ~/go/src/github.com -a \! -regex '.*/\.git.*' | peco)
   BUFFER="${LBUFFER}${l}"
   CURSOR=$#BUFFER
   zle clear-screen
 }
 zle -N peco-cd-repository
 zle -N peco-find-repository
-bindkey '^e^d' peco-cd-repository
-bindkey '^e^r' peco-find-repository
+bindkey '^g^r' peco-cd-repository
+bindkey '^g^f' peco-find-repository
 
 # search current directory(カレントディレクトリ下の検索)
 # peco-find: ドットファイルを検索対象としない
@@ -527,7 +527,7 @@ function peco-pushd() {
   zle clear-screen
 }
 zle -N peco-pushd
-bindkey '^e^e' peco-pushd
+bindkey '^e^r' peco-pushd
 
 # cd-bookmarkでブックマークしたディレクトリに移動
 function peco-cd-bookmark() {
@@ -536,7 +536,7 @@ function peco-cd-bookmark() {
   zle clear-screen
 }
 zle -N peco-cd-bookmark
-bindkey '^e^b' peco-cd-bookmark
+bindkey '^e^e' peco-cd-bookmark
 
 # cd-bookmarkでブックマークしたディレクトリをfinderで開く
 function peco-open-bookmark() {
