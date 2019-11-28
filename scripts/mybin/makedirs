@@ -1,0 +1,51 @@
+#!/bin/sh
+
+# ディレクトリを指定の個数作成するスクリプト
+
+if [ "$#" -eq 0 ]; then
+  echo "Please set args."
+  echo "ex) makedirs.sh 10 -> 01 ~ 10"
+  echo "ex) makedirs.sh ch 15 -> ch01 ~ ch15"
+  echo "ex) makedirs.sh lesson 5 20 -> lesson05 ~ lesson20"
+elif [ "$#" -gt 3 ]; then
+  echo "You set args too mach! Args are 2 or 3."
+fi
+
+# 引数１つの場合(数字のみ)
+# 引数2つの場合(名前+数字)
+# 引数3つの場合(名前+開始数字+終了数字)
+if [ "$#" -eq 1 ]; then
+  num=$1
+  for i in $(seq 1 "$num")
+  do
+    if [ "$i" -le 9 ]; then
+      mkdir "0${i}"
+    else
+      mkdir "${i}"
+    fi
+  done
+elif [ "$#" -eq 2 ]; then
+  name=$1
+  num=$2
+  for i in $(seq 1 "$num")
+  do
+    if [ "$i" -le 9 ]; then
+      mkdir "${name}0${i}"
+    else
+      mkdir "${name}${i}"
+    fi
+  done
+elif [ "$#" -eq 3 ]; then
+  name=$1
+  snum=$2
+  enum=$3
+  for i in $(seq "$snum" "$enum")
+  do
+    if [ "$i" -le 9 ]; then
+      mkdir "${name}0${i}"
+    else
+      mkdir "${name}${i}"
+    fi
+  done
+fi
+
