@@ -12,6 +12,15 @@ repo = 'Shougo/unite.vim'
 repo = 'Shougo/denite.nvim'
 
 [[plugins]]
+repo = 'Shougo/defx.nvim'
+
+[[plugins]]
+repo = 'kristijanhusak/defx-icons'
+
+[[plugins]]
+repo ='kristijanhusak/defx-git'
+
+[[plugins]]
 repo = 'Shougo/neco-vim'
 
 [[plugins]]
@@ -31,6 +40,9 @@ repo = 'mklabs/split-term.vim'
 
 [[plugins]]
 repo = 'kassio/neoterm'
+
+[[plugins]]
+repo = 'ryanoasis/vim-devicons'
 
 [[plugins]]
 repo = 'LeafCage/yankround.vim'
