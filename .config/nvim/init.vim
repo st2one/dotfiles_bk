@@ -489,31 +489,6 @@ if dein#tap('denite.nvim')
         \ '*.min.*',
         \ 'img/', 'fonts/'])
 
-  " Define mappings
-  autocmd FileType denite call s:denite_my_settings()
-  function! s:denite_my_settings() abort
-    nnoremap <silent><buffer><expr> <CR>
-    \ denite#do_map('do_action')
-    nnoremap <silent><buffer><expr> s
-    \ denite#do_map('do_action', 'split')
-    nnoremap <silent><buffer><expr> v
-    \ denite#do_map('do_action', 'vsplit')
-    nnoremap <silent><buffer><expr> d
-    \ denite#do_map('do_action', 'delete')
-    nnoremap <silent><buffer><expr> p
-    \ denite#do_map('do_action', 'preview')
-    nnoremap <silent><buffer><expr> q
-    \ denite#do_map('quit')
-    nnoremap <silent><buffer><expr> i
-    \ denite#do_map('open_filter_buffer')
-    nnoremap <silent><buffer><expr> <Space>
-    \ denite#do_map('toggle_select').'j'
-    inoremap <silent><buffer><expr> <C-c>
-    \ denite#do_map('quit')
-    nnoremap <silent><buffer><expr> <C-c>
-    \ denite#do_map('quit')
-  endfunction
-
   let s:denite_win_width_percent = 0.8
   let s:denite_win_height_percent = 0.5
 
@@ -530,31 +505,50 @@ if dein#tap('denite.nvim')
     \ 'highlight_matched_char': 'Type',
     \ })
 
+  " Define mappings
+  autocmd FileType denite call s:denite_my_settings()
+  function! s:denite_my_settings() abort
+    nnoremap <silent><buffer><expr> <CR>
+    \ denite#do_map('do_action')
+    nnoremap <silent><buffer><expr> l
+    \ denite#do_map('do_action')
+    nnoremap <silent><buffer><expr> s
+    \ denite#do_map('do_action', 'split')
+    nnoremap <silent><buffer><expr> v
+    \ denite#do_map('do_action', 'vsplit')
+    nnoremap <silent><buffer><expr> t
+    \ denite#do_map('do_action', 'tabopen')
+    nnoremap <silent><buffer><expr> d
+    \ denite#do_map('do_action', 'delete')
+    nnoremap <silent><buffer><expr> h
+    \ denite#do_map('move_up_path')
+    nnoremap <silent><buffer><expr> p
+    \ denite#do_map('do_action', 'preview')
+    nnoremap <silent><buffer><expr> q
+    \ denite#do_map('quit')
+    nnoremap <silent><buffer><expr> i
+    \ denite#do_map('open_filter_buffer')
+    nnoremap <silent><buffer><expr> .
+    \ denite#do_map('choose_action')
+    nnoremap <silent><buffer><expr> <Space>
+    \ denite#do_map('toggle_select').'j'
+    inoremap <silent><buffer><expr> <C-c>
+    \ denite#do_map('quit')
+    nnoremap <silent><buffer><expr> <C-c>
+    \ denite#do_map('quit')
+  endfunction
+
   autocmd FileType denite-filter call s:denite_filter_my_settings()
   function! s:denite_filter_my_settings() abort
-    imap <silent><buffer> <C-c> <Plug>(denite_filter_quit)
+    inoremap <silent><buffer><expr> <C-c>
+    \ denite#do_map('quit')
+    nnoremap <silent><buffer><expr> <C-c>
+    \ denite#do_map('quit')
   endfunction
 
   autocmd FileType denite set winblend=10
   autocmd FileType denite-filter set winblend=10
 endif
-
-" Define mappings
-autocmd FileType denite call s:denite_my_settings()
-function! s:denite_my_settings() abort
-  nnoremap <silent><buffer><expr> <CR>
-  \ denite#do_map('do_action')
-  nnoremap <silent><buffer><expr> d
-  \ denite#do_map('do_action', 'delete')
-  nnoremap <silent><buffer><expr> p
-  \ denite#do_map('do_action', 'preview')
-  nnoremap <silent><buffer><expr> q
-  \ denite#do_map('quit')
-  nnoremap <silent><buffer><expr> i
-  \ denite#do_map('open_filter_buffer')
-  nnoremap <silent><buffer><expr> <Space>
-  \ denite#do_map('toggle_select').'j'
-endfunction
 
 
 "==============================
