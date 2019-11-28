@@ -28,8 +28,8 @@ set splitright " 新しいウインドウを右に開く
 set inccommand=split " 文字列置換をインタラクティブに表示
 set noshowmode " 左下のinsertモードなどの表示をしない
 " set ambiwidth=double
-" set termguicolors
-" let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+set termguicolors
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 " let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
@@ -488,6 +488,39 @@ if dein#tap('denite.nvim')
         \ 'images/', '*.o', '*.make',
         \ '*.min.*',
         \ 'img/', 'fonts/'])
+
+  " Define mappings
+  autocmd FileType denite call s:denite_my_settings()
+  function! s:denite_my_settings() abort
+    nnoremap <silent><buffer><expr> <CR>
+    \ denite#do_map('do_action')
+    nnoremap <silent><buffer><expr> d
+    \ denite#do_map('do_action', 'delete')
+    nnoremap <silent><buffer><expr> p
+    \ denite#do_map('do_action', 'preview')
+    nnoremap <silent><buffer><expr> q
+    \ denite#do_map('quit')
+    nnoremap <silent><buffer><expr> i
+    \ denite#do_map('open_filter_buffer')
+    nnoremap <silent><buffer><expr> <Space>
+    \ denite#do_map('toggle_select').'j'
+  endfunction
+
+  let s:denite_win_width_percent = 0.6
+  let s:denite_win_height_percent = 0.5
+
+  " Change denite default options
+  call denite#custom#option('default', {
+    \ 'split': 'floating',
+    \ 'winwidth': float2nr(&columns * s:denite_win_width_percent),
+    \ 'wincol': float2nr((&columns - (&columns * s:denite_win_width_percent)) / 2),
+    \ 'winheight': float2nr(&lines * s:denite_win_height_percent),
+    \ 'winrow': float2nr((&lines - (&lines * s:denite_win_height_percent)) / 2),
+    \ 'source_names': 'short',
+    \ 'prompt': '>',
+    \ 'highlight_filter_background': 'CursorLine',
+    \ 'highlight_matched_char': 'Type',
+    \ })
 endif
 
 " Define mappings
@@ -1067,9 +1100,9 @@ set timeout timeoutlen=1000 ttimeoutlen=50
 " gitの差分を表示
 nnoremap <silent> ,gg :<C-u>GitGutterToggle<CR>
 nnoremap <silent> ,gh :<C-u>GitGutterLineHighlightsToggle<CR>
-nmap ,gv <Plug>GitGutterPreviewHunk
-nmap ,gn <Plug>GitGutterNextHunk
-nmap ,gp <Plug>GitGutterPrevHunk
+nmap ,gv <Plug>(GitGutterPreviewHunk)
+nmap ,gn <Plug>(GitGutterNextHunk)
+nmap ,gp <Plug>(GitGutterPrevHunk)
 set updatetime=250
 
 " =======================================

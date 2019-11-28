@@ -14,10 +14,8 @@ fi
 # General Stteings
 #-------------------------------------------------
 export LANG=en_US.UTF-8
-# export locale=en_US.UTF-8
-# export TERM=xterm-256color
+# export TERM="xterm-256color"
 # [[ $TMUX = "" ]] && export TERM="xterm-256color"
-[[ $TMUX = "" ]] && export TERM="screen-256color"
 
 # command history search
 autoload history-search-end
@@ -121,9 +119,6 @@ alias ocaml="rlwrap ocaml"
 
 # kubectl
 alias kbc='kubectl'
-
-# mybin
-alias makedirs="makedirs.sh"
 
 export EDITOR=nvim
 
@@ -293,8 +288,8 @@ eval "$(goenv init -)"
 # Yarn
 export PATH="/usr/local/Cellar/yarn/1.7.0/bin:$PATH"
 
-# サーチパスに~/mybinを追加
-PATH=$PATH:~/mybin
+# サーチパスに~/scripts/mybinを追加
+PATH=$PATH:~/scripts/mybin
 
 # kubectlの補完機能
 source <(kubectl completion zsh)
@@ -366,7 +361,7 @@ function tmux_automatically_attach_session()
         fi
     fi
 }
-tmux_automatically_attach_session
+# tmux_automatically_attach_session
 
 # OPAM configuration
 . /Users/takumi/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
