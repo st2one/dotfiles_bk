@@ -28,6 +28,7 @@ set splitright " 新しいウインドウを右に開く
 set inccommand=split " 文字列置換をインタラクティブに表示
 set noshowmode " 左下のinsertモードなどの表示をしない
 " set ambiwidth=double
+set pumblend=15 " ポップアップメニューを半透明化
 set termguicolors
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 " let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
@@ -158,9 +159,9 @@ endif
 "===============================
 syntax on
 syntax enable
-" autocmd ColorScheme * highlight Normal ctermbg=none
+autocmd ColorScheme * highlight Normal ctermbg=none
 " autocmd ColorScheme * highlight EndOfBuffer ctermbg=none
-" autocmd ColorScheme * highlight LineNr ctermbg=none
+autocmd ColorScheme * highlight LineNr ctermbg=none
 autocmd ColorScheme * highlight VertSplit ctermbg=none
 " autocmd ColorScheme * highlight StatusLine ctermbg=none
 " autocmd ColorScheme * highlight TabLine ctermbg=none
@@ -175,13 +176,12 @@ autocmd ColorScheme * highlight Search ctermbg=none
 " colorscheme molokai
 " colorscheme hybrid
 " colorscheme mustang
-colorscheme jellybeans
+" colorscheme jellybeans
 " colorscheme wombat
 " colorscheme railscasts
 " colorscheme tender
-" colorscheme OceanicNext
 " colorscheme atom-dark
-" colorscheme onedark
+colorscheme onedark
 " colorscheme gruvbox
 
 " 行番号の色
@@ -375,7 +375,7 @@ if dein#tap('denite.nvim')
   nnoremap <silent> [denite]l :<C-u>Denite line -smartcase<CR>
   nnoremap <silent> [denite]T :<C-u>Denite tag<CR>
   nnoremap <silent> [denite]u :<C-u>Denite file_mru -smartcase<CR>
-  nnoremap <silent> [denite]r :<C-u>Denite file_rec -smartcase<CR>
+  nnoremap <silent> [denite]r :<C-u>Denite file/rec -smartcase<CR>
   nnoremap <silent> [denite]d :<C-u>Denite directory_mru -smartcase<CR>
   nnoremap <silent> [denite]s :<C-u>Denite directory_rec -smartcase<CR>
   nnoremap <silent> [denite]M :<C-u>Denite menu<CR>
@@ -386,9 +386,9 @@ if dein#tap('denite.nvim')
   " Denite grep検索結果を再表示する
   nnoremap <silent> gr :<C-u>Denite -resume -buffer-name=search-buffer-denite<CR>
   " resumeした検索結果の次の行の結果へ飛ぶ
-  nnoremap <silent> gn :<C-u>Denite -resume -buffer-name=search-buffer-denite -select=+1 -immediately<CR>
+  nnoremap <silent> gn :<C-u>Denite -resume -buffer-name=search-buffer-denite -cursor-pos=+1 -immediately<CR>
   " resumeした検索結果の前の行の結果へ飛ぶ
-  nnoremap <silent> gp :<C-u>Denite -resume -buffer-name=search-buffer-denite -select=-1 -immediately<CR>
+  nnoremap <silent> gp :<C-u>Denite -resume -buffer-name=search-buffer-denite -cursor-pos=-1 -immediately<CR>
   " resume previous buffer
   " nnoremap <silent> [denite]R :<C-u>Denite -buffer-name=search -resume -mode=normal<CR>
 
@@ -494,6 +494,10 @@ if dein#tap('denite.nvim')
   function! s:denite_my_settings() abort
     nnoremap <silent><buffer><expr> <CR>
     \ denite#do_map('do_action')
+    nnoremap <silent><buffer><expr> s
+    \ denite#do_map('do_action', 'split')
+    nnoremap <silent><buffer><expr> v
+    \ denite#do_map('do_action', 'vsplit')
     nnoremap <silent><buffer><expr> d
     \ denite#do_map('do_action', 'delete')
     nnoremap <silent><buffer><expr> p
@@ -504,9 +508,13 @@ if dein#tap('denite.nvim')
     \ denite#do_map('open_filter_buffer')
     nnoremap <silent><buffer><expr> <Space>
     \ denite#do_map('toggle_select').'j'
+    inoremap <silent><buffer><expr> <C-c>
+    \ denite#do_map('quit')
+    nnoremap <silent><buffer><expr> <C-c>
+    \ denite#do_map('quit')
   endfunction
 
-  let s:denite_win_width_percent = 0.6
+  let s:denite_win_width_percent = 0.8
   let s:denite_win_height_percent = 0.5
 
   " Change denite default options
@@ -521,6 +529,14 @@ if dein#tap('denite.nvim')
     \ 'highlight_filter_background': 'CursorLine',
     \ 'highlight_matched_char': 'Type',
     \ })
+
+  autocmd FileType denite-filter call s:denite_filter_my_settings()
+  function! s:denite_filter_my_settings() abort
+    imap <silent><buffer> <C-c> <Plug>(denite_filter_quit)
+  endfunction
+
+  autocmd FileType denite set winblend=10
+  autocmd FileType denite-filter set winblend=10
 endif
 
 " Define mappings
@@ -1012,9 +1028,9 @@ let g:deoplete#enable_smart_case = 1
 let g:deoplete#file#enable_buffer_path = 1
 let g:deoplete#max_list = 10000
 
-inoremap <expr><tab> pumvisible() ? "\<C-n>" :
-      \ neosnippet#expandable_or_jumpable() ?
-      \    "\<Plug>(neosnippet_expand_or_jump)" : "\<tab>"
+imap <expr><TAB> pumvisible() ? "\<C-n>" : neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+smap <expr><TAB> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<S-TAB>"
 
 " jedi
 let g:deoplete#sources#jedi#server_timeout=100
