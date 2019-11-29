@@ -6,10 +6,6 @@ repo = 'Shougo/vimproc.vim'
 build = 'make'
 
 [[plugins]]
-repo = 'Shougo/unite.vim'
-depends = 'neomru.vim'
-
-[[plugins]]
 repo = 'Shougo/denite.nvim'
 depends = ['neomru.vim', 'neoyank.vim']
 
@@ -34,9 +30,6 @@ repo = 'Shougo/tabpagebuffer.vim'
 
 [[plugins]]
 repo = 'Shougo/neosnippet-snippets'
-
-# [[plugins]]
-# repo = 'Shougo/vimfiler'
 
 [[plugins]]
 repo = 'mklabs/split-term.vim'
@@ -103,24 +96,6 @@ repo = 'thinca/vim-quickrun'
 
 [[plugins]]
 repo = 'airblade/vim-gitgutter'
-
-# [[plugins]]
-# repo = 'prabirshrestha/asyncomplete.vim'
-
-# [[plugins]]
-# repo = 'prabirshrestha/asyncomplete-lsp.vim'
-
-# [[plugins]]
-# repo = 'prabirshrestha/asyncomplete-neosnippet.vim'
-
-# [[plugins]]
-# repo = 'prabirshrestha/async.vim'
-
-# [[plugins]]
-# repo = 'prabirshrestha/vim-lsp'
-
-# [[plugins]]
-# repo = 'async.vim'
 
 [[plugins]]
 repo = 'w0rp/ale'

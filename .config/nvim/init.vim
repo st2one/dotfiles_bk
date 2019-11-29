@@ -148,12 +148,6 @@ if dein#check_install()
 endif
 
 
-if dein#tap("unite.vim")
-  nnoremap [unite] <Nop>
-  nmap <Leader>u [unite]
-  nnoremap <silent> [unite]b :Unite buffer<CR>
-endif
-
 "===============================
 " color schema
 "===============================
@@ -197,65 +191,8 @@ highlight CursorLine ctermfg=167
 " ステータスラインの色
 highlight statusline term=bold cterm=bold ctermfg=231 ctermbg=59
 
-"==============================
-" Unite
-"==============================
-" 入力モードで開始する
-let g:unite_enable_start_insert=1
 
-" バッファ一覧
-" noremap <C-P> :Unite buffer<CR>
-
-" ファイル一覧
-" noremap <C-N> :Unite -buffer-name=file file<CR>
-
-" 最近使ったファイルの一覧
-" noremap <C-Z> :Unite file_mru<CR>
-
-" sourcesを「今開いているファイルのディレクトリ」とする
-" noremap :uff :<C-u>UniteWithBufferDir file -buffer-name=file<CR>
-
-" 大文字小文字を区別しない
-let g:unite_enable_ignore_case = 1
-let g:unite_enable_smart_case = 1
-
-" grep検索
-nnoremap <silent> ,ug  :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
-nnoremap <silent> ,dg  :<C-u>Unite grep -buffer-name=search-buffer<CR>
-
-" カーソル位置の単語をgrep検索
-nnoremap <silent> ,cg :<C-u>Unite grep:. -buffer-name=search-buffer<CR><C-R><C-W><CR>
-
-" grep検索結果の再呼出
-nnoremap <silent> ,gr  :<C-u>UniteResume -buffer-name=search-buffer<CR>
-
-" Unite.vimの設定
-let g:unite_enable_start_insert=1
-let g:unite_source_history_yank_enable =1
-let g:unite_source_file_mru_limit = 200
-" nnoremap <silent> ,uy :<C-u>Unite history/yank<CR>
-" nnoremap <silent> ,ub :<C-u>Unite buffer<CR>
-nnoremap <silent> ;B :<C-u>Unite buffer_tab -buffer-name=file<CR>
-" nnoremap <silent> ,uf :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
-" nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>
-" nnoremap <silent> ,uu :<C-u>Unite file_mru buffer<CR>
-nnoremap <silent> ;t :<C-u>Unite tab<CR>
-nnoremap <silent> ;n :<C-u>Unite file/new<CR>
-" ファイル非同期検索
-" nnoremap <silent> ,up  :<C-u>Unite file_rec/async:!<CR>
-
-" unite grep に ag(The Silver Searcher) を使う
-if executable('ag')
-  let g:unite_source_grep_command = 'ag'
-  let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
-  let g:unite_source_grep_recursive_opt = ''
-endif
-
-" book-mark list
-noremap ;m :Unite bookmark<CR>
-" add book-mark
-noremap ;add :UniteBookmarkAdd<CR>
-
+" タブやスプリットの設定
 nnoremap s <Nop>
 nnoremap sj <C-w>j
 nnoremap sk <C-w>k
@@ -316,19 +253,6 @@ map <silent> [Tag]n :tabnext<CR>
 " tp 前のタブ
 map <silent> [Tag]p :tabprevious<CR>
 
-" unite.vim上でのキーマッピング
-autocmd FileType unite call s:unite_my_settings()
-function! s:unite_my_settings()
-  " 単語単位からパス単位で削除するように変更
-  imap <buffer> <C-w> <Plug>(unite_delete_backward_path)
-  " ESCキーを2回押すと終了する
-  nmap <silent><buffer> <ESC><ESC> q
-  imap <silent><buffer> <ESC><ESC> <ESC>q
-  " <C-c>でuniteを終了
-  nmap <buffer> <C-c> <Plug>(unite_exit)
-  imap <buffer> <C-c> <Plug>(unite_exit)
-endfunction
-
 
 "==============================
 " Denite
@@ -384,11 +308,11 @@ if dein#tap('denite.nvim')
   " nnoremap <silent> ,bm :<C-u>Denite -direction=topleft -cursor-wrap=true bookmark<CR>
   " nnoremap <silent> ,ba :<C-u>DeniteBookmarkAdd<CR>
   " Denite grep検索結果を再表示する
-  nnoremap <silent> gr :<C-u>Denite -resume -buffer-name=search-buffer-denite<CR>
+  nnoremap <silent> gr :<C-u>Denite -resume<CR>
   " resumeした検索結果の次の行の結果へ飛ぶ
-  nnoremap <silent> gn :<C-u>Denite -resume -buffer-name=search-buffer-denite -cursor-pos=+1 -immediately<CR>
+  nnoremap <silent> gn :<C-u>Denite -resume -cursor-pos=+1 -immediately<CR>
   " resumeした検索結果の前の行の結果へ飛ぶ
-  nnoremap <silent> gp :<C-u>Denite -resume -buffer-name=search-buffer-denite -cursor-pos=-1 -immediately<CR>
+  nnoremap <silent> gp :<C-u>Denite -resume -cursor-pos=-1 -immediately<CR>
   " resume previous buffer
   " nnoremap <silent> [denite]R :<C-u>Denite -buffer-name=search -resume -mode=normal<CR>
 
@@ -397,11 +321,10 @@ if dein#tap('denite.nvim')
   if executable('rg')
     call denite#custom#var('file_rec', 'command',
           \ ['rg', '--files', '--glob', '!.git'])
-    " call denite#custom#var('grep', 'command', ['rg'])
     " Ripgrep command on grep source
     call denite#custom#var('grep', 'command', ['rg', '--smart-case'])
     call denite#custom#var('grep', 'default_opts',
-      \ ['--vimgrep', '--no-heading'])
+          \ ['--vimgrep', '--no-heading'])
     call denite#custom#var('grep', 'recursive_opts', [])
     call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
     call denite#custom#var('grep', 'separator', ['--'])
@@ -943,20 +866,6 @@ augroup END
 let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
 " execute 'set rtp+=' . g:opamshare . '/merlin/vim'
 
-" Ocamlにおけるocp-indentの設定
-" execute 'set rtp^=' . g:opamshare . '/ocp-indent/vim'
-"
-" function! s:ocaml_format()
-"     let now_line = line('.')
-"     exec ':%! ocp-indent'
-"     exec ':' . now_line
-" endfunction
-"
-" augroup ocaml_format
-"     autocmd!
-"     autocmd BufWrite,FileWritePre,FileAppendPre *.mli\= call s:ocaml_format()
-"   augroup END
-
 
 "自動でペーストモード
 if &term =~ "xterm"
@@ -1163,13 +1072,6 @@ command! FZFMru call fzf#run({
 \  'options': '-m -x +s --reverse',
 \  'down' : '~70%' })
 
-" command! -bang -nargs=* Rg
-"   \ call fzf#vim#grep(
-"   \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
-"   \   <bang>0 ? fzf#vim#with_preview('up:60%')
-"   \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-"   \   <bang>0)
-
 " =======================================
 " ctags
 " =======================================
@@ -1296,7 +1198,9 @@ let g:indentLine_color_term = 59
 let g:indentLine_fileTypeExclude = ['denite', 'defx']
 
 
+" =======================================
 " Rainbow
+" =======================================
 let g:rainbow_active = 1
 
 let g:rainbow_conf = {
@@ -1322,12 +1226,17 @@ let g:rainbow_conf = {
   \ }
 \}
 
+" =======================================
 " vim-json
+" =======================================
 " jsonでダブルクォーテーション表示されるように
 let g:vim_json_syntax_conceal = 0
 
+
 " Goの設定
+" =======================================
 " vim-go
+" =======================================
 let g:go_highlight_chan_whitespace_error = 0
 let g:go_fmt_command = "goimports"
 let g:go_highlight_functions = 1
@@ -1359,7 +1268,9 @@ autocmd FileType go :match goErr /\<err\>/
 autocmd BufRead,BufNewFile *_test.go set filetype=go.test
 let g:quickrun_config['go.test'] = {'command': 'go', 'exec' : ['%c test']}
 
+" =======================================
 " deoplete-go
+" =======================================
 let g:deoplete#sources#go#gocode_binary = '$GOPATH/bin/gocode'
 let g:deoplete#sources#go#align_class = 1
 let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
