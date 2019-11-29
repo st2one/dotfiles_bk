@@ -7,7 +7,7 @@ filetype off
 " 画面表示の設定
 "===========================
 set number         " 行番号を表示する
-" set cursorline     " カーソル行の背景色を変える
+set cursorline     " カーソル行の背景色を変える
 " set cursorcolumn   " カーソル位置のカラムの背景色を変える
 set laststatus=2   " ステータス行を常に表示
 set cmdheight=2    " メッセージ表示欄を2行確保
@@ -28,7 +28,7 @@ set splitright " 新しいウインドウを右に開く
 set inccommand=split " 文字列置換をインタラクティブに表示
 set noshowmode " 左下のinsertモードなどの表示をしない
 " set ambiwidth=double
-set pumblend=15 " ポップアップメニューを半透明化
+set pumblend=10 " ポップアップメニューを半透明化
 set termguicolors
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 " let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
@@ -368,8 +368,8 @@ if dein#tap('denite.nvim')
   " nnoremap <silent> [denite]B :<C-u>Denite buffer_tab -buffer-name=file<CR>
   nnoremap <silent> [denite]c :<C-u>Denite change -smartcase<CR>
   nnoremap <silent> [denite]f :<C-u>Denite file -smartcase<CR>
-  nnoremap <silent> [denite]g :<C-u>Denite grep -buffer-name=search-buffer-denite<CR>
-  nnoremap <silent> [denite]G :<C-u>DeniteCursorWord grep -buffer-name=search-buffer-denite<CR>
+  nnoremap <silent> [denite]g :<C-u>Denite grep<CR>
+  nnoremap <silent> [denite]G :<C-u>DeniteCursorWord grep<CR>
   nnoremap <silent> [denite]h :<C-u>Denite command_history -smartcase<CR>
   nnoremap <silent> [denite]H :<C-u>Denite help<CR>
   nnoremap <silent> [denite]l :<C-u>Denite line -smartcase<CR>
@@ -393,80 +393,7 @@ if dein#tap('denite.nvim')
   " nnoremap <silent> [denite]R :<C-u>Denite -buffer-name=search -resume -mode=normal<CR>
 
   call denite#custom#option('default', 'prompt', '>')
-  call denite#custom#map('_', "<C-h>",
-        \ '<denite:do_action:split>')
-  call denite#custom#map('insert', "<C-h>",
-        \ '<denite:do_action:split>')
-  call denite#custom#map('_', "<C-v>",
-        \ '<denite:do_action:vsplit>')
-  call denite#custom#map('insert',
-        \ "<C-v>", '<denite:do_action:vsplit>')
-  call denite#custom#map('insert',
-        \ "<C-s>", '<denite:do_action:split>')
-  call denite#custom#map('_', "<C-t>",
-        \ '<denite:do_action:tabopen>')
-  call denite#custom#map('insert',
-        \ "<C-t>", '<denite:do_action:tabopen>')
-  " call denite#custom#map('insert',
-  "       \ "jj", '<denite:enter_mode:normal>')
 
-  call denite#custom#map(
-        \ 'insert',
-        \ '<Down>',
-        \ '<denite:move_to_next_line>',
-        \ 'noremap'
-        \)
-  call denite#custom#map(
-        \ 'insert',
-        \ '<Up>',
-        \ '<denite:move_to_previous_line>',
-        \ 'noremap'
-        \)
-  call denite#custom#map(
-        \ 'insert',
-        \ '<C-N>',
-        \ '<denite:move_to_next_line>',
-        \ 'noremap'
-        \)
-  call denite#custom#map(
-        \ 'insert',
-        \ '<C-P>',
-        \ '<denite:move_to_previous_line>',
-        \ 'noremap'
-        \)
-  " call denite#custom#map(
-  "       \ 'insert',
-  "       \ '<C-G>',
-  "       \ '<denite:assign_next_txt>',
-  "       \ 'noremap'
-  "       \)
-  " call denite#custom#map(
-  "       \ 'insert',
-  "       \ '<C-T>',
-  "       \ '<denite:assign_previous_line>',
-  "       \ 'noremap'
-  "       \)
-  " call denite#custom#map(
-  "       \ 'normal',
-  "       \ '/',
-  "       \ '<denite:enter_mode:insert>',
-  "       \ 'noremap'
-  "       \)
-  " call denite#custom#map(
-  "       \ 'insert',
-  "       \ '<Esc>',
-  "       \ '<denite:enter_mode:normal>',
-  "       \ 'noremap'
-  "       \)
-  "<C-j>でdeniteにおいてインサート,ノーマル切り替え
-  call denite#custom#map('insert', '<C-j>', '<denite:enter_mode:normal>', 'noremap')
-  call denite#custom#map('normal', '<C-j>', '<denite:enter_mode:insert>', 'noremap')
-  " call denite#custom#var('file_rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
-  " call denite#custom#var('grep', 'command', ['ag'])
-  " call denite#custom#var('grep', 'recursive_opts', [])
-  " call denite#custom#var('grep', 'final_opts', [])
-  " call denite#custom#var('grep', 'separator', [])
-  " call denite#custom#var('grep', 'default_opts', ['--follow', '--nocolor', '--nogroup'])
   if executable('rg')
     call denite#custom#var('file_rec', 'command',
           \ ['rg', '--files', '--glob', '!.git'])
@@ -512,11 +439,11 @@ if dein#tap('denite.nvim')
     \ denite#do_map('do_action')
     nnoremap <silent><buffer><expr> l
     \ denite#do_map('do_action')
-    nnoremap <silent><buffer><expr> s
+    nnoremap <silent><buffer><expr> <C-s>
     \ denite#do_map('do_action', 'split')
-    nnoremap <silent><buffer><expr> v
+    nnoremap <silent><buffer><expr> <C-v>
     \ denite#do_map('do_action', 'vsplit')
-    nnoremap <silent><buffer><expr> t
+    nnoremap <silent><buffer><expr> <C-t>
     \ denite#do_map('do_action', 'tabopen')
     nnoremap <silent><buffer><expr> d
     \ denite#do_map('do_action', 'delete')
@@ -540,14 +467,16 @@ if dein#tap('denite.nvim')
 
   autocmd FileType denite-filter call s:denite_filter_my_settings()
   function! s:denite_filter_my_settings() abort
-    inoremap <silent><buffer><expr> <C-c>
-    \ denite#do_map('quit')
-    nnoremap <silent><buffer><expr> <C-c>
-    \ denite#do_map('quit')
+    " inoremap <silent><buffer><expr> <C-c>
+    " \ denite#do_map('quit')
+    " nnoremap <silent><buffer><expr> <C-c>
+    " \ denite#do_map('quit')
+    imap <silent><buffer> <C-c> <Plug>(denite_filter_quit)
+    nmap <silent><buffer> <C-c> <Plug>(denite_filter_quit)
   endfunction
 
-  autocmd FileType denite set winblend=10
-  autocmd FileType denite-filter set winblend=10
+  " autocmd FileType denite set winblend=10
+  " autocmd FileType denite-filter set winblend=10
 endif
 
 
@@ -558,7 +487,8 @@ nnoremap <silent><C-e> :<C-u>Defx -split=vertical -winwidth=40 -direction=toplef
 
 call defx#custom#option('_', {
     \ 'columns': 'indent:git:icons:filename',
-    \ 'show_ignored_files': 1,
+    \ 'show_ignored_files': 0,
+    \ 'root_marker': '> ',
     \ })
 
 let g:defx_icons_enable_syntax_highlight = 1
@@ -567,7 +497,7 @@ let g:defx_icons_column_length = 2
 autocmd FileType defx call s:defx_my_settings()
   function! s:defx_my_settings() abort
     nnoremap <silent><buffer><expr> <CR>
-    \ defx#do_action('open')
+    \ defx#do_action('open_or_close_tree')
     " 【l】 ファイルを開く
     nnoremap <silent><buffer><expr> l
     \ defx#do_action('drop')
@@ -640,11 +570,6 @@ autocmd FileType defx call s:defx_my_settings()
     nnoremap <silent><buffer><expr> cd
     \ defx#do_action('change_vim_cwd')
 endfunction
-
-" Disable root marker
-call defx#custom#option('_', {
-      \ 'root_marker': '> ',
-      \ })
 
 " update defx status automatically when changing file
 autocmd BufWritePost * call defx#redraw()
@@ -1150,6 +1075,7 @@ let g:airline#extensions#tabline#buffer_idx_mode = 1
 let g:airline#extensions#whitespace#mixed_indent_algo = 1
 let airline#extensions#tabline#show_buffers = 0
 let g:airline#extensions#whitespace#enabled = 0
+" let g:airline#extensions#ale#enabled = 1
 " 上部タブバー右にバッファを表示させない
 " let g:airline#extensions#tabline#show_splits = 0
 let g:airline_theme = 'jellybeans'
@@ -1187,6 +1113,10 @@ let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = '☰ '
 let g:airline_symbols.maxlinenr = ''
+
+" ale symbols
+let g:airline#extensions#ale#error_symbol = ' '
+let g:airline#extensions#ale#warning_symbol = ' '
 
 let g:airline#extensions#tabline#buffer_idx_format = {
   \ '0': '0 ',
@@ -1317,9 +1247,10 @@ let g:auto_ctags_tags_args = '--recurse=yes --append=yes --tag-relative=yes --la
 " =======================================
 " ALE(シンタックスチェッカー)
 " =======================================
-let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_text_changed = 0
+let g:ale_lint_on_insert_leave = 1
 let g:ale_lint_on_enter = 0
-let g:ale_lint_on_save = 0
+let g:ale_lint_on_save = 1
 
 nnoremap ,sc :<C-u>ALELint<CR>
 nmap <silent> ,p <Plug>(ale_previous)
@@ -1330,9 +1261,9 @@ nnoremap ,m  :ALEList<CR>
 autocmd MyAutoGroup FileType help,qf,man,ref let b:ale_enabled = 0
 
 " シンボル変更
-let g:ale_sign_error = '⨉'
-let g:ale_sign_warning = '⚠'
-let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+let g:ale_sign_error = ''
+let g:ale_sign_warning = ''
+let g:ale_echo_msg_format = '[%linter%] %s (%severity%)'
 
 let g:ale_linters = {
     \ 'javascript': ['eslint', 'prettier'],
@@ -1409,9 +1340,13 @@ if has('python3')
 endif
 nnoremap U :GundoToggle<CR>
 
-" indentLineの設定
+" =======================================
+" indentLine
+" =======================================
 " let g:indentLine_color_term = 240
 let g:indentLine_color_term = 59
+let g:indentLine_fileTypeExclude = ['defx']
+
 
 " Rainbow
 let g:rainbow_active = 1

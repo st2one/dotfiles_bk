@@ -7,12 +7,15 @@ build = 'make'
 
 [[plugins]]
 repo = 'Shougo/unite.vim'
+depends = 'neomru.vim'
 
 [[plugins]]
 repo = 'Shougo/denite.nvim'
+depends = ['neomru.vim', 'neoyank.vim']
 
 [[plugins]]
 repo = 'Shougo/defx.nvim'
+depends = ['defx-icons', 'defx-git']
 
 [[plugins]]
 repo = 'kristijanhusak/defx-icons'
