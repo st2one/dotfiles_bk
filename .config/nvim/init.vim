@@ -484,6 +484,7 @@ endif
 " Defx
 "==============================
 nnoremap <silent><C-e> :<C-u>Defx -split=vertical -winwidth=40 -direction=topleft -toggle<CR>
+nnoremap <silent><C-a> :<C-u>Defx -resume<CR>
 
 call defx#custom#option('_', {
     \ 'columns': 'indent:git:icons:filename',
@@ -505,10 +506,10 @@ autocmd FileType defx call s:defx_my_settings()
     nnoremap <silent><buffer><expr> h
     \ defx#do_action('cd', ['..'])
     " 【s】 ウィンドウを水平分割してファイルを開く
-    nnoremap <silent><buffer><expr> s
+    nnoremap <silent><buffer><expr> <C-s>
     \ defx#do_action('open', 'split')
     " 【v】 ウィンドウを垂直分割してファイルを開く
-    nnoremap <silent><buffer><expr> v
+    nnoremap <silent><buffer><expr> <C-v>
     \ defx#do_action('open', 'vsplit')
     " 【t】 新規タブでファイルを開く
     " nnoremap <silent><buffer><expr> t
@@ -758,63 +759,6 @@ command! -nargs=*
 nnoremap @p :T python3 %<CR><c-w>j
 " REPLを自動的に改行
 let g:neoterm_autoscroll=1
-
-" =======================================
-" vimfiler
-" =======================================
-" ファイル名長くて全て見れないときは<C-g>で全部見れる
-
-" vimfilerをデフォルトのexplorerに
-let g:vimfiler_as_default_explorer = 1
-" デフォルトのセーフモードを解除
-let g:vimfiler_safe_mode_by_default = 0
-nnoremap <silent> <Space>vf :VimFilerBufferDir<CR>
-" Open filer
-noremap <silent> ,vf :VimFiler -split -simple -winwidth=40 -no-quit<CR>
-noremap <C-X><C-T> :VimFiler -split -simple -winwidth=40 -no-quit<ENTER>
-" Don't let <CR> enter the directory but let it open the directory
-autocmd FileType vimfiler nmap <buffer> <CR> <Plug>(vimfiler_expand_or_edit)
-" ファイルに対しeコマンド(or Enter)で新規タブで開く
-let g:vimfiler_edit_action = 'tabopen'
-" Unite bookmarkからEnterでvimfiler上で移動
-" autocmd FileType vimfiler call unite#custom_default_action('directory', 'cd')
-" 自動でカレントディレクトリ変更
-" let g:vimfiler_enable_auto_cd = 1
-" 開いているファイルをvimfilerで開く
-" nnoremap <silent> ,tr :<C-u>VimFilerBufferDir -split -simple -winwidth=35 -no-quit<CR>
-" 開いているファイルをIDEっぽく階層的に表示
-nnoremap <silent> ,ie :<C-u>VimFilerExplorer -find -simple -winwidth=40 -no-quit<CR>
-" 現在開いているバッファのディレクトリを表示(<C-e>で表示/非表示)使い勝手良い
-" nnoremap <silent> <C-e> :<C-u>VimFilerBufferDir -split -simple -winwidth=35 -toggle -no-quit<CR>
-" カレントディレクトリを表示(<C-e>で表示/非表示)使い勝手良い
-" nnoremap <silent> <C-e> :<C-u>VimFilerCurrentDir -split -simple -winwidth=35 -toggle -no-quit<CR>
-let g:vimfiler_tree_leaf_icon = ''
-let g:vimfiler_tree_opened_icon = '▾'
-let g:vimfiler_tree_closed_icon = '▸'
-let g:vimfiler_marked_file_icon = '✓'
-
-" vimfiler上でunite bookmark
-autocmd FileType vimfiler call unite#custom_default_action('directory', 'lcd')
-
-" vim-devicons
-let g:webdevicons_conceal_nerdtree_brackets = 1
-let g:WebDevIconsNerdTreeAfterGlyphPadding = ' '
-
-" dir-icons
-let g:WebDevIconsUnicodeDecorateFolderNodes = 1
-let g:DevIconsEnableFoldersOpenClose = 1
-let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
-let g:DevIconsDefaultFolderOpenSymbol = ''
-" file-icons
-let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = {}
-let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['html'] = ''
-let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['css'] = ''
-let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['md'] = ''
-let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['txt'] = ''
-
-" QuickLook使ってプレビュー(,v)
-let g:vimfiler_quick_look_command = 'qlmanage -p'
-autocmd FileType vimfiler nmap <buffer> ,v <Plug>(vimfiler_quick_look)
 
 " Anywhere SID.
 function! s:SID_PREFIX()
@@ -1147,7 +1091,10 @@ set updatetime=250
 " =======================================
 " fugitive
 " =======================================
-nnoremap <silent> <Space>gw :<C-u>Gwrite<CR>
+" Gstatusのウィンドウを閉じるコマンドは'gq'
+nnoremap <silent> <Space>gs :<C-u>Gstatus<CR>
+nnoremap <silent> <Space>gl :<C-u>Glog<CR>
+nnoremap <silent> <Space>ga :<C-u>Gwrite<CR>
 nnoremap <silent> <Space>gc :<C-u>Gcommit<CR>
 nnoremap <silent> <Space>gca :<C-u>Gcommit --amend<CR>
 nnoremap <silent> <Space>gd :<C-u>Gdiff<CR>

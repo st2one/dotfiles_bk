@@ -35,8 +35,8 @@ repo = 'Shougo/tabpagebuffer.vim'
 [[plugins]]
 repo = 'Shougo/neosnippet-snippets'
 
-[[plugins]]
-repo = 'Shougo/vimfiler'
+# [[plugins]]
+# repo = 'Shougo/vimfiler'
 
 [[plugins]]
 repo = 'mklabs/split-term.vim'
