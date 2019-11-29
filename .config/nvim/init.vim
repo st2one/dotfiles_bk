@@ -763,9 +763,6 @@ set shellslash
 " nnoremap <silent> ,pv :PrevimOpen<CR>
 nmap <silent> ,pv <Plug>MarkdownPreview
 
-" autocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
-" " Disable highlight italic in Markdown
-" autocmd FileType markdown hi! def link markdownItalic LineNr
 if has("autocmd")
   augroup MyAutoCmd
     autocmd!
@@ -813,8 +810,8 @@ let g:markdown_fenced_languages = [
 \]
 
 " previmのプレビューのデザイン変更
-let g:previm_disable_default_css = 1
-let g:previm_custom_css_path = '~/.previm/markdown.css'
+" let g:previm_disable_default_css = 1
+" let g:previm_custom_css_path = '~/.previm/markdown.css'
 
 " nyaovim-markdown-preview
 let g:markdown_preview_auto = 1

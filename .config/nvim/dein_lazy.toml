@@ -26,9 +26,9 @@ on_ft = ['md', 'markdown']
 repo = 'joker1007/vim-markdown-quote-syntax'
 on_ft = ['md', 'markdown']
 
-[[plugins]]
-repo = 'kannokanno/previm'
-on_ft = ['md', 'markdown']
+# [[plugins]]
+# repo = 'kannokanno/previm'
+# on_ft = ['md', 'markdown']
 
 [[plugins]]
 repo = 'iamcco/markdown-preview.nvim'
