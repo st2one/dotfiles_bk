@@ -837,7 +837,8 @@ au FileType php vmap <buffer><C-_>c :TCommentAs php_surround<CR>
 " set syntax=markdown
 set shellslash
 " ,pvでプレビュー
-nnoremap <silent> ,pv :PrevimOpen<CR>
+" nnoremap <silent> ,pv :PrevimOpen<CR>
+nmap <silent> ,pv <Plug>MarkdownPreview
 
 " autocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
 " " Disable highlight italic in Markdown
@@ -1292,7 +1293,7 @@ nnoremap U :GundoToggle<CR>
 " =======================================
 " let g:indentLine_color_term = 240
 let g:indentLine_color_term = 59
-let g:indentLine_fileTypeExclude = ['defx']
+let g:indentLine_fileTypeExclude = ['denite', 'defx']
 
 
 " Rainbow
