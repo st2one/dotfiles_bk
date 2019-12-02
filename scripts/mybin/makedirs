@@ -1,12 +1,13 @@
-#!/bin/sh
+#!/usr/bin/env bash
+set -eu
 
 # ディレクトリを指定の個数作成するスクリプト
 
 if [ "$#" -eq 0 ]; then
   echo "Please set args."
-  echo "ex) makedirs.sh 10 -> 01 ~ 10"
-  echo "ex) makedirs.sh ch 15 -> ch01 ~ ch15"
-  echo "ex) makedirs.sh lesson 5 20 -> lesson05 ~ lesson20"
+  echo "ex) makedirs 10 -> 01 ~ 10"
+  echo "ex) makedirs ch 15 -> ch01 ~ ch15"
+  echo "ex) makedirs lesson 5 20 -> lesson05 ~ lesson20"
 elif [ "$#" -gt 3 ]; then
   echo "You set args too mach! Args are 2 or 3."
 fi

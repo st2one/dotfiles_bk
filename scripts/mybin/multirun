@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+set -eu
+
+run_all_commands () {
+  eval commands=(${1})
+
+  for command in "${commands[@]}"; do
+    echo "Run: ${command}"
+    eval ${command}
+    echo
+  done
+}
+
+# 入力された複数のプログラムを実行するスクリプト
+
+main () {
+  echo "The inputted commands will be executed in order."
+  echo
+
+  commands=()
+  while true; do
+    echo "Please input command."
+    echo "If you finish specify commands all, just press Enter!"
+    read -p "> " command
+    if [[ ${command} = '' ]]; then
+      run_all_commands "${commands[*]}"
+      exit 0
+    fi
+    commands+=("'${command}'")
+  done
+}
+
+if [ "$#" -ne 0 ]; then
+  echo "Target commands must be specified by input."
+  echo "So no need to set command line args."
+  echo "Please run just: multirun"
+  exit 1
+fi
+
+main
+

@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -eu
+
+for path in "$@"; do
+  echo "Run: python ${path}"
+  python "${path}"
+  echo
+done
+
