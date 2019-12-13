@@ -535,10 +535,10 @@ let g:user_emmet_leader_key = '<C-E>'
 let g:user_emmet_settings = {'variables' : { 'lang' : 'ja' }}
 
 " tcomment_vimキーマップ変更
-let g:tcommentMapLeader1 = '<C-_>'
-let g:tcommentMapLeader2 = '<Leader>'
-let g:tcommentMapLeaderOp1 = 'gc'
-let g:tcommentMapLeaderOp2 = 'gC'
+let g:tcomment_mapleader1 = '<C-_>'
+let g:tcomment_mapleader2 = '<Leader>'
+let g:tcomment_opleader1 = 'gc'
+let g:tcomment_opleader2 = 'gC'
 
 " tcommentで使用する形式を追加
 if !exists('g:tcomment_types')

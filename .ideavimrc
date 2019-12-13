@@ -1,6 +1,9 @@
 set surround
+set easymotion
+set commentary
+set ideajoin
 set scrolloff=8
-set visualbell t_vb=  
+set visualbell t_vb=
 set noerrorbells
 
 imap <C-j> <esc>
@@ -18,14 +21,18 @@ vnoremap <tab> %
 nnoremap <C-n> :<C-u>action NextTab<CR>
 nnoremap <C-p> :<C-u>action PreviousTab<CR>
 
-nnoremap ss :<C-u>action VimWindowSplitHorizontal<CR>
-nnoremap sv :<C-u>action VimWindowSplitVertical<CR>
-nnoremap sh :<C-u>action VimWindowLeft<CR>
-nnoremap sl :<C-u>action VimWindowRight<CR>
-nnoremap sk :<C-u>action VimWindowUp<CR>
-nnoremap sj :<C-u>action VimWindowDown<CR>
+nnoremap ss :<C-u>split<CR>
+nnoremap sv :<C-u>vsplit<CR>
+nnoremap sl <C-w>l
+nnoremap sh <C-w>h
+nnoremap sk <C-w>k
+nnoremap sj <C-w>j
 nnoremap sq :<C-u>action CloseEditor<CR>
-nnoremap sQ :<C-u>action VimWindowClose<CR>
+" nnoremap sl :<C-u>action VimWindowRight<CR>
+" nnoremap sh :<C-u>action VimWindowLeft<CR>
+" nnoremap sk :<C-u>action VimWindowUp<CR>
+" nnoremap sj :<C-u>action VimWindowDown<CR>
+" nnoremap sQ :<C-u>action VimWindowClose<CR>
 
 nnoremap <Space><Space> :<C-u>action AceAction<CR>
 nnoremap <Space>s :<C-u>action KJumpAction<CR>
@@ -36,6 +43,8 @@ nnoremap / :<C-u>action Find<CR>
 
 nnoremap g; :<C-u>action JumpToLastChange<CR>
 nnoremap g, :<C-u>action JumpToNextChange<CR>
+nnoremap gd :<C-u>action GotoDeclaration<CR>
+nnoremap gi :<C-u>action GotoImplementation<CR>
 
 nnoremap [m :<C-u>action MethodUp<CR>
 nnoremap ]m :<C-u>action MethodDown<CR>
