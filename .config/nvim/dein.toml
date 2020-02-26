@@ -17,7 +17,13 @@ depends = ['defx-icons', 'defx-git']
 repo = 'kristijanhusak/defx-icons'
 
 [[plugins]]
-repo ='kristijanhusak/defx-git'
+repo = 'kristijanhusak/defx-git'
+
+[[plugins]]
+repo = 'w1mvy/vim-denite-tab'
+
+[[plugins]]
+repo = 'kmnk/denite-dirmark'
 
 [[plugins]]
 repo = 'Shougo/neco-vim'

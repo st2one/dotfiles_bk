@@ -304,7 +304,9 @@ if dein#tap('denite.nvim')
   nnoremap <silent> [denite]s :<C-u>Denite directory_rec -smartcase<CR>
   nnoremap <silent> [denite]M :<C-u>Denite menu<CR>
   nnoremap <silent> [denite]y :<C-u>Denite neoyank<CR>
-  " nnoremap <silent> [denite]t :<C-u>Denite tab<CR>
+  nnoremap <silent> [denite]t :<C-u>Denite tab<CR>
+  nnoremap <silent> ,bm :<C-u>Denite -default-action=cd dirmark<CR>
+  nnoremap <silent> ,ba :<C-u>Denite dirmark/add<CR>
   " nnoremap <silent> ,bm :<C-u>Denite -direction=topleft -cursor-wrap=true bookmark<CR>
   " nnoremap <silent> ,ba :<C-u>DeniteBookmarkAdd<CR>
   " Denite grep検索結果を再表示する
@@ -682,6 +684,7 @@ command! -nargs=*
 nnoremap @p :T python3 %<CR><c-w>j
 " REPLを自動的に改行
 let g:neoterm_autoscroll=1
+" let g:neoterm_default_mod='horizontal'
 
 " Anywhere SID.
 function! s:SID_PREFIX()
@@ -835,6 +838,10 @@ let g:quickrun_config = {
 \       'outputter/error/error' : 'quickfix',
 \       'hook/cd/directory': '%S:h',
 \       'exec': '%c %s'
+\   },
+\   "cpp" : {
+\       'command': 'g++',
+\       'cmdopt': '-std=c++17 -Wall -O3'
 \   },
 \   "python": {
 \       'command': 'python3'
