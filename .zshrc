@@ -102,8 +102,8 @@ alias vim='nvim'
 export NVIM_PYTHON_LOG_FILE=/tmp/log
 export NVIM_PYTHON_LOG_LEVEL=DEBUG
 
-export XDG_CONFIG_HOME="/Users/takumi/.config"
-export XDG_CACHE_HOME="/Users/takumi/.cache"
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_CACHE_HOME="$HOME/.cache"
 
 # normal-vim
 alias oldvim="\vim"
@@ -130,7 +130,7 @@ export PGDATA='/usr/local/var/postgres'
 
 PATH=/opt/local/bin:/opt/local/sbin:$PATH
 
-#MANPATH
+# MANPATH
 MANPATH=/opt/local/man:$MANPATH
 
 # brew
@@ -138,94 +138,51 @@ export PATH=/usr/local/bin:$PATH
 
 export HOMEBREW_UPGRADE_CLEANUP=1
 
-#VHDL
-export PATH=$PATH:/Developer/Simulator/GHDL/bin:/Developer/Simulator/GTKwave/bin
-
-#mysql
+# mysql
 export PATH=$PATH:/usr/local/mysql/bin
-
-# MacPorts Installer addition on 2012-10-11_at_04:18:37: adding an appropriate PATH variable for use with MacPorts.
-export PATH=/opt/local/bin:/opt/local/sbin:$PATH
-
-#carch
-export PATH=/Users/nikaido/work/carch/bin:$PATH
 
 # Haskell
 export PATH=$HOME/Library/Haskell/bin:$PATH
-# nodejs
-#export PATH=$HOME/usr/local/share/npm/bin:$PATH
-#export PATH=~/node_modules/typescript/bin:$PATH
-export PATH=/usr/local/share/npm/bin:$PATH
 
 # nodebrew
 # export PATH=$HOME/.nodebrew/current/bin:$PATH
 
-# Python
-export PYENV_ROOT=${HOME}/.pyenv
-export PATH="${PYENV_ROOT}/bin:$PATH"
+# pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
-# Pipenv
+# pipenv
 export PIPENV_VENV_IN_PROJECT=true
 
-# Alias(activate / deactivate)
-alias conda-activate='source $PYENV_ROOT/versions/anaconda3-5.0.0/bin/activate'
-alias conda-deactivate='source $PYENV_ROOT/versions/anaconda3-5.0.0/bin/deactivate'
-
-#export PYTHONSTARTUP=$HOME/.pythonrc.py
-#PYTHONPATH=~/Library/Python/debug_toolbar:$PYTHONPATH
-#export PYTHONPATH
-
-# Add path for pip
-export PATH="$HOME/Library/Python/2.7/bin:$PATH"
-
-# Java
-#export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8
-
-# Node.js
-export PATH=$HOME/.nodebrew/current/bin:$PATH
-
 # nodenv
-# export PATH=$HOME/.nodenv/bin:$PATH
-export PATH="/usr/local/Cellar/nodenv/1.1.2/bin:$PATH"
+export PATH="$HOME/.nodenv/bin:$PATH"
 eval "$(nodenv init -)"
 
-# Postgres
-export PATH=/Applications/Postgres.app/Contents/MacOS/bin:$PATH
+# rbenv
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
 
-# MongoDB
-export PATH=/usr/local/Cellar/mongodb/2.2.0-x86_64/bin:$PATH
+# goenv
+export GOENV_ROOT="$HOME/.goenv"
+export PATH="$GOENV_ROOT/bin:$PATH"
+eval "$(goenv init -)"
 
-# Antlr4
-export CLASSPATH=/usr/local/lib/antlr-4.0-complete.jar:$CLASSPATH
-# Antlr3
-export CLASSPATH=/usr/local/lib/antlr-4.0-complete.jar:$CLASSPATH
-
-# opencv
-export PYTHONPATH=/usr/local/Cellar/opencv/2.4.9/lib/python2.7/site-packages:$PYTHONPATH
+# Go
+export PATH="$GOROOT/bin:$PATH"
+export PATH="$PATH:$GOPATH/bin"
 
 # openssl
 export PATH=/usr/local/opt/openssl/bin:$PATH
-
-# tex
-PATH=$PATH:/usr/local/texlive/2014/bin/x86_64-darwin/
-
-# gcc-6
-# export PATH=/usr/local/bin:$PATH
 
 # openmpi
 export MANPATH=/opt/openmpi/share/man:$MANPATH
 export LD_LIBRARY_PATH=/opt/openmpi/lib:$LD_LIBRARY_PATH
 export PATH="/opt/openmpi/bin:$PATH"
 
-### Added by the Heroku Toolbelt
+# Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
-
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-
-# MAMP PHP
-export PATH="/Applications/MAMP/bin/php/php5.5.26/bin:$PATH"
 
 # carch
 export PATH="/opt/carch/bin:$PATH"
@@ -245,12 +202,6 @@ autoload -Uz cd-bookmark
 # git stashが使えない問題の対処
 export GIT_INTERNAL_GETTEXT_TEST_FALLBACKS=1
 
-# The next line updates PATH for the Google Cloud SDK.
-# source '/Users/st2one/google-cloud-sdk/path.zsh.inc'
-
-# The next line enables shell command completion for gcloud.
-# source '/Users/st2one/google-cloud-sdk/completion.zsh.inc'
-
 # tab_title
 function chpwd() { ls; echo -ne "\033]0;$(pwd | rev | awk -F \/ '{print "/"$1"/"$2}'| rev)\007"}
 
@@ -263,108 +214,14 @@ then
     PATH=$PATH:$HOME/Tools; export PATH
 fi
 
-# Add path for pip
-for DIR in $HOME/Library/Python/2.7/bin $HOME/.local/bin ; do
-  if [ -d ${DIR} ] ; then
-    PATH=${PATH}:${DIR}
-  fi
-done
-
-# Ruby
-export PATH="$HOME/.rbenv/bin:$PATH"
-export PATH="$HOME/.rbenv/shims:$PATH"
-eval "$(rbenv init -)"
-
-# Go
-# GOPATH: Goのライブラリがインストールされるパス
-export GOPATH="$HOME/go"
-export PATH="$GOPATH/bin:$PATH"
-# export GOROOT="$( go env GOROOT )"
-
-# goenv
-export PATH="$HOME/.goenv/bin:$PATH"
-eval "$(goenv init -)"
-
-# Yarn
-export PATH="/usr/local/Cellar/yarn/1.7.0/bin:$PATH"
-
 # サーチパスに~/scripts/mybinを追加
 PATH=$PATH:~/scripts/mybin
 
 # kubectlの補完機能
 source <(kubectl completion zsh)
 
-# powerlineによりzshの見た目を変更
-# powerline-daemon -q
-# . /Users/takumi/Library/Python/2.7/lib/python/site-packages/powerline/bindings/zsh/powerline.zsh
-
-# tmuxのzshとの連携
-# シェルにログインした時に、デタッチされたセッションがあればアタッチし
-# なければ tmux new-session を実行するように
-function is_exists() { type "$1" >/dev/null 2>&1; return $?; }
-function is_osx() { [[ $OSTYPE == darwin* ]]; }
-function is_screen_running() { [ ! -z "$STY" ]; }
-function is_tmux_runnning() { [ ! -z "$TMUX" ]; }
-function is_screen_or_tmux_running() { is_screen_running || is_tmux_runnning; }
-function shell_has_started_interactively() { [ ! -z "$PS1" ]; }
-function is_ssh_running() { [ ! -z "$SSH_CONECTION" ]; }
-
-function tmux_automatically_attach_session()
-{
-    if is_screen_or_tmux_running; then
-        ! is_exists 'tmux' && return 1
-
-        if is_tmux_runnning; then
-            echo "${fg_bold[red]} _____ __  __ _   ___  __ ${reset_color}"
-            echo "${fg_bold[red]}|_   _|  \/  | | | \ \/ / ${reset_color}"
-            echo "${fg_bold[red]}  | | | |\/| | | | |\  /  ${reset_color}"
-            echo "${fg_bold[red]}  | | | |  | | |_| |/  \  ${reset_color}"
-            echo "${fg_bold[red]}  |_| |_|  |_|\___//_/\_\ ${reset_color}"
-        elif is_screen_running; then
-            echo "This is on screen."
-        fi
-    else
-        if shell_has_started_interactively && ! is_ssh_running; then
-            if ! is_exists 'tmux'; then
-                echo 'Error: tmux command not found' 2>&1
-                return 1
-            fi
-
-            if tmux has-session >/dev/null 2>&1 && tmux list-sessions | grep -qE '.*]$'; then
-                # detached session exists
-                tmux list-sessions
-                echo -n "Tmux: attach? (y/N/num) "
-                read
-                if [[ "$REPLY" =~ ^[Yy]$ ]] || [[ "$REPLY" == '' ]]; then
-                    tmux attach-session
-                    if [ $? -eq 0 ]; then
-                        echo "$(tmux -V) attached session"
-                        return 0
-                    fi
-                elif [[ "$REPLY" =~ ^[0-9]+$ ]]; then
-                    tmux attach -t "$REPLY"
-                    if [ $? -eq 0 ]; then
-                        echo "$(tmux -V) attached session"
-                        return 0
-                    fi
-                fi
-            fi
-
-            if is_osx && is_exists 'reattach-to-user-namespace'; then
-                # on OS X force tmux's default command
-                # to spawn a shell in the user's namespace
-                tmux_config=$(cat $HOME/.tmux.conf <(echo 'set-option -g default-command "reattach-to-user-namespace -l $SHELL"'))
-                tmux -f <(echo "$tmux_config") new-session && echo "$(tmux -V) created new session supported OS X"
-            else
-                tmux new-session && echo "tmux created new session"
-            fi
-        fi
-    fi
-}
-# tmux_automatically_attach_session
-
 # OPAM configuration
-. /Users/takumi/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+# . /Users/takumi/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 
 # peco(ヒストリを便利に)の設定
 function peco-history-selection() {
@@ -496,7 +353,7 @@ zle -N peco-select_window
 bindkey '^e^w' peco-select_window
 
 # === cool-peco init ===
-FPATH="$FPATH:/Users/takumi/.ghq/github.com/ryoppy/cool-peco"
+FPATH="$FPATH:$HOME/.ghq/github.com/ryoppy/cool-peco"
 autoload -Uz cool-peco
 cool-peco
 # ======================
