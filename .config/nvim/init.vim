@@ -382,7 +382,7 @@ if dein#tap('denite.nvim')
     \ denite#do_map('open_filter_buffer')
     nnoremap <silent><buffer><expr> .
     \ denite#do_map('choose_action')
-    nnoremap <silent><buffer><expr> <Space>
+    nnoremap <silent><buffer><expr> <Space><Space>
     \ denite#do_map('toggle_select').'j'
     inoremap <silent><buffer><expr> <C-c>
     \ denite#do_map('quit')
@@ -487,8 +487,11 @@ autocmd FileType defx call s:defx_my_settings()
     nnoremap <silent><buffer><expr> k
     \ line('.') == 1 ? 'G' : 'k'
     "  [Space] 選択のトグル
-    nnoremap <silent><buffer><expr> <Space>
+    nnoremap <silent><buffer><expr> <Space><Space>
      \ defx#do_action('toggle_select') . 'j'
+    " [*] 全選択
+    nnoremap <silent><buffer><expr> <Space>*
+	  \ defx#do_action('toggle_select_all')
     "  [C-g] フルパスをプリント
     nnoremap <silent><buffer><expr> <C-g>
      \ defx#do_action('print')
@@ -539,7 +542,7 @@ noremap <S-j> }
 noremap <S-k> {
 
 "jjでノーマルモード
-inoremap jj <esc>
+" inoremap jj <esc>
 
 "エスケープをcontrol+jにマッピング
 imap <C-j> <esc>
@@ -1155,7 +1158,7 @@ let g:EasyMotion_enter_jump_first = 1
 let g:EasyMotion_space_jump_first = 1
 
 nnoremap [em] <Nop>
-nmap <Space><Space> [em]
+nmap <Space>m [em]
 " FindMotion
 map [em]f <Plug>(easymotion-fl)
 map [em]t <Plug>(easymotion-tl)
@@ -1258,9 +1261,9 @@ autocmd FileType go nnoremap ;gor :GoRun<CR>
 autocmd FileType go nnoremap ;got :GoTest<CR>
 autocmd FileType go nnoremap ;goi :GoInstall<CR>
 
-cnoremap goi GoImport<space>
-cnoremap gor GoRename<space>
-cnoremap god GoDrop<space>
+cnoremap ,goi GoImport<space>
+cnoremap ,gor GoRename<space>
+cnoremap ,god GoDrop<space>
 
 " Goのインデント
 autocmd FileType go setlocal noexpandtab tabstop=4 shiftwidth=4
