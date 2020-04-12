@@ -1246,6 +1246,7 @@ let g:vim_json_syntax_conceal = 0
 " =======================================
 let g:go_highlight_chan_whitespace_error = 0
 let g:go_fmt_command = "goimports"
+let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1

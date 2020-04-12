@@ -1,0 +1,26 @@
+#/usr/bin/env bash
+set -eu
+
+filepath=$1
+
+if [ -d "$filepath" ]; then
+  echo "Please specify c/cpp file to args"
+  exit 1
+elif [ -f "$filepath" ]; then
+  case "$filepath" in
+    *.c)
+      exepath="${filepath%.*}"
+      gcc -o ${exepath} ${filepath}
+      ;;
+    *.cpp)
+      exepath="${filepath%.*}"
+      g++ -o ${exepath} ${filepath}
+      ;;
+    *)
+      echo "Not supported file: $filepath"
+      echo "Please specify c/cpp file"
+      exit 1
+      ;;
+  esac
+fi
+
