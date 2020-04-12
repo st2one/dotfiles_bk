@@ -273,6 +273,18 @@ function peco-git-stash () {
 zle -N peco-git-stash
 bindkey '^gs' peco-git-stash
 
+# ^gpでPull Requestのブランチにチェックアウト
+function peco-checkout-pull-request() {
+  local selected_pr_id=$(gh pr list | peco | awk '{ print $1 }')
+  if [ -n "$selected_pr_id" ]; then
+      BUFFER="gh pr checkout ${selected_pr_id}"
+      zle accept-line
+  fi
+  zle clear-screen
+}
+zle -N peco-checkout-pull-request
+bindkey '^gp' peco-checkout-pull-request
+
 # ^eaエイリアスをフィルタリング
 function aliasp () {
   BUFFER=$(alias | peco --query "$LBUFFER" | awk -F"=" '{print $1}')
