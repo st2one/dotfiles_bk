@@ -52,6 +52,10 @@ nnoremap ]c :<C-u>action VcsShowNextChangeMarker<CR>
 nnoremap [e :<C-u>action GotoPreviousError<CR>
 nnoremap ]e :<C-u>action GotoNextError<CR>
 
+nnoremap <Space>f :<C-u>action GotoFile<CR>
+nnoremap <Space>c :<C-u>action GotoClass<CR>
+nnoremap <Space>m :<C-u>action GotoSymbol<CR>
+
 nnoremap <C-h> :<C-u>action Back<CR>
 nnoremap <C-l> :<C-u>action Forward<CR>
 
@@ -62,9 +66,7 @@ nnoremap <C-o>S :<C-u>action GotoSuperMethod<CR>
 nnoremap <C-o>t :<C-u>action GotoTest<CR>
 nnoremap <C-o>f :<C-u>action ShowUsages<CR>
 
-nnoremap <Space>f :<C-u>action GotoFile<CR>
-nnoremap <Space>c :<C-u>action GotoClass<CR>
-nnoremap <Space>m :<C-u>action GotoSymbol<CR>
-
 nnoremap <C-o><C-o> :<C-u>action GotoAction<CR>
 nnoremap <C-f> :<C-u>action FindInPath<CR>
+
+nnoremap <C-g>b :<C-u>action Annotate<CR>
