@@ -23,23 +23,20 @@ nnoremap <C-p> :<C-u>action PreviousTab<CR>
 
 nnoremap ss :<C-u>split<CR>
 nnoremap sv :<C-u>vsplit<CR>
-nnoremap sl <C-w>l
-nnoremap sh <C-w>h
+" nnoremap sl <C-w>l
+" nnoremap sh <C-w>h
 nnoremap sk <C-w>k
 nnoremap sj <C-w>j
 nnoremap sq :<C-u>action CloseEditor<CR>
-" nnoremap sl :<C-u>action VimWindowRight<CR>
-" nnoremap sh :<C-u>action VimWindowLeft<CR>
-" nnoremap sk :<C-u>action VimWindowUp<CR>
-" nnoremap sj :<C-u>action VimWindowDown<CR>
-" nnoremap sQ :<C-u>action VimWindowClose<CR>
+nnoremap sl :<C-u>action NextSplitter<CR>
+nnoremap sh :<C-u>action PrevSplitter<CR>
 
 nnoremap <Space><Space> :<C-u>action AceAction<CR>
 nnoremap <Space>s :<C-u>action KJumpAction<CR>
 nnoremap <Space>w :<C-u>action KJumpAction.Word1<CR>
 nnoremap <Space>l :<C-u>action KJumpAction.Line<CR>
 
-nnoremap / :<C-u>action Find<CR>
+" nnoremap / :<C-u>action Find<CR>
 
 nnoremap g; :<C-u>action JumpToLastChange<CR>
 nnoremap g, :<C-u>action JumpToNextChange<CR>
