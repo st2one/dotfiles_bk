@@ -138,6 +138,9 @@ export PATH=/usr/local/bin:$PATH
 
 export HOMEBREW_UPGRADE_CLEANUP=1
 
+# direnv
+eval "$(direnv hook zsh)"
+
 # mysql
 export PATH=$PATH:/usr/local/mysql/bin
 
