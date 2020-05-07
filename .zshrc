@@ -17,6 +17,9 @@ export LANG=en_US.UTF-8
 # export TERM="xterm-256color"
 # [[ $TMUX = "" ]] && export TERM="xterm-256color"
 
+export EDITOR=nvim
+export VISUAL=nvim
+
 # command history search
 autoload history-search-end
 zle -N history-beginning-search-backward-end history-search-end
@@ -119,8 +122,6 @@ alias ocaml="rlwrap ocaml"
 
 # kubectl
 alias kbc='kubectl'
-
-export EDITOR=nvim
 
 export PGDATA='/usr/local/var/postgres'
 
