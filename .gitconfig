@@ -5,11 +5,14 @@
   precomposeunicode = true
   quotepath = false
   excludesfile = ~/.gitignore_global
+  pager = delta --plus-color="#012800" --minus-color="#340001" --theme='Monokai Extended'
 [color]
   diff = auto
   status = auto
   branch = auto
   ui = true
+[interactive]
+  diffFilter = delta --color-only
 [push]
   default = simple
 [url "git@github.com:"]
