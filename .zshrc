@@ -177,6 +177,12 @@ eval "$(goenv init -)"
 export PATH="$GOROOT/bin:$PATH"
 export PATH="$PATH:$GOPATH/bin"
 
+# Rust
+export PATH="$HOME/.cargo/bin:$PATH"
+
+# Java
+export JAVA_HOME=`/usr/libexec/java_home -v 11.0.2`
+
 # openssl
 export PATH=/usr/local/opt/openssl/bin:$PATH
 

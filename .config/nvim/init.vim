@@ -209,12 +209,12 @@ nnoremap <silent>sq :<C-u>q<CR>
 " バッファを消す
 nnoremap <silent>sQ :<C-u>bd<CR>
 " 前のバッファへ
-nnoremap <silent>sN :<C-u>bn<CR>
+nnoremap <silent>sn :<C-u>bn<CR>
 " 後ろのバッファへ
-nnoremap <silent>sP :<C-u>bp<CR>
+nnoremap <silent>sp :<C-u>bp<CR>
 nnoremap <silent>st :<C-u>tabnew<CR>
-nnoremap sn gt
-nnoremap sp gT
+" nnoremap sn gt
+" nnoremap sp gT
 nnoremap <C-n> gt
 nnoremap <C-p> gT
 
