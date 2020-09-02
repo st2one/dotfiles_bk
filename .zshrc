@@ -121,7 +121,16 @@ alias python='python3'
 alias ocaml="rlwrap ocaml"
 
 # kubectl
-alias kbc='kubectl'
+source <(kubectl completion zsh)
+alias k='kubectl'
+complete -o default -F __start_kubectl k
+
+# exa
+alias e='exa'
+alias ea='exa -aa'
+alias el='exa -l'
+alias ee='exa -aal'
+alias et='exa -lT'
 
 export PGDATA='/usr/local/var/postgres'
 
