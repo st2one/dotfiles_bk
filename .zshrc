@@ -139,6 +139,9 @@ export PATH=/usr/local/bin:$PATH
 
 export HOMEBREW_UPGRADE_CLEANUP=1
 
+# anyenv
+eval "$(anyenv init -)"
+
 # direnv
 eval "$(direnv hook zsh)"
 
