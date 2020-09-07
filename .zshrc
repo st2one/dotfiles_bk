@@ -212,6 +212,9 @@ export PATH="/opt/carch/bin:$PATH"
 # flutter
 export PATH="$PATH:$HOME/flutter/bin"
 
+# ImageMagick
+export PKG_CONFIG_PATH=/opt/ImageMagick/lib/pkgconfig
+
 # git-escape-magic (git使用時HEAD^をHEAD\^と自動エスケープ)
 fpath=(~/.functions ${fpath})
 autoload -Uz git-escape-magic
