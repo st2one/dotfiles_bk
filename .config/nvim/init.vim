@@ -553,6 +553,8 @@ nnoremap <ESC><ESC> :nohlsearch<CR>
 " 挿入モード時にカーソルを移動
 inoremap <C-f> <Right>
 inoremap <C-b> <Left>
+inoremap <C-a> <Home>
+inoremap <C-e> <End>
 
 " tabにて対応ペアにジャンプ
 nnoremap <tab> %
@@ -739,7 +741,7 @@ let g:tcomment_types = {
 " =======================================
 " emmetキーマップ変更
 " =======================================
-let g:user_emmet_leader_key = '<C-E>'
+" let g:user_emmet_leader_key = '<C-E>' " default: <C-Y>
 let g:user_emmet_settings = {'variables' : { 'lang' : 'ja' }}
 
 " マッピングを追加

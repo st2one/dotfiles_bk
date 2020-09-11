@@ -8,6 +8,8 @@ set noerrorbells
 
 imap <C-j> <esc>
 
+inoremap <C-a> <c-o>^
+inoremap <C-e> <c-o>$<Right>
 inoremap <C-b> <Left>
 inoremap <C-f> <Right>
 
