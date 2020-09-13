@@ -8,6 +8,7 @@ link_dotfiles() {
   local files=(
     .ctags
     .gitconfig
+    .gitignore_global
     .gitmessage.txt
     .ideavimrc
     .tmux.conf
