@@ -488,7 +488,7 @@
 	<key>HideActivityIndicator</key>
 	<true/>
 	<key>HideMenuBarInFullscreen</key>
-	<false/>
+	<true/>
 	<key>HideScrollbar</key>
 	<true/>
 	<key>HideTab</key>
@@ -530,9 +530,15 @@
 	<key>NSFontPanelAttributes</key>
 	<string>1, 1</string>
 	<key>NSNavLastRootDirectory</key>
-	<string>~/Dropbox/Pictures</string>
+	<string>~/Dropbox/config/iTerm2</string>
+	<key>NSNavLastUserSetHideExtensionButtonState</key>
+	<false/>
 	<key>NSNavPanelExpandedSizeForOpenMode</key>
 	<string>{712, 448}</string>
+	<key>NSNavPanelExpandedSizeForSaveMode</key>
+	<string>{841, 448}</string>
+	<key>NSNavPanelExpandedStateForSaveMode</key>
+	<true/>
 	<key>NSQuotedKeystrokeBinding</key>
 	<string></string>
 	<key>NSRepeatCountBinding</key>
@@ -574,6 +580,8 @@
 		<key>TB Is Shown</key>
 		<integer>1</integer>
 	</dict>
+	<key>NSWindow Frame NSNavPanelAutosaveName</key>
+	<string>299 250 841 470 0 0 1440 900 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>410 381 620 392 0 0 1440 900 </string>
 	<key>NSWindow Frame SharedPreferences</key>
@@ -776,6 +784,8 @@
 			</dict>
 			<key>Background Image Location</key>
 			<string></string>
+			<key>Background Image Mode</key>
+			<integer>0</integer>
 			<key>Badge Color</key>
 			<dict>
 				<key>Alpha Component</key>
@@ -2022,12 +2032,12 @@
 		<string>3.3.11</string>
 		<string>3.3.12</string>
 		<string>3.3.1</string>
-		<string>3.3.4</string>
+		<string>3.2.9</string>
 		<string>3.3.7</string>
 		<string>3.3.9</string>
-		<string>3.2.9</string>
 		<string>3.3.0</string>
 		<string>3.3.2</string>
+		<string>3.3.4</string>
 	</array>
 	<key>NoSyncBFPFavorites</key>
 	<array>
@@ -2056,14 +2066,14 @@
 		<key>screenFrame</key>
 		<string>{{0, 0}, {1440, 900}}</string>
 		<key>topLeft</key>
-		<string>{269, 595}</string>
+		<string>{204, 726}</string>
 	</dict>
 	<key>NoSyncHaveWarnedAboutPasteConfirmationChange</key>
 	<true/>
 	<key>NoSyncInstallationId</key>
 	<string>61F97035-E170-4519-8957-9CB4698D38D2</string>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>57</integer>
+	<integer>64</integer>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
@@ -2820,6 +2830,11 @@
 			</dict>
 		</array>
 	</dict>
+	<key>NoSyncSavePanelSavedSettings_SaveProfile</key>
+	<dict>
+		<key>Initial Directory</key>
+		<string>/Users/takumi/Dropbox/config/iTerm2</string>
+	</dict>
 	<key>NoSyncTimeOfFirstLaunchOfVersionWithTip</key>
 	<real>586168054.07871401</real>
 	<key>NoSyncTipOfTheDayEligibilityBeganTime</key>
@@ -2900,7 +2915,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2020-09-02T03:05:31Z</date>
+	<date>2020-10-16T14:57:22Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SUUpdateGroupIdentifier</key>
