@@ -14,9 +14,11 @@ link_dotfiles() {
     .tmux.conf
     .vimrc
     .zshrc
+    .zpreztorc
     .peco/config.json
     .config/nvim/init.vim
     .config/tmux/get_battery_tmux.sh
+    .zprezto/modules/prompt/functions/prompt_mypure_setup
   )
 
   for file in ${files[@]}; do
