@@ -19,6 +19,7 @@ link_dotfiles() {
     .config/nvim/init.vim
     .config/tmux/get_battery_tmux.sh
     .zprezto/modules/prompt/functions/prompt_mypure_setup
+    .zsh-vimode-visual.zsh
   )
 
   for file in ${files[@]}; do

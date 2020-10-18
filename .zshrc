@@ -80,14 +80,30 @@ bindkey -M viins '^W'  backward-kill-word
 bindkey -M viins '^Y'  yank
 
 # モードを表示
-function zle-line-init zle-keymap-select {
-  VIM_NORMAL="%K{208}%F%k%f%K{166}%F{237} % N %k%f%K%F{166}%k%f"
-  VIM_INSERT="%K{075}%F%k%f%K{032}%F{237} % I %k%f%K%F{032}%k%f"
-  RPS1="${${KEYMAP/vicmd/$VIM_NORMAL}/(main|viins)/$VIM_INSERT}"
+if [[ -s "${ZDOTDIR:-$HOME}/.zsh-vimode-visual.zsh" ]]; then
+  source "${ZDOTDIR:-$HOME}/.zsh-vimode-visual.zsh"
+fi
+
+function zle-line-init zle-line-finish zle-keymap-select {
+  VIM_NORMAL="%K%F%k%f%K{166}%F{237} % N %k%f%K%F{166}%k%f"
+  VIM_INSERT="%K%F%k%f%K{032}%F{237} % I %k%f%K%F{032}%k%f"
+  VIM_VISUAL="%K%F%k%f%K{029}%F{237} % V %k%f%K%F{029}%k%f"
+  case $KEYMAP in
+    main|viins)
+      RPS1="${VIM_INSERT}"
+      ;;
+    vicmd)
+      RPS1="${VIM_NORMAL}"
+      ;;
+    vivis|vivli)
+      RPS1="${VIM_VISUAL}"
+      ;;
+  esac
   RPS2=$RPS1
   zle reset-prompt
 }
 zle -N zle-line-init
+zle -N zle-line-finish
 zle -N zle-keymap-select
 
 : "Ctrl-Wでパスの文字列などをスラッシュ単位で削除する" && {
@@ -242,9 +258,6 @@ fi
 
 # サーチパスに~/scripts/mybinを追加
 PATH=$PATH:~/scripts/mybin
-
-# kubectlの補完機能
-source <(kubectl completion zsh)
 
 # OPAM configuration
 # . /Users/takumi/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
@@ -435,5 +448,51 @@ function peco-open-bookmark() {
 zle -N peco-open-bookmark
 bindkey '^e^m' peco-open-bookmark
 
+# ディレクトリ移動
+function peco-cd {
+  local sw="1"
+  while [ "$sw" != "0" ]
+  do
+    if [ "$sw" = "1" ];then
+     local list=$(echo -e "---$PWD\n../\n$( ls -F | grep / )\n---Show hidden directory\n---Show files, $(echo $(ls -F | grep -v / ))\n---HOME DIRECTORY")
+    elif [ "$sw" = "2" ];then
+     local list=$(echo -e "---$PWD\n$( ls -a -F | grep / | sed 1d )\n---Hide hidden directory\n---Show files, $(echo $(ls -F | grep -v / ))\n---HOME DIRECTORY")
+    else
+     local list=$(echo -e "---BACK\n$( ls -F | grep -v / )")
+    fi
+
+    local slct=$(echo -e "$list" | peco )
+
+    if [ "$slct" = "---$PWD" ];then
+     local sw="0"
+    elif [ "$slct" = "---Hide hidden directory" ];then
+     local sw="1"
+    elif [ "$slct" = "---Show hidden directory" ];then
+     local sw="2"
+    elif [ "$slct" = "---Show files, $(echo $(ls -F | grep -v / ))" ];then
+     local sw=$(($sw+2))
+    elif [ "$slct" = "---HOME DIRECTORY" ];then
+     cd "$HOME"
+    elif [[ "$slct" =~ / ]];then
+     cd "$slct"
+    elif [ "$slct" = "" ];then
+     :
+    else
+     local sw=$(($sw-2))
+    fi
+  done
+  zle clear-screen
+}
+zle -N peco-cd
+bindkey '^ed' peco-cd
+
+# カレントディレクトリ下のディレクトリを検索してcd
+function peco-find-cd() {
+  local dir=$(\find . -maxdepth 8 -type d | peco)
+  cd "${dir}"
+  zle clear-screen
+}
+zle -N peco-find-cd
+bindkey '^e^d' peco-find-cd
 
 # [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
