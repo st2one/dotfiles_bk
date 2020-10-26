@@ -164,6 +164,10 @@ autocmd ColorScheme * highlight Search ctermbg=none
 " autocmd ColorScheme * highlight Visual ctermbg=143 ctermfg=232 cterm=bold
 " autocmd ColorScheme * highlight Visual ctermbg=238 cterm=bold
 
+" let g:tokyonight_style = 'storm'
+" let g:tokyonight_enable_italic = 1
+" let g:tokyonight_transparent_background = 1
+
 " colorscheme dracula
 " color Dracula
 " colorscheme solarized
@@ -176,6 +180,7 @@ autocmd ColorScheme * highlight Search ctermbg=none
 " colorscheme tender
 " colorscheme atom-dark
 colorscheme onedark
+" colorscheme tokyonight
 " colorscheme gruvbox
 
 " 行番号の色

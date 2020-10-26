@@ -134,6 +134,9 @@ repo = 'gosukiwi/vim-atom-dark'
 repo = 'joshdick/onedark.vim'
 
 [[plugins]]
+repo = 'ghifarit53/tokyonight-vim'
+
+[[plugins]]
 repo = 'morhetz/gruvbox'
 
 [[plugins]]
