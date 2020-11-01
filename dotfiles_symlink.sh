@@ -17,6 +17,8 @@ link_dotfiles() {
     .zpreztorc
     .peco/config.json
     .config/nvim/init.vim
+    .config/nvim/dein.toml
+    .config/nvim/dein_lazy.toml
     .config/tmux/get_battery_tmux.sh
     .zprezto/modules/prompt/functions/prompt_mypure_setup
     .zsh-vimode-visual.zsh
