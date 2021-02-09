@@ -166,6 +166,7 @@ export PATH=/usr/local/bin:$PATH
 export HOMEBREW_UPGRADE_CLEANUP=1
 
 # anyenv
+export PATH="$HOME/.anyenv/bin:$PATH"
 eval "$(anyenv init -)"
 
 # direnv
