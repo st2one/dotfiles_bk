@@ -1106,6 +1106,7 @@ nnoremap <silent> ,h :split<CR> :exe("tjump ".expand('<cword>'))<CR>
 let g:auto_ctags_directory_list = ['.git']
 " ctagsのオプション指定
 let g:auto_ctags_tags_args = '--recurse=yes --append=yes --tag-relative=yes --languages=Ruby,JavaScript,Python,Java --exclude=node_modules --exclude=vendor --exclude=.git --exclude=log'
+let g:auto_ctags_set_tags_option = 0
 
 
 " =======================================
