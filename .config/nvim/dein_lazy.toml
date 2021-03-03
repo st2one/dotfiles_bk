@@ -2,6 +2,22 @@
 repo = 'Shougo/deoplete.nvim'
 if = 'has("nvim")'
 on_i = 1
+hook_add = '''
+  set runtimepath+=~/.cache/dein/repos/github.com/Shougo/deoplete.nvim
+  let g:deoplete#enable_at_startup = 1
+
+  call deoplete#custom#option({
+  \ 'auto_complete_delay': 0,
+  \ 'max_list': 10000,
+  \ 'camel_case': v:false,
+  \ 'ignore_case': v:false,
+  \ 'refresh_always': v:false,
+  \ 'smart_case': v:true,
+  \ 'buffer_path': v:true
+  \ })
+
+  call deoplete#custom#var('buffer_path', v:true)
+'''
 
 [[plugins]]
 repo = 'Shougo/neomru.vim'
