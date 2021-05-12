@@ -143,13 +143,24 @@ alias k='kubectl'
 complete -o default -F __start_kubectl k
 
 # exa
-alias e='exa'
-alias ea='exa -aa'
-alias el='exa -l'
-alias ee='exa -aal'
-alias et='exa -lT'
-
-export PGDATA='/usr/local/var/postgres'
+if [[ $(command -v exa) ]]; then
+  alias e='exa'
+  alias l=e
+  alias ls=e
+  alias ea='exa -a'
+  alias el='exa -l --icons --git'
+  alias ll=el
+  alias ee='exa -ahl --icons --git'
+  alias la=ee
+  alias eot='exa -ahl -s modified -r' # 更新時間順(Order by Time)
+  alias lot=eot
+  alias eos='exa -ahl -s size -r' # ファイルサイズ順 (Order by Size)
+  alias los=eos
+  alias et='exa -T -L3 -a -I "node_modules|.git|.cache" --icons'
+  alias lt=et
+  alias eta='exa -T -a -I "node_modules|.git|.cache" --color=always --icons | less -r'
+  alias lta=eta
+fi
 
 #-------------------------------------------------
 # Path
@@ -174,6 +185,9 @@ eval "$(direnv hook zsh)"
 
 # mysql
 export PATH=$PATH:/usr/local/mysql/bin
+
+# postresql
+export PGDATA='/usr/local/var/postgres'
 
 # Haskell
 export PATH=$HOME/Library/Haskell/bin:$PATH
